@@ -1,0 +1,25 @@
+{
+  "name": "create-cycle-app-flavors",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "lerna run test",
+    "publish": "lerna publish",
+    "updated": "lerna updated"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
+  },
+  "keywords": [],
+  "author": "Nick Balestra <nick@balestra.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"
+  },
+  "homepage": "https://github.com/cyclejs-community/create-cycle-app-flavors#readme",
+  "devDependencies": {
+    "lerna": "2.0.0-beta.36"
+  }
+}
