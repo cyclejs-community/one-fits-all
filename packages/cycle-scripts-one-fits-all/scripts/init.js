@@ -77,10 +77,12 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
     'build': 'cycle-scripts build',
     'eject': 'cycle-scripts eject'
   }
-  // TODO: move into own babel config file
-  appPackage.babel = {
-    'presets': ['es2015']
-  }
+
+  const babelrc = JSON.parse(fs.readFileSync(
+    path.join(__dirname, 'scripts', '.babelrx'), { encoding: 'utf-8' })
+  );
+  appPackage.babel = babelrc;
+
   fs.writeFileSync(
     appPackageJson,
     JSON.stringify(appPackage, null, 2)
