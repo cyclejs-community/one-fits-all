@@ -1,10 +1,10 @@
-# cycle-scripts
+# one-fits-all flavour
 
-[Cycle-app](https://github.com/cyclejs-community/create-cycle-app) core flavor.
+[Cycle-app](https://github.com/cyclejs-community/create-cycle-app) flavor.
 
 ## Language
 
-ES6 ( Babel ) configured with:
+ES6 or Typescript 2.1 configured with:
 * [ES2015 preset](https://babeljs.io/docs/plugins/preset-es2015/)
 
 ## Bundler
@@ -30,13 +30,14 @@ my-awesome-cycle-app/
 ├── node_modules/
 ├── public/
 │   ├── favicon.ico
-│   └── index.html
 ├── src/
-│   ├── app.js
+│   ├── app.tsx
 │   ├── app.test.js
-│   └── index.js
-└── package.json
+│   └── index.ts
+├── package.json
+└── index.ejs
 ```
 
 ### Config files
 * .babelrc (Added on the root after running the eject script)
+* webpack.config.js (Added on the root after running the eject script)
