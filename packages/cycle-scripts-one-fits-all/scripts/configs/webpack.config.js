@@ -49,7 +49,7 @@ module.exports = createConfig([
     env('production', [
         addPlugins([
             new webpack.optimize.UglifyJsPlugin(),
-            new CopyWebpackPlugin([{ from: 'public', to: 'build' }])
+            new CopyWebpackPlugin([{ from: 'public', to: '' }])
         ])
     ])
 ])
