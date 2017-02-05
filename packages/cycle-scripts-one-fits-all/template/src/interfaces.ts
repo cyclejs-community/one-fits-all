@@ -14,3 +14,5 @@ export interface Sinks
     DOM? : Stream<VNode>;
     HTTP? : Stream<RequestOptions>;
 }
+
+export type Component = (s : Sources) => Sinks;
