@@ -37,14 +37,5 @@ fs.writeFileSync(
   JSON.stringify(newPackageJson, null, 2)
 )
 
-mkdirp(scriptsPath, () => {
-  function copy (script, subDir, inRoot) {
-    subDir = subDir || ''
-    fs.copySync(path.join(__dirname, subDir, script), path.join(inRoot ? '' : scriptsPath, script))
-  }
-
-  // Copy configs
-  copy('.babelrc', 'configs', true)
-  copy('webpack.config.js', 'configs', true)
-})
-
+fs.copySync(path.join(__dirname, 'configs', '.babelrc'), '.babelrc')
+fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')

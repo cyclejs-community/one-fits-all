@@ -79,7 +79,7 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
   }
 
   const babelrc = JSON.parse(fs.readFileSync(
-    path.join(__dirname, 'scripts', '.babelrx'), { encoding: 'utf-8' })
+    path.join(__dirname, 'configs', '.babelrc'), { encoding: 'utf-8' })
   );
   appPackage.babel = babelrc;
 

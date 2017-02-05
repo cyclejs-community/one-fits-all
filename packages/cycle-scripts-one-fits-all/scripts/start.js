@@ -1,14 +1,10 @@
 'use strict'
+const spawn = require('cross-spawn');
+const path = require('path');
 
-const webpack = require('webpack')
-const WebpackDevServer = require('webpack-dev-server')
+const env = Object.create( process.env );
+env.NODE_ENV = 'development';
 
-const port = 8080
-process.env.NODE_ENV = 'development'
+const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack-dev-server');
 
-const config = require('./configs/webpack.config.js')
-
-const compiler = webpack(config)
-const server = new WebpackDevServer(compiler)
-
-server.listen(port)
+spawn.sync(webpack, ['--config', path.join(__dirname, 'configs', 'webpack.config.js')], { env: env, stdio: 'inherit' });

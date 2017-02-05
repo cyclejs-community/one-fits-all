@@ -11,6 +11,6 @@ export interface Sources
 
 export interface Sinks
 {
-    DOM : Stream<VNode>;
-    HTTP : Stream<RequestOptions>;
+    DOM? : Stream<VNode>;
+    HTTP? : Stream<RequestOptions>;
 }

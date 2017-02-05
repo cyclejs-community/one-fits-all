@@ -1,15 +1,10 @@
 'use strict'
+const spawn = require('cross-spawn');
+const path = require('path');
 
-const webpack = require('webpack')
+const env = Object.create( process.env );
+env.NODE_ENV = 'production';
 
-process.env.NODE_ENV = 'production'
+const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack');
 
-const config = require('./configs/webpack.config.js');
-
-const compiler = webpack(config);
-
-compiler.run((err, stats) => {
-  if (err) {
-    console.log(err)
-  }
-})
+spawn(webpack, ['--config', path.join(__dirname, 'configs', 'webpack.config.js')], { env: env, stdio: 'inherit' } );

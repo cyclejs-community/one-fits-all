@@ -11,17 +11,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require('path');
 
 module.exports = createConfig([
-    entryPoint('./src/index.ts'),
-    entryPoint('./src/styles.scss'),
-    setOutput('./build/bundle.js'),
+    entryPoint(path.join(process.cwd(), 'src', 'index.ts')),
+    entryPoint(path.join(process.cwd(), 'src', 'css', 'styles.scss')),
+    setOutput(path.join(process.cwd(), 'build', 'bundle.js')),
     babel(),
     typescript(),
     tslint(),
     sass(),
     extractText('[name].css', 'text/x-sass'),
-    extractText('[name].css', 'text/css'),
     postcss([
         autoprefixer({ browsers: ['last 2 versions'] })
     ]),
@@ -32,13 +32,12 @@ module.exports = createConfig([
         new HtmlWebpackPlugin({
             template: './index.ejs',
             inject: true,
-            favicon: 'favicon.png',
+            favicon: 'public/favicon.png',
             hash: true
         }),
         new webpack.ProvidePlugin({
             snabb: 'snabbdom-jsx'
-        }),
-        new ProgressBarPlugin()
+        })
     ]),
     env('development', [
         devServer(),
