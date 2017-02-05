@@ -1,0 +1,19 @@
+{
+    "compileOnSave": false,
+    "compilerOptions":
+    {
+        "module": "CommonJS",
+        "sourceMap": true,
+        "jsx" : "preserve",
+        "target": "ES6"
+    },
+    "awesomeTypescriptLoaderOptions":
+    {
+        "forkChecker": true,
+        "useBabel": true,
+        "useCache": false
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
