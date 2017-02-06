@@ -78,10 +78,15 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
     'eject': 'cycle-scripts eject'
   }
 
-  const babelrc = JSON.parse(fs.readFileSync(
-    path.join(__dirname, 'configs', '.babelrc'), { encoding: 'utf-8' })
-  );
-  appPackage.babel = babelrc;
+  appPackage.babel = {
+    presets: [
+        ['es2015', { 'modules': false }]
+    ],
+    plugins: [
+        'syntax-jsx',
+        ['transform-react-jsx', { pragma: 'snabb.html' }]
+    ]
+}
 
   fs.writeFileSync(
     appPackageJson,

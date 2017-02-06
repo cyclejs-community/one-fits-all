@@ -37,5 +37,9 @@ fs.writeFileSync(
   JSON.stringify(newPackageJson, null, 2)
 )
 
-fs.copySync(path.join(__dirname, 'configs', '.babelrc'), '.babelrc')
+fs.writeFileSync(
+    path.join(process.cwd(), '.babelrc'),
+    JSON.stringify(appPackageJson.babel)
+)
+
 fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')
