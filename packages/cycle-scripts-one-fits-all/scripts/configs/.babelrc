@@ -1,9 +1,0 @@
-{
-    "presets": [
-        ["es2015", { "modules": false }]
-    ],
-    "plugins": [
-        "syntax-jsx",
-        ["transform-react-jsx", {"pragma": "snabb.html"}]
-    ]
-}
