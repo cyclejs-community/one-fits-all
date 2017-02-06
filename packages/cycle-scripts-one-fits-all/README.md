@@ -10,8 +10,8 @@ ES6 or Typescript 2.1 configured with:
 ## Bundler
 
 Webpack configured with
-* [Webpack dev server](https://webpack.github.io/docs/webpack-dev-server.html)
-* [Hot Module Replacement](https://webpack.github.io/docs/hot-module-replacement-with-webpack.html)
+* [Webpack dev server](https://webpack.js.org/configuration/dev-server)
+* [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/)
 
 ## Scripts
 
