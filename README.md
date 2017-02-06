@@ -24,7 +24,7 @@ $ create-cycle-app my-app --flavor path/to/cycle-scripts-one-fits-all
 
 | Flavor | Language | Bundler | CLI compatibility | Status |
 |---------|:--------------------------:|:--------------:|:-------------:|:-------------:|
-| [cycle-scripts-one-fits-all](https://github.com/cyclejs-community/create-cycle-app-flavors/tree/master/packages/cycle-scripts-one-fits-all) | TypeScript | Webpack2 | v3 | ✅ Active |
+| [cycle-scripts-one-fits-all](https://github.com/cyclejs-community/create-cycle-app-flavors/tree/master/packages/cycle-scripts-one-fits-all) | TypeScript or ES6 | Webpack2 | v3 | ✅ Active |
 | [cycle-scripts-ts-webpack](https://github.com/cyclejs-community/create-cycle-app-flavors/tree/master/packages/cycle-scripts-ts-webpack) | TypeScript | Webpack1 | v2 | :no_good_man: Deprecated |
 | [cycle-scripts-ts-browserify](https://github.com/cyclejs-community/create-cycle-app-flavors/tree/master/packages/cycle-scripts-ts-browserify) | TypeScript | Browserify | v2 | :no_good_man: Deprecated |
 | [cycle-scripts-es-browserify](https://github.com/cyclejs-community/create-cycle-app-flavors/tree/master/packages/cycle-scripts-es-browserify) | ES6 | Browserify | v2 | :no_good_man: Deprecated |
