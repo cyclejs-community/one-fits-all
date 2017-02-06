@@ -29,12 +29,18 @@ The flavor generate the following file structure:
 my-awesome-cycle-app/
 ├── node_modules/
 ├── public/
-│   ├── favicon.ico
+│   ├── favicon.png
+│   └── favicon.ico
 ├── src/
+│   ├── css
+│   │   └── styles.scss
 │   ├── app.tsx
 │   ├── app.test.js
 │   └── index.ts
+├── .gitignore
 ├── package.json
+├── tsconfig.json
+├── tslint.json
 └── index.ejs
 ```
 
