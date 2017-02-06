@@ -5,11 +5,12 @@
 ## Language
 
 ES6 or Typescript 2.1 configured with:
-* [ES2015 preset](https://babeljs.io/docs/plugins/preset-es2015/)
-
+* TypeScript ```target: ES6``` transpiles to ES6 with [```lib: DOM,ES6,DOM.Iterable,ScriptHost```](http://www.typescriptlang.org/docs/handbook/compiler-options.html) and piped through Babel
+* Babel targets ES5 with [ES2015 preset](https://babeljs.io/docs/plugins/preset-es2015/)
+ 
 ## Bundler
 
-Webpack configured with
+Webpack is configured using [webpack-blocks](https://github.com/andywer/webpack-blocks)
 * [Webpack dev server](https://webpack.js.org/configuration/dev-server)
 * [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/)
 
