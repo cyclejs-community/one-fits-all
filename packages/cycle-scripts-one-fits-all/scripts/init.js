@@ -6,10 +6,10 @@ const chalk = require('chalk')
 const spawn = require('cross-spawn')
 
 const basicDependencies = [
-  '@cycle/dom',
-  '@cycle/http',
-  '@cycle/xstream-run',
-  'xstream'
+  '@cycle/dom@14.3.0',
+  '@cycle/http@11.3.0',
+  '@cycle/xstream-run@4.2.0',
+  'xstream@10.2.0'
 ]
 
 function patchGitignore (appPath) {
