@@ -1,6 +1,5 @@
 import { Stream } from 'xstream';
-import { VNode } from '@cycle/dom';
-import { DOMSource } from '@cycle/dom/xstream-typings';
+import { VNode, DOMSource } from '@cycle/dom';
 import { HTTPSource, RequestOptions } from '@cycle/http';
 
 export interface Sources
