@@ -6,10 +6,10 @@ const chalk = require('chalk')
 const spawn = require('cross-spawn')
 
 const basicDependencies = [
-  '@cycle/dom@14.3.0',
-  '@cycle/http@11.3.0',
-  '@cycle/xstream-run@4.2.0',
-  'xstream@10.2.0'
+  '@cycle/dom@16.0.0',
+  '@cycle/http@13.2.0',
+  '@cycle/run@3.0.0',
+  'xstream@10.3.0'
 ]
 
 function patchGitignore (appPath) {
@@ -80,11 +80,16 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
 
   appPackage.babel = {
     presets: [
-        ['es2015', { 'modules': false }]
+        ['env', {
+            'modules': false,
+            'targets': {
+                'browsers': ['last 2 versions']
+            },
+            'useBuiltIns': true
+        }]
     ],
     plugins: [
-        'syntax-jsx',
-        ['transform-react-jsx', { pragma: 'snabb.html' }]
+        ['transform-react-jsx', { pragma: 'Snabbdom.createElement' }]
     ]
 }
 

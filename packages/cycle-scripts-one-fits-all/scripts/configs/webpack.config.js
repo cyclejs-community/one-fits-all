@@ -11,6 +11,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 const path = require('path');
 
 module.exports = createConfig([
@@ -36,7 +37,7 @@ module.exports = createConfig([
             hash: true
         }),
         new webpack.ProvidePlugin({
-            snabb: 'snabbdom-jsx'
+            Snabbdom: 'snabbdom-pragma'
         })
     ]),
     env('development', [
@@ -48,7 +49,7 @@ module.exports = createConfig([
     ]),
     env('production', [
         addPlugins([
-            new webpack.optimize.UglifyJsPlugin(),
+            new BabiliPlugin(),
             new CopyWebpackPlugin([{ from: 'public', to: '' }])
         ])
     ])
