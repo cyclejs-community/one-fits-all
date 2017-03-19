@@ -1,3 +1,5 @@
+import 'babel-polyfill'; //This will be replaced based on your babel-env config
+
 import { run } from '@cycle/run';
 import { makeDOMDriver } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
