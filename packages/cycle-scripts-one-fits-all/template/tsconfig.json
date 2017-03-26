@@ -2,7 +2,8 @@
     "compileOnSave": false,
     "compilerOptions":
     {
-        "module": "CommonJS",
+        "module": "ES6",
+        "moduleResolution": "node",
         "sourceMap": true,
         "jsx" : "preserve",
         "target": "ES6"
