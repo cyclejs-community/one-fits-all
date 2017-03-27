@@ -4,14 +4,13 @@ const path = require('path')
 const spawn = require('cross-spawn')
 const chalk = require('chalk')
 
-const mocha = path.resolve(process.cwd(), 'node_modules', '.bin', 'mocha')
+const mocha = path.resolve(process.cwd(), 'node_modules', '.bin', 'mocha-webpack')
 
 const args = [
   '--colors',
-  '--require',
-  'babel-register',
-  !process.env.CI && (console.log(chalk.green.bold('Enabling watch mode')) || '--watch'),
-  'src/**/*.test.js'
+  '--webpack-config',
+  path.join(__dirname, 'configs', 'webpack.config.test.js'),
+  'src/**/*.test.*'
 ].filter(Boolean)
 
 spawn(mocha, args, {stdio: 'inherit'})

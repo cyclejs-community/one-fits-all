@@ -8,7 +8,9 @@ const spawn = require('cross-spawn')
 const basicDependencies = [
   '@cycle/dom@16.0.0',
   '@cycle/http@13.2.0',
+  '@cycle/time@0.8.0',
   '@cycle/run@3.0.0',
+  'cycle-onionify@3.1.0',
   'xstream@10.3.0'
 ]
 
