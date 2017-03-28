@@ -33,10 +33,12 @@ describe('app tests', () => {
             const html$ = app.DOM.map(toHtml);
 
             Time.assertEqual(html$, xs.of(n).map(expectedHTML), htmlLooksLike);
-            return new Promise(resolve => Time.run(resolve))
-                .then(() => true);
+
+            return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property);
+        assert(property)
+            .then(val => val ? done(val) : done());
+
     });
 });
