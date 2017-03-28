@@ -1,6 +1,6 @@
-import { forall, assert, nat } from 'jsverify';
+import { forall, assert, nat, json } from 'jsverify';
 import * as htmlLooksLike from 'html-looks-like';
-const toHtml : any = require('snabbdom-to-html');
+const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
 import xs, { Stream } from 'xstream';
 import { VNode, makeHTMLDriver, mockDOMSource } from '@cycle/dom';
@@ -16,8 +16,6 @@ function mockStateSource(count : number) : any
 }
 
 describe('app tests', () => {
-    const Time : any = mockTimeSource();
-    const DOM : any = mockDOMSource({});
 
     const expectedHTML = count => `
         <div>
@@ -27,12 +25,16 @@ describe('app tests', () => {
     `;
 
     it('should always print same text', done => {
-        const property = forall(nat, (n) => {
-            const app = App({ DOM, onion: mockStateSource(n) } as any);
-            const html$ = app.DOM.compose(toHtml);
+        const property = forall(json, (n) => {
+            const Time : any = mockTimeSource();
+            const DOM : any = mockDOMSource({});
 
-            Time.assertEqual(html$, xs.of(n).map(expectedHTML), htmlLooksLike.bool);
-            Time.run();
+            const app = App({ DOM, onion: mockStateSource(n) } as any);
+            const html$ = app.DOM.map(toHtml);
+
+            Time.assertEqual(html$, xs.of(n).map(expectedHTML), htmlLooksLike);
+            return new Promise(resolve => Time.run(resolve))
+                .then(() => true);
         });
 
         assert(property);
