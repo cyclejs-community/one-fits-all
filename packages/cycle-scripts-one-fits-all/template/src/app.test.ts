@@ -17,14 +17,14 @@ function mockStateSource(count : number) : any
 
 describe('app tests', () => {
 
-    const expectedHTML = count => `
-        <div>
-            <h2>My awesome Cycle.js app</h2>
-            {{ ... }}
-        </div>
-    `;
-
     it('should always print same text', done => {
+        const expectedHTML = count => `
+            <div>
+                <h2>My awesome Cycle.js app</h2>
+                {{ ... }}
+            </div>
+        `;
+
         const property = forall(json, (n) => {
             const Time : any = mockTimeSource();
             const DOM : any = mockDOMSource({});
@@ -39,6 +39,31 @@ describe('app tests', () => {
 
         assert(property)
             .then(val => val ? done(val) : done());
-
     });
+
+    it('should always print the correct number', done => {
+        const expectedHTML = count => `
+            <div>
+                {{ ... }}
+                <span>Counter: ${count}</span>
+                {{ ... }}
+            </div>
+        `;
+
+        const property = forall(nat, (n) => {
+            const Time : any = mockTimeSource();
+            const DOM : any = mockDOMSource({});
+
+            const app = App({ DOM, onion: mockStateSource(n) } as any);
+            const html$ = app.DOM.map(toHtml);
+
+            Time.assertEqual(html$, xs.of(n).map(expectedHTML), htmlLooksLike);
+
+            return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
+        });
+
+        assert(property)
+            .then(val => val ? done(val) : done());
+    });
+
 });
