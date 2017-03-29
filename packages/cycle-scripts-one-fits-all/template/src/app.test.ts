@@ -1,4 +1,4 @@
-import { forall, assert, nat, json } from 'jsverify';
+import { forall, assert, nat } from 'jsverify';
 import * as htmlLooksLike from 'html-looks-like';
 const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
@@ -17,15 +17,17 @@ function mockStateSource(count : number) : any
 
 describe('app tests', () => {
 
-    it('should always print same text', done => {
+    it('should always print same text', (done) => {
         const expectedHTML = count => `
             <div>
-                <h2>My awesome Cycle.js app</h2>
+                <h2>My Awesome Cycle.js app</h2>
                 {{ ... }}
+                <button type="button" class="add">Increase</button>
+                <button type="button" class="subtract">Decrease</button>
             </div>
         `;
 
-        const property = forall(json, (n) => {
+        const property = forall(nat, (n) => {
             const Time : any = mockTimeSource();
             const DOM : any = mockDOMSource({});
 
@@ -33,12 +35,12 @@ describe('app tests', () => {
             const html$ = app.DOM.map(toHtml);
 
             Time.assertEqual(html$, xs.of(n).map(expectedHTML), htmlLooksLike);
-
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
         assert(property)
-            .then(val => val ? done(val) : done());
+            .then(val => val ? done(val) : done())
+            .catch(err => done(err));
     });
 
     it('should always print the correct number', done => {
@@ -63,7 +65,7 @@ describe('app tests', () => {
         });
 
         assert(property)
-            .then(val => val ? done(val) : done());
+            .then(val => val ? done(val) : done())
+            .catch(err => done(err));
     });
-
 });
