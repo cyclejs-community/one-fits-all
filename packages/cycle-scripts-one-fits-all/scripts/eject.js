@@ -13,7 +13,7 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 // Declaring new scripts
 const scripts = {
   start: 'NODE_ENV=development webpack --config webpack.config.js',
-  test: 'mocha --colors --require babel-register src/**/**.test.js',
+  test: 'NODE_ENV=test nyc mocha-webpack --timeout=10000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
   build: 'NODE_ENV=production webpack --config webpack.config.js'
 }
 
@@ -43,3 +43,4 @@ fs.writeFileSync(
 )
 
 fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')
+fs.copySync(path.join(__dirname, 'configs', 'webpack.config.test.js'), 'webpack.config.test.js')

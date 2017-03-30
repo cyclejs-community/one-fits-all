@@ -5,10 +5,10 @@ const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are bro
 import xs, { Stream } from 'xstream';
 import { VNode, makeHTMLDriver, mockDOMSource } from '@cycle/dom';
 import { mockTimeSource } from '@cycle/time';
-import { diagramArbitrary } from './diagramArbitrary';
+import { diagramArbitrary } from 'cyclejs-test-helpers';
 import onionify from 'cycle-onionify';
 
-import { App } from './app';
+import { App } from '../src/app';
 
 const testOptions : Options = {
     tests: 100,
@@ -101,7 +101,7 @@ describe('app tests', () => {
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property, { ...testOptions, tests: testOptions.tests * 0.4 })
+        assert(property, { ...testOptions, tests: testOptions.tests / 2 })
             .then(val => val ? done(val) : done())
             .catch(err => done(err));
     });

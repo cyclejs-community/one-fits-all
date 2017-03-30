@@ -1,3 +1,6 @@
 build/ 
+.tmp/
+node_modules/
+coverage/
 
 *.log
