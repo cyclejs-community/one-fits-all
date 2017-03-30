@@ -1,4 +1,4 @@
-import { forall, assert, nat } from 'jsverify';
+import { forall, assert, nat, Options } from 'jsverify';
 import * as htmlLooksLike from 'html-looks-like';
 const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
@@ -9,6 +9,11 @@ import { diagramArbitrary } from './diagramArbitrary';
 import onionify from 'cycle-onionify';
 
 import { App } from './app';
+
+const testOptions : Options = {
+    tests: 100,
+    size: 200
+};
 
 function mockStateSource(count : number) : any
 {
@@ -41,7 +46,7 @@ describe('app tests', () => {
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property)
+        assert(property, testOptions)
             .then(val => val ? done(val) : done())
             .catch(err => done(err));
     });
@@ -68,7 +73,7 @@ describe('app tests', () => {
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property)
+        assert(property, testOptions)
             .then(val => val ? done(val) : done())
             .catch(err => done(err));
     });
@@ -96,7 +101,7 @@ describe('app tests', () => {
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property, { tests: 10 })
+        assert(property, { ...testOptions, tests: testOptions.tests * 0.4 })
             .then(val => val ? done(val) : done())
             .catch(err => done(err));
     });
