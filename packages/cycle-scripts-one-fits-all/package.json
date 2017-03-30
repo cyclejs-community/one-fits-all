@@ -46,6 +46,7 @@
     "nyc": "^10.2.0",
     "progress-bar-webpack-plugin": "^1.9.3",
     "snabbdom-pragma": "^1.8.0",
+    "snabbdom-to-html": "^3.1.1",
     "typescript": "^2.2.2",
     "webpack": "^2.3.2",
     "webpack-dev-server": "^2.4.2",

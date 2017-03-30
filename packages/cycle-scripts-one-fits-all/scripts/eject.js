@@ -27,9 +27,6 @@ Object.keys(appPackageJson.devDependencies)
   })
 devDependencies = Object.assign({}, devDependencies, ownPackageJson.dependencies)
 
-// Delete babel config in package.json
-delete appPackageJson.babel
-
 // Write the new package.json
 const newPackageJson = Object.assign({}, appPackageJson, {scripts: scripts, devDependencies: devDependencies})
 fs.writeFileSync(
@@ -41,6 +38,9 @@ fs.writeFileSync(
     path.join(process.cwd(), '.babelrc'),
     JSON.stringify(appPackageJson.babel)
 )
+
+// Delete babel config in package.json
+delete appPackageJson.babel
 
 fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')
 fs.copySync(path.join(__dirname, 'configs', 'webpack.config.test.js'), 'webpack.config.test.js')
