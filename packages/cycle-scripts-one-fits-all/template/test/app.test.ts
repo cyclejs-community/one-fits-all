@@ -48,8 +48,6 @@ describe('app tests', () => {
             return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
         });
 
-        assert(property, testOptions)
-            .then(val => val ? done(val) : done())
-            .catch(err => done(err));
+        return assert(property, testOptions);
     });
 });
