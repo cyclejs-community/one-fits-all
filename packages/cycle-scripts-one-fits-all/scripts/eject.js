@@ -13,7 +13,7 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 // Declaring new scripts
 const scripts = {
   start: 'NODE_ENV=development webpack --config webpack.config.js',
-  test: 'NODE_ENV=test nyc mocha-webpack --timeout=10000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
+  test: 'NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
   build: 'NODE_ENV=production webpack --config webpack.config.js'
 }
 

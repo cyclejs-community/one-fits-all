@@ -19,13 +19,14 @@ describe('app tests', () => {
 
     const expectedHTML = count => `
         <div>
-            {{ ... }}
+            <h2>My Awesome Cycle.js app</h2>
             <span>Counter: ${count}</span>
-            {{ ... }}
+            <button type="button" class="add">Increase</button>
+            <button type="button" class="subtract">Decrease</button>
         </div>
     `;
 
-    it('should interact correctly', (done) => {
+    it('should interact correctly', () => {
         const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => {
             const Time = mockTimeSource();
 
