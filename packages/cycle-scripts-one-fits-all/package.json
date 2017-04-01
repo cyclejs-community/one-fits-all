@@ -40,7 +40,7 @@
     "cyclejs-test-helpers": "^1.0.1",
     "html-looks-like": "^1.0.2",
     "html-webpack-plugin": "^2.28.0",
-    "jsverify": "^0.8.1",
+    "jsverify": "^0.8.2",
     "mocha": "^3.2.0",
     "mocha-webpack": "^0.7.0",
     "nyc": "^10.2.0",
