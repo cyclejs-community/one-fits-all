@@ -21,8 +21,8 @@ describe('app tests', () => {
         <div>
             <h2>My Awesome Cycle.js app</h2>
             <span>Counter: ${count}</span>
-            <button type="button" class="add">Increase</button>
-            <button type="button" class="subtract">Decrease</button>
+            <button>Increase</button>
+            <button>Decrease</button>
         </div>
     `;
 
