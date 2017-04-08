@@ -6,9 +6,11 @@ const chalk = require('chalk')
 const spawn = require('cross-spawn')
 
 const basicDependencies = [
-  '@cycle/dom@16.0.0',
+  '@cycle/dom@17.1.0',
   '@cycle/http@13.2.0',
-  '@cycle/run@3.0.0',
+  '@cycle/time@0.8.0',
+  '@cycle/run@3.1.0',
+  'cycle-onionify@3.1.0',
   'xstream@10.3.0'
 ]
 
@@ -78,7 +80,22 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
     'eject': 'cycle-scripts eject'
   }
 
+  appPackage.nyc = {
+    include: [
+      "src"
+    ],
+    reporter: [
+        "html",
+        "text-summary"
+    ]
+  }
+
   appPackage.babel = {
+    env: {
+        test: {
+            plugins: [ 'istanbul' ]
+        }
+    },
     presets: [
         ['env', {
             'modules': false,

@@ -2,7 +2,7 @@
     "rules": {
         "member-access": true,
         "no-reference": true,
-        "typedef": [true, "call-signature", "call-signature", "parameter", "property-declaration", "variable-declaration", "member-variable-declaration"],
+        "typedef": [true, "call-signature", "call-signature", "parameter", "property-declaration", "member-variable-declaration"],
         "typedef-whitespace": [
             true,
             {

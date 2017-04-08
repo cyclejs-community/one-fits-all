@@ -13,7 +13,7 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 // Declaring new scripts
 const scripts = {
   start: 'NODE_ENV=development webpack --config webpack.config.js',
-  test: 'mocha --colors --require babel-register src/**/**.test.js',
+  test: 'NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
   build: 'NODE_ENV=production webpack --config webpack.config.js'
 }
 
@@ -27,9 +27,6 @@ Object.keys(appPackageJson.devDependencies)
   })
 devDependencies = Object.assign({}, devDependencies, ownPackageJson.dependencies)
 
-// Delete babel config in package.json
-delete appPackageJson.babel
-
 // Write the new package.json
 const newPackageJson = Object.assign({}, appPackageJson, {scripts: scripts, devDependencies: devDependencies})
 fs.writeFileSync(
@@ -42,4 +39,8 @@ fs.writeFileSync(
     JSON.stringify(appPackageJson.babel)
 )
 
+// Delete babel config in package.json
+delete appPackageJson.babel
+
 fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')
+fs.copySync(path.join(__dirname, 'configs', 'webpack.config.test.js'), 'webpack.config.test.js')

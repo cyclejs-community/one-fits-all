@@ -2,7 +2,7 @@
 const spawn = require('cross-spawn');
 const path = require('path');
 
-const env = Object.create( process.env );
+let env = Object.create( process.env );
 env.NODE_ENV = 'production';
 
 const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack');
