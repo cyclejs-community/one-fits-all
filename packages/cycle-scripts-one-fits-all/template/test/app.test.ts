@@ -1,5 +1,5 @@
 import { forall, assert, nat, Options } from 'jsverify';
-import { diagramArbitrary } from 'cyclejs-test-helpers';
+import { diagramArbitrary, promise } from 'cyclejs-test-helpers';
 import * as htmlLooksLike from 'html-looks-like';
 const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
@@ -46,7 +46,7 @@ describe('app tests', () => {
                 .map(expectedHTML);
 
             Time.assertEqual(html$, expected$, htmlLooksLike);
-            return new Promise((resolve, reject) => Time.run(err => err ? reject(err) : resolve(true)));
+            return promise(Time.run);
         });
 
         return assert(property, testOptions);
