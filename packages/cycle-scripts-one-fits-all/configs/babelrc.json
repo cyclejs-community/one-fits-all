@@ -1,0 +1,14 @@
+{
+    "presets": [
+        [ "env", {
+            "targets": {
+                "browsers": ["last 2 versions"],
+                "uglify": true
+            }
+        }]
+    ],
+    "plugins": [
+        ["transform-react-jsx", { "pragma": "Snabbdom.createElement" }],
+        ["transform-object-rest-spread"]
+    ]
+}

@@ -7,4 +7,4 @@ env.NODE_ENV = 'production';
 
 const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack');
 
-spawn(webpack, ['--config', path.join(__dirname, 'configs', 'webpack.config.js')], { env: env, stdio: 'inherit' } );
+spawn(webpack, ['--config', path.join(__dirname, '..', 'configs', 'webpack.config.js')], { env: env, stdio: 'inherit' } );

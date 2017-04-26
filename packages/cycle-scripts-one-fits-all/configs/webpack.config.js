@@ -12,14 +12,26 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
+
 const path = require('path');
+const fs = require('fs');
+
+const babelConfig = require('./babelrc.json');
+
+const tsconfigPath = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? path.join(process.cwd(), 'tsconfig.json') : path.join(__dirname, 'tsconfig.json');
 
 module.exports = createConfig([
     entryPoint(path.join(process.cwd(), 'src', 'index.ts')),
     entryPoint(path.join(process.cwd(), 'src', 'css', 'styles.scss')),
-    setOutput(path.join(process.cwd(), 'build', 'bundle.js')),
-    babel(),
-    typescript(),
+    setOutput(path.join(process.cwd(), 'build', 'bundle.[hash].js')),
+    babel(Object.assign({}, babelConfig, { cacheDirectory: true })),
+    typescript({
+        configFileName: tsconfigPath,
+        useBabel: true,
+        babelOptions: babelConfig,
+        useCache: true,
+        cacheDirectory: 'node_modules/.cache/at-loader'
+    }),
     tslint(),
     sass(),
     extractText('[name].css', 'text/x-sass'),
@@ -42,9 +54,6 @@ module.exports = createConfig([
     ]),
     env('development', [
         devServer(),
-        devServer.proxy({
-            '/api': { target: 'http://localhost:3000' }
-        }),
         sourceMaps()
     ]),
     env('production', [

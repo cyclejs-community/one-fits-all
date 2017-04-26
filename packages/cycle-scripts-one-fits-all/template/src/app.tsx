@@ -3,6 +3,10 @@ import { VNode, DOMSource } from '@cycle/dom';
 
 import { Sources, Sinks, Reducer } from './interfaces';
 
+export type AppState = {
+    count : number;
+}
+
 export function App(sources : Sources) : Sinks
 {
     const action$ : Stream<Reducer> = intent(sources.DOM);
@@ -27,7 +31,7 @@ function intent(DOM : DOMSource) : Stream<Reducer>
     return xs.merge(init$, add$, subtract$);
 }
 
-function view(state$ : Stream<any>) : Stream<VNode>
+function view(state$ : Stream<AppState>) : Stream<VNode>
 {
     return state$
         .map(s => s.count)

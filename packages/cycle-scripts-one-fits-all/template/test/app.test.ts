@@ -1,6 +1,6 @@
 import { forall, assert, nat, Options } from 'jsverify';
-import { diagramArbitrary, promise } from 'cyclejs-test-helpers';
-import * as htmlLooksLike from 'html-looks-like';
+import { diagramArbitrary, withTime } from 'cyclejs-test-helpers';
+const htmlLooksLike = require('html-looks-like');
 const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
 import xs from 'xstream';
@@ -27,9 +27,7 @@ describe('app tests', () => {
     `;
 
     it('should interact correctly', () => {
-        const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => {
-            const Time = mockTimeSource();
-
+        const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => withTime(Time => {
             const add$ = Time.diagram(addDiagram);
             const subtract$ = Time.diagram(subtractDiagram);
 
@@ -46,8 +44,7 @@ describe('app tests', () => {
                 .map(expectedHTML);
 
             Time.assertEqual(html$, expected$, htmlLooksLike);
-            return promise(Time.run);
-        });
+        }));
 
         return assert(property, testOptions);
     });
