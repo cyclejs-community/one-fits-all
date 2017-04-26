@@ -5,7 +5,7 @@ import { Sources, Sinks, Reducer } from './interfaces';
 
 export type AppState = {
     count : number;
-}
+};
 
 export function App(sources : Sources) : Sinks
 {

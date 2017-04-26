@@ -9,7 +9,6 @@ const extractText = require('@webpack-blocks/extract-text2');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const BabiliPlugin = require('babili-webpack-plugin');
 

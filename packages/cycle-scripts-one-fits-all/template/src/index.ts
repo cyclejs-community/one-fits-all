@@ -15,4 +15,4 @@ const drivers : any = {
     HTTP: makeHTTPDriver()
 };
 
-run(main, drivers);
+run(main as any, drivers);
