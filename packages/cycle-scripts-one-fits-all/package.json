@@ -37,6 +37,7 @@
     "babel-preset-env": "^1.2.2",
     "babili-webpack-plugin": "0.0.11",
     "copy-webpack-plugin": "^4.0.1",
+    "cross-env": "^4.0.0",
     "cyclejs-test-helpers": "^1.1.0",
     "html-looks-like": "^1.0.2",
     "html-webpack-plugin": "^2.28.0",

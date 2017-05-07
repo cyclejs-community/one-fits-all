@@ -12,9 +12,9 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 
 // Declaring new scripts
 const scripts = {
-  start: 'NODE_ENV=development webpack --config webpack.config.js',
-  test: 'NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
-  build: 'NODE_ENV=production webpack --config webpack.config.js'
+  start: 'cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js',
+  test: 'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
+  build: 'cross-env NODE_ENV=production webpack --config webpack.config.js'
 }
 
 // Declare the new dependencies, excluding self
