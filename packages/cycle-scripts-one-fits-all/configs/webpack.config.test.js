@@ -2,6 +2,7 @@ const config = require('./webpack.config.js');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = Object.assign({}, config, {
+//    entry: './test',
     target: 'node',
     externals: [nodeExternals()],
     plugins: config.plugins

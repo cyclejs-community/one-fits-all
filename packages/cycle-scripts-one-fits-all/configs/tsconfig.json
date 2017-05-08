@@ -6,13 +6,11 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "jsx" : "preserve",
-        "target": "ES6"
-    },
-    "awesomeTypescriptLoaderOptions":
-    {
-        "forkChecker": true,
-        "useBabel": true,
-        "useCache": false
+        "target": "ES6",
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "strictNullChecks": true
     },
     "exclude": [
         "node_modules"

@@ -13,7 +13,7 @@ const args = [
   '--timeout=100000',
   '--colors',
   '--webpack-config',
-  path.join(__dirname, 'configs', 'webpack.config.test.js'),
+  path.join(__dirname, '..', 'configs', 'webpack.config.test.js'),
   'test/**/*.test.*'
 ].filter(Boolean)
 
