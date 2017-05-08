@@ -9,11 +9,13 @@ export type Sources = {
     onion : StateSource<AppState>;
 };
 
-export type Sinks = {
-    DOM? : Stream<VNode>;
-    HTTP? : Stream<RequestOptions>;
-    onion? : Stream<Reducer>;
+export type RootSinks = {
+    DOM : Stream<VNode>;
+    HTTP : Stream<RequestOptions>;
+    onion : Stream<Reducer>;
 };
+
+export type Sinks = Partial<RootSinks>;
 
 export type AppState = {
     count : number;

@@ -3,6 +3,7 @@
 const fs = require('fs-extra')
 const path = require('path')
 const mkdirp = require('mkdirp')
+const merge = require('deepmerge')
 
 const ownPackageJsonPath = path.resolve(__dirname, '..', 'package.json')
 const appPackageJsonPath = path.join(process.cwd(), 'package.json')
@@ -12,9 +13,9 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 
 // Declaring new scripts
 const scripts = {
-  start: 'cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js',
-  test: 'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config webpack.config.test.js test/**/*.test.*',
-  build: 'cross-env NODE_ENV=production webpack --config webpack.config.js'
+  start: 'cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js',
+  test: 'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config configs/webpack.config.test.js test/**/*.test.*',
+  build: 'cross-env NODE_ENV=production webpack --config configs/webpack.config.js'
 }
 
 // Declare the new dependencies, excluding self
@@ -34,13 +35,17 @@ fs.writeFileSync(
   JSON.stringify(newPackageJson, null, 2)
 )
 
+const babelrc = fs.existsSync(path.join(process.cwd(), '.babelrc')) ?
+    merge(require('../configs/babelrc.json'), JSON.parse(fs.readFileSync(path.join(process.cwd(), '.babelrc')))) :
+    require('../configs/babelrc.json');
+
 fs.writeFileSync(
     path.join(process.cwd(), '.babelrc'),
-    JSON.stringify(appPackageJson.babel)
+    JSON.stringify(babelrc, null, 2)
 )
 
-// Delete babel config in package.json
-delete appPackageJson.babel
+fs.mkdirSync(path.join(process.cwd(), 'configs'));
+fs.copySync(path.join(__dirname, '..', 'configs', 'webpack.config.js'), 'configs/webpack.config.js')
+fs.copySync(path.join(__dirname, '..', 'configs', 'webpack.config.test.js'), 'configs/webpack.config.test.js')
 
-fs.copySync(path.join(__dirname, 'configs', 'webpack.config.js'), 'webpack.config.js')
-fs.copySync(path.join(__dirname, 'configs', 'webpack.config.test.js'), 'webpack.config.test.js')
+fs.copySync(path.join(__dirname, '..', 'configs', 'tsconfig.json'), 'tsconfig.json')

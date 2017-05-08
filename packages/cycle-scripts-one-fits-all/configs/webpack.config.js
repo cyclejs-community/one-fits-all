@@ -16,15 +16,19 @@ const path = require('path');
 const fs = require('fs');
 const merge = require('deepmerge');
 
-const appPath = process.cwd();
-const packageJson = reqire(path.join(appPath, 'package.json'));
-const babelConfig = require('./babelrc.json');
-const babelrcPath = path.join(appPath, '.babelrc');
-const babelrc = fs.existsSync(babelrcPath) ? merge(babelConfig, JSON.parse(fs.readSync(babelrcPath, 'utf-8')) : babelConfig;
+const appPath = file => path.join(process.cwd(), file);
+const packageJson = require(appPath('package.json'));
+const babelConfig = fs.existsSync(appPath('babelrc.json')) ? require('./babelrc.json') : {};
+const babelrc = fs.existsSync(appPath('.babelrc') ? merge(babelConfig, JSON.parse(fs.readFileSync(appPath('.babelrc', 'utf-8'))) : babelConfig;
 
 const tsconfigPath = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? path.join(process.cwd(), 'tsconfig.json') : path.join(__dirname, 'tsconfig.json');
 
+const customConfig = fs.existsSync(appPath('webpack.config.js')) ?
+    require(appPath('webpack.config.js')) :
+    {};
+
 module.exports = createConfig([
+    () => customConfig, //Include user config
     entryPoint(path.join(process.cwd(), 'src', 'index.ts')),
     entryPoint(path.join(process.cwd(), 'src', 'css', 'styles.scss')),
     setOutput(path.join(process.cwd(), 'build', 'bundle.[hash].js')),

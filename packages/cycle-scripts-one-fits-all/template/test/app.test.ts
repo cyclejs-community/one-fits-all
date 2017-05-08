@@ -3,8 +3,8 @@ import { diagramArbitrary, withTime } from 'cyclejs-test-helpers';
 const htmlLooksLike = require('html-looks-like');
 const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are broken
 
-import xs from 'xstream';
-import { mockDOMSource } from '@cycle/dom';
+import xs, { Stream } from 'xstream';
+import { mockDOMSource, VNode } from '@cycle/dom';
 import { mockTimeSource } from '@cycle/time';
 import onionify from 'cycle-onionify';
 
@@ -37,7 +37,7 @@ describe('app tests', () => {
             });
 
             const app = onionify(App)({ DOM } as any);
-            const html$ = app.DOM.map(toHtml);
+            const html$ = (app.DOM as Stream<VNode>).map(toHtml);
 
             const expected$ = xs.merge(add$.mapTo(+1), subtract$.mapTo(-1))
                 .fold((acc, curr) => acc + curr, 0)
