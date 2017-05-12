@@ -18,7 +18,7 @@ const merge = require('deepmerge');
 
 const appPath = file => path.join(process.cwd(), file);
 const packageJson = require(appPath('package.json'));
-const babelConfig = fs.existsSync(appPath('babelrc.json')) ? require('./babelrc.json') : {};
+const babelConfig = require('./babelrc.json');
 const babelrc = fs.existsSync(appPath('.babelrc')) ? merge(babelConfig, JSON.parse(fs.readFileSync(appPath('.babelrc', 'utf-8')))) : babelConfig;
 
 const tsconfigPath = fs.existsSync(path.join(process.cwd(), 'tsconfig.json')) ? path.join(process.cwd(), 'tsconfig.json') : path.join(__dirname, 'tsconfig.json');
