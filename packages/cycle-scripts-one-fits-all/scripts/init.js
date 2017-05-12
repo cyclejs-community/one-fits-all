@@ -9,9 +9,9 @@ const basicDependencies = [
   '@cycle/dom@17.1.0',
   '@cycle/http@13.2.0',
   '@cycle/time@0.8.0',
-  '@cycle/run@3.1.0',
+  '@cycle/run@3.2.0',
   'cycle-onionify@3.1.0',
-  'xstream@10.3.0'
+  'xstream@10.7.0'
 ]
 
 function patchGitignore (appPath) {
@@ -89,26 +89,6 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
         "text-summary"
     ]
   }
-
-  appPackage.babel = {
-    env: {
-        test: {
-            plugins: [ 'istanbul' ]
-        }
-    },
-    presets: [
-        ['env', {
-            'modules': false,
-            'targets': {
-                'browsers': ['last 2 versions']
-            },
-            'useBuiltIns': true
-        }]
-    ],
-    plugins: [
-        ['transform-react-jsx', { pragma: 'Snabbdom.createElement' }]
-    ]
-}
 
   fs.writeFileSync(
     appPackageJson,
