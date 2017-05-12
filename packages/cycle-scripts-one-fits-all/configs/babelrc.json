@@ -6,6 +6,11 @@
             }
         }]
     ],
+    "env": {
+      "test": {
+        "plugins": ["istanbul"]
+      }
+    },
     "plugins": [
         ["transform-react-jsx", { "pragma": "Snabbdom.createElement" }],
         ["transform-object-rest-spread"]
