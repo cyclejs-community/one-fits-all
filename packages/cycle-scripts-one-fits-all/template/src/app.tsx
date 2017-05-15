@@ -1,13 +1,17 @@
 import xs, { Stream } from 'xstream';
 import { VNode, DOMSource } from '@cycle/dom';
+import { StateSource } from 'cycle-onionify';
 
-import { Sources, Sinks, Reducer } from './interfaces';
+import { Sources, Sinks } from './interfaces';
 
+export type AppSources = Sources & { onion : StateSource<AppState> };
+export type AppSinks = Sinks & { onion : Stream<Reducer> };
+export type Reducer = (prev : AppState) => AppState;
 export type AppState = {
     count : number;
 };
 
-export function App(sources : Sources) : Sinks
+export function App(sources : AppSources) : AppSinks
 {
     const action$ : Stream<Reducer> = intent(sources.DOM);
     const vdom$ : Stream<VNode> = view(sources.onion.state$);
@@ -20,13 +24,13 @@ export function App(sources : Sources) : Sinks
 
 function intent(DOM : DOMSource) : Stream<Reducer>
 {
-    const init$ : Stream<Reducer> = xs.of(() => ({ count: 0 }));
+    const init$ : Stream<Reducer> = xs.of<Reducer>(() => ({ count: 0 }));
 
     const add$ : Stream<Reducer> = DOM.select('.add').events('click')
-        .mapTo(state => ({ ...state, count: state.count + 1 }));
+        .mapTo<Reducer>(state => ({ ...state, count: state.count + 1 }));
 
     const subtract$ : Stream<Reducer> = DOM.select('.subtract').events('click')
-        .mapTo(state => ({ ...state, count: state.count - 1 }));
+        .mapTo<Reducer>(state => ({ ...state, count: state.count - 1 }));
 
     return xs.merge(init$, add$, subtract$);
 }
