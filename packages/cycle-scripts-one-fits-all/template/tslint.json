@@ -32,7 +32,7 @@
         "triple-equals": true,
         "use-isnan": true,
         "prefer-const": true,
-        "trailing-comma": true,
+        "trailing-comma": [true, {"multiline": "never", "singleline": "never"}],
         "class-name": true,
         "no-angle-bracket-type-assertion": true,
         "no-consecutive-blank-lines": true,
