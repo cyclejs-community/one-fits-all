@@ -6,11 +6,11 @@ const chalk = require('chalk')
 const spawn = require('cross-spawn')
 
 const basicDependencies = [
-    '@cycle/dom@17.1.0',
-    '@cycle/http@13.2.0',
+    '@cycle/dom@17.3.0',
+    '@cycle/http@13.3.0',
     '@cycle/time@0.8.0',
     '@cycle/run@3.1.0',
-    'cycle-onionify@3.2.0',
+    'cycle-onionify@3.3.0',
     'xstream@10.8.0'
 ]
 
