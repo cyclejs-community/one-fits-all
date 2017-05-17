@@ -4,14 +4,14 @@
     {
         "module": "ES6",
         "moduleResolution": "node",
+        "target": "ES5",
         "sourceMap": true,
-        "jsx" : "preserve",
-        "target": "ES6",
+        "jsx" : "react",
+        "jsxFactory": "Snabbdom.createElement",
         "noImplicitReturns": true,
-        "noImplicitThis": true,
-        "alwaysStrict": true,
-        "strictNullChecks": true,
-        "allowJs": true
+        "strict": true,
+        "allowJs": true,
+        "lib": ["ES6", "ES5", "DOM"]
     },
     "exclude": [
         "node_modules"

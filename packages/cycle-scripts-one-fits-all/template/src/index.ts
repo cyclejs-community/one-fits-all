@@ -4,12 +4,12 @@ import { makeDOMDriver } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
 import onionify from 'cycle-onionify';
 
-import { Component } from './interfaces';
+import { Component, Sources, RootSinks } from './interfaces';
 import { App } from './app';
 
 const main : Component = onionify(App);
 
-const defaultSinks = sources => Object.assign({
+const defaultSinks : (s : Sources) => RootSinks = sources => Object.assign({
     DOM: xs.never(),
     HTTP: xs.never(),
     onion: xs.never()

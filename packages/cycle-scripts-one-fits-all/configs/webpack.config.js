@@ -1,5 +1,4 @@
 const { createConfig, defineConstants, env, entryPoint, setOutput, sourceMaps, addPlugins } = require('@webpack-blocks/webpack2');
-const babel = require('@webpack-blocks/babel6');
 const devServer = require('@webpack-blocks/dev-server2');
 const postcss = require('@webpack-blocks/postcss');
 const sass = require('@webpack-blocks/sass');
@@ -10,19 +9,11 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const BabiliPlugin = require('babili-webpack-plugin');
 
 const path = require('path');
 const fs = require('fs');
-const merge = require('deepmerge');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
-
-const packageJson = require(appPath('package.json'));
-const babelConfig = require('./babelrc.json');
-const babelrc = fs.existsSync(appPath('.babelrc')) ? merge(babelConfig, JSON.parse(fs.readFileSync(appPath('.babelrc', 'utf-8')))) : babelConfig;
-
-const tsconfigPath = fs.existsSync(appPath('tsconfig.json')) ? appPath('tsconfig.json') : path.join(__dirname, 'tsconfig.json');
 
 const customConfig = fs.existsSync(appPath('webpack.config.js')) ?
     require(appPath('webpack.config.js')) :
@@ -30,14 +21,7 @@ const customConfig = fs.existsSync(appPath('webpack.config.js')) ?
 
 module.exports = createConfig([
     () => customConfig, //Include user config
-    entryPoint(appPath('src', 'index.ts')),
-    entryPoint(appPath('src', 'css', 'styles.scss')),
-    setOutput(appPath('build', 'bundle.[hash].js')),
-    babel(Object.assign({}, babelrc, { cacheDirectory: true })),
     typescript({
-        configFileName: tsconfigPath,
-        useBabel: true,
-        babelOptions: babelrc,
         useCache: true,
         cacheDirectory: 'node_modules/.cache/at-loader'
     }),
@@ -67,8 +51,8 @@ module.exports = createConfig([
     ]),
     env('production', [
         addPlugins([
-            new BabiliPlugin(),
-            new CopyWebpackPlugin([{ from: 'public', to: '' }])
+            new CopyWebpackPlugin([{ from: 'public', to: '' }]),
+            new webpack.optimize.UglifyJsPlugin()
         ])
     ])
 ])

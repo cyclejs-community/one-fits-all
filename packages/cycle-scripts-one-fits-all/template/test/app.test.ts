@@ -17,7 +17,7 @@ const testOptions : Options = {
 
 describe('app tests', () => {
 
-    const expectedHTML = count => `
+    const expectedHTML = (count : number) => `
         <div>
             <h2>My Awesome Cycle.js app</h2>
             <span>Counter: ${count}</span>
