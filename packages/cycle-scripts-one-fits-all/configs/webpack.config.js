@@ -19,6 +19,10 @@ const customConfig = fs.existsSync(appPath('webpack.config.js')) ?
     require(appPath('webpack.config.js')) :
     {};
 
+if(customConfig === undefined) {
+    throw new Error('The 3.0 update is a breaking release, you need to upgrade manually. Please refer to https://github.com/cyclejs-community/create-cycle-app-flavors#migrating');
+}
+
 module.exports = createConfig([
     () => customConfig, //Include user config
     typescript({

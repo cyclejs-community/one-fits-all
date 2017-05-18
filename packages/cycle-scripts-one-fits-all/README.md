@@ -4,9 +4,23 @@
 
 ## Language
 
-ES6 or Typescript 2.1 configured with:
-* TypeScript ```target: ES6``` transpiles to ES6 with [```lib: DOM,ES6,DOM.Iterable,ScriptHost```](http://www.typescriptlang.org/docs/handbook/compiler-options.html) and piped through Babel
-* Babel targets ES5 with [ES2015 preset](https://babeljs.io/docs/plugins/preset-es2015/)
+ES6 or Typescript 2.1, uses the Typescript compiler for both.
+
+## How does this flavor work
+
+My goal is to create a flavor where you don't have to eject if you want to customize the config. This is now possible with the 3.0.0 update. The template will create a `webpack.config.js` inside your app folder that defines the entry points of the app. You can add to that config and it will be merged with the config defined in this flavor.
+
+I strongly recommend [wepack-blocks](https://github.com/andywer/webpack-blocks) as they help a lot in making webpack easy.
+
+## Migrating
+
+The 3.0.0 update is a breaking change, you will need to update manually:
+
+1. Create a new bare scaffold using `create-cycle-app tmp --flavor cycle-scripts-one-fits-all`
+2. Copy over your source and tests.
+3. (optional) Adjust the entry points in the webpack.config.js
+4. Open the old package.json and the new one (that was created by `create-cycle-app`) and copy over the dependencies of your app _manually_. **It won't work if you replace the config alltogether!**
+5. Enjoy your new flavor :)
  
 ## Bundler
 
@@ -42,9 +56,10 @@ my-awesome-cycle-app/
 ├── package.json
 ├── tsconfig.json
 ├── tslint.json
+├── webpack.config.js
 └── index.ejs
 ```
 
 ### Config files
-* .babelrc (Added on the root after running the eject script)
-* webpack.config.js (Added on the root after running the eject script)
+* webpack.config.js (Added to `config/` after running the eject script)
+* webpack.config.test.js (Added to `config/` after running the eject script)
