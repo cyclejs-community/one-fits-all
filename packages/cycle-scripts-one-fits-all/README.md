@@ -20,7 +20,10 @@ The 3.0.0 update is a breaking change, you will need to update manually:
 2. Copy over your source and tests.
 3. (optional) Adjust the entry points in the webpack.config.js
 4. Open the old package.json and the new one (that was created by `create-cycle-app`) and copy over the dependencies of your app _manually_. **It won't work if you replace the config alltogether!**
-5. Enjoy your new flavor :)
+5. Copy over `.git` and all other files you want to keep
+6. Check if everything is working as it should.
+7. Delete your old folder and rename `tmp` to your app name.
+8. Enjoy your new flavor :)
  
 ## Bundler
 
