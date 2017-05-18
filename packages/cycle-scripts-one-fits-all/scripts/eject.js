@@ -15,7 +15,8 @@ const scriptsPath = path.join(process.cwd(), '.scripts')
 const scripts = {
   start: 'cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js',
   test: 'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config configs/webpack.config.test.js test/**/*.test.*',
-  build: 'cross-env NODE_ENV=production webpack --config configs/webpack.config.js'
+  build: 'cross-env NODE_ENV=production webpack --config configs/webpack.config.js',
+  clean: 'rimraf build .tmp .nyc_output coverage'
 }
 
 // Declare the new dependencies, excluding self

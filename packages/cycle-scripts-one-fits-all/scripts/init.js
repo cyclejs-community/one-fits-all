@@ -84,7 +84,8 @@ module.exports = function init (appPath, appName, verbose, originalDirectory) {
         'start': 'cycle-scripts start',
         'test': 'cycle-scripts test',
         'build': 'cycle-scripts build',
-        'eject': 'cycle-scripts eject'
+        'eject': 'cycle-scripts eject',
+        'clean': 'cycle-scripts clean'
     }
 
     appPackage.nyc = {
