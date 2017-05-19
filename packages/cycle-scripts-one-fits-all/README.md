@@ -4,7 +4,7 @@
 
 ## Language
 
-ES6 or Typescript 2.3, uses the Typescript compiler for both.
+ES6 or Typescript, uses the Typescript compiler for both.
 
 ## How does this flavor work
 
