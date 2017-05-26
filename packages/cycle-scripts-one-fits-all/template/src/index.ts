@@ -22,5 +22,4 @@ const defaultSinks : (s : Sources) => RootSinks = sources => ({
     ...main(sources)
 });
 
-
 run(defaultSinks, drivers);
