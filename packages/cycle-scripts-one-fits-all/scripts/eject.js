@@ -3,7 +3,6 @@
 const fs = require('fs-extra')
 const path = require('path')
 const mkdirp = require('mkdirp')
-const merge = require('deepmerge')
 
 const ownPackageJsonPath = path.resolve(__dirname, '..', 'package.json')
 const appPackageJsonPath = path.join(process.cwd(), 'package.json')
@@ -23,7 +22,6 @@ const scripts = {
 let devDependencies = {}
 Object.keys(appPackageJson.devDependencies)
   .filter(dep => dep !== ownPackageJson.name)
-  .filter(dep => dependencies.indexOf(dep) === -1)
   .forEach(dep => {
     devDependencies[dep] = appPackageJson.devDependencies[dep]
   })
@@ -36,17 +34,6 @@ fs.writeFileSync(
   JSON.stringify(newPackageJson, null, 2)
 )
 
-const babelrc = fs.existsSync(path.join(process.cwd(), '.babelrc')) ?
-    merge(require('../configs/babelrc.json'), JSON.parse(fs.readFileSync(path.join(process.cwd(), '.babelrc')))) :
-    require('../configs/babelrc.json');
-
-fs.writeFileSync(
-    path.join(process.cwd(), '.babelrc'),
-    JSON.stringify(babelrc, null, 2)
-)
-
 fs.mkdirSync(path.join(process.cwd(), 'configs'));
 fs.copySync(path.join(__dirname, '..', 'configs', 'webpack.config.js'), 'configs/webpack.config.js')
 fs.copySync(path.join(__dirname, '..', 'configs', 'webpack.config.test.js'), 'configs/webpack.config.test.js')
-
-fs.copySync(path.join(__dirname, '..', 'configs', 'tsconfig.json'), 'tsconfig.json')

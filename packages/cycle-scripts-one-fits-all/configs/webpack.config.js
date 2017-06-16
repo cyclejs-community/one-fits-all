@@ -9,9 +9,26 @@ const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const path = require('path');
 const fs = require('fs');
+
+const preprocessor = production => ({
+    PRODUCTION: production,
+    DEVELOPMENT: !production
+});
+
+const ifdef = (opts, block) => context => {
+    let conf = block(context);
+    conf.module.loaders[0].loaders.push(`ifdef-loader?json=${JSON.stringify(opts)}`);
+    return conf;
+}
+
+const tsIfDef = production => ifdef(preprocessor(production), typescript({
+    useCache: true,
+    cacheDirectory: 'node_modules/.cache/at-loader'
+}));
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
@@ -25,10 +42,6 @@ if(customConfig === undefined) {
 
 module.exports = createConfig([
     () => customConfig, //Include user config
-    typescript({
-        useCache: true,
-        cacheDirectory: 'node_modules/.cache/at-loader'
-    }),
     tslint(),
     sass(),
     extractText('[name].css', 'text/x-sass'),
@@ -50,11 +63,17 @@ module.exports = createConfig([
         })
     ]),
     env('development', [
+        tsIfDef(false),
         devServer(),
-        sourceMaps()
+        sourceMaps(),
+        addPlugins([
+            new webpack.NamedModulesPlugin()
+        ])
     ]),
     env('production', [
+        tsIfDef(true),
         addPlugins([
+            new CleanWebpackPlugin([appPath('build')]),
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
             new webpack.optimize.UglifyJsPlugin()
         ])

@@ -1,4 +1,3 @@
-const { entryPoint, setOutput } = require('@webpack-blocks/webpack2');
 const path = require('path');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
