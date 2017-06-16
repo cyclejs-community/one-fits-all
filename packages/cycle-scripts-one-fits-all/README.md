@@ -12,6 +12,11 @@ My goal is to create a flavor where you don't have to eject if you want to custo
 
 I strongly recommend [wepack-blocks](https://github.com/andywer/webpack-blocks) as they help a lot in making webpack easy.
 
+## Enable HMR
+
+If you have a new scaffold you won't have to do anything.
+When migration from an earlier version, you will have to update the flavor and adjust your index.ts like [this one](https://github.com/cyclejs-community/create-cycle-app-flavors/blob/master/packages/cycle-scripts-one-fits-all/template/src/index.ts)
+
 ## Migrating
 
 The 3.0.0 update is a breaking change, you will need to update manually:
