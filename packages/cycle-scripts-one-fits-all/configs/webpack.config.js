@@ -44,7 +44,6 @@ module.exports = createConfig([
     () => customConfig, //Include user config
     tslint(),
     sass(),
-    extractText('[name].css', 'text/x-sass'),
     postcss([
         autoprefixer({ browsers: ['last 2 versions'] })
     ]),
@@ -72,6 +71,7 @@ module.exports = createConfig([
     ]),
     env('production', [
         tsIfDef(true),
+        extractText('[name].css', 'text/x-sass'),
         addPlugins([
             new CleanWebpackPlugin([appPath('build')]),
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
