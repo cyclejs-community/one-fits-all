@@ -10,7 +10,7 @@ const basicDependencies = [
     '@cycle/http@13.3.0',
     '@cycle/time@0.8.0',
     '@cycle/run@3.1.0',
-    '@cycle/isolate@2.1.0',
+    '@cycle/isolate@3.0.0',
     'cycle-onionify@3.3.0',
     'xstream@10.8.0'
 ]
