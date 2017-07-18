@@ -73,7 +73,9 @@ module.exports = createConfig([
         tsIfDef(true),
         extractText('[name].css', 'text/x-sass'),
         addPlugins([
-            new CleanWebpackPlugin([appPath('build')]),
+            new CleanWebpackPlugin([appPath('build')], {
+                root: process.cwd()
+            }),
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
             new webpack.optimize.UglifyJsPlugin()
         ])
