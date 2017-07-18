@@ -1,6 +1,6 @@
 {
   "name": "cycle-scripts-one-fits-all",
-  "version": "3.2.3",
+  "version": "3.2.4",
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "scripts": {
