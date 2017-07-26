@@ -11,7 +11,7 @@ import onionify from 'cycle-onionify';
 import { App } from '../src/app';
 
 const testOptions : Options = {
-    tests: 100,
+    tests: 10,
     size: 200
 };
 

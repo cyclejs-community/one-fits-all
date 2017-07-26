@@ -79,5 +79,8 @@ module.exports = createConfig([
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
             new webpack.optimize.UglifyJsPlugin()
         ])
+    ]),
+    env('test', [
+        tsIfDef(true)
     ])
 ])
