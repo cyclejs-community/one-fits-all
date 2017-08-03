@@ -4,7 +4,7 @@
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Maybe later\""
+    "format": "prettier --tab-width 4 --single-quote --write './**/*.{js,ts,tsx}' && prettier --write './**/*.json'"
   },
   "repository": {
     "type": "git",
@@ -51,6 +51,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
+    "prettier": "^1.5.3",
     "release-it": "^2.8.2"
   }
 }

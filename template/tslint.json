@@ -36,7 +36,7 @@
         "class-name": true,
         "no-angle-bracket-type-assertion": true,
         "no-consecutive-blank-lines": true,
-        "quotemark": [true, "single"],
+        "quotemark": [true, "single", "jsx-double"],
         "semicolon": [true, "always"],
         "space-before-function-paren": [true, "never"],
         "whitespace": [true, "check-decl", "check-operator", "check-module", "check-type"]
