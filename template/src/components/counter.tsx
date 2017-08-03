@@ -16,7 +16,7 @@ export interface Sinks extends BaseSinks {
 export interface State {
     count : number;
 };
-const defaultState : State = {
+export const defaultState : State = {
     count: 30
 };
 export type Reducer = (prev : State) => State | undefined;

@@ -24,7 +24,7 @@ export interface State {
     counter? : CounterState;
     speaker? : SpeakerState;
 }
-const defaultState : State = {
+export const defaultState : State = {
     thing: 123,
     counter: { count: 5 },
     speaker: undefined //use default state of component
