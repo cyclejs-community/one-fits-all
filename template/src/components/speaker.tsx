@@ -17,7 +17,7 @@ export interface Sinks extends BaseSinks {
 export interface State {
     text : string;
 }
-const defaultState : State = { text: 'Edit me!' };
+export const defaultState : State = { text: 'Edit me!' };
 export type Reducer = (prev? : State) => State | undefined;
 
 // Actions

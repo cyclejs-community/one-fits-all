@@ -9,32 +9,10 @@ import { buildDrivers, wrapMain } from './drivers';
 import { Component } from './interfaces';
 import { App } from './components/app';
 
-<<<<<<< HEAD
-const main: Component = onionify(App);
-
-let drivers: any, driverFn: any;
-/// #if PRODUCTION
-drivers = {
-    DOM: makeDOMDriver('#app'),
-    HTTP: makeHTTPDriver(),
-    Time: timeDriver
-};
-/// #else
-driverFn = () => ({
-    DOM: restartable(makeDOMDriver('#app'), {
-        pauseSinksWhileReplaying: false
-    }),
-    HTTP: restartable(makeHTTPDriver()),
-    Time: timeDriver
-});
-/// #endif
-export const driverNames: string[] = Object.keys(drivers || driverFn());
-=======
 const main : Component = wrapMain(App);
 
 /// #if PRODUCTION
 run(main as any, buildDrivers(([k, t]) => [k, t()]));
->>>>>>> Add new SPA template
 
 /// #else
 const mkDrivers = () =>
