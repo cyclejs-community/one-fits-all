@@ -15,17 +15,17 @@ const testOptions : Options = {
     size: 200
 };
 
-describe('app tests', () => {
+export const expectedHTML = (count : any) => `
+    <div>
+        <h2>My Awesome Cycle.js app - Page 1</h2>
+        <span>Counter: ${count}</span>
+        <button>Increase</button>
+        <button>Decrease</button>
+        <button>Page 2</button>
+    </div>
+`;
 
-    const expectedHTML = (count : number) => `
-        <div>
-            <h2>My Awesome Cycle.js app - Page 1</h2>
-            <span>Counter: ${count}</span>
-            <button>Increase</button>
-            <button>Decrease</button>
-            <button>Page 2</button>
-        </div>
-    `;
+describe('app tests', () => {
 
     it('counter should work without prevState', () => {
         const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => withTime(Time => {
