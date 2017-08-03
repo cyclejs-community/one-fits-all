@@ -11,6 +11,9 @@
     "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
   },
   "author": "Jan van Brügge <supermantiu@gmail.com>",
+  "contributors": [
+    "Steve Lee <steve@opendirective.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"

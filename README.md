@@ -2,9 +2,23 @@
 
 [Cycle-app](https://github.com/cyclejs-community/create-cycle-app) flavor.
 
+## Features
+
+An elementary SPA. Each page is a cycle component and has its own state, which is persisted in local storage
+
+* xstream observables designed for HTML apps
+* @cycle/dom and snabbdom for HTML rendering and events
+* @cycle/http for http requests 
+* @cycle/time for accurate timing
+* cycle-onionify and @cycle/isolate for fractal single state atom 
+* cycle-storageify and @cycle/storage for persistence in browser local storage
+* cyclic-router and switch-path for routing and history management
+* cycle-rerun for Hot Module Reloading (HMR)
+* Custom HTML speech driver (write only)
+
 ## Language
 
-ES6 or Typescript, uses the Typescript compiler for both.
+Typescript (strict) with TSLint or ES6, uses the Typescript compiler for both.
 
 ## How does this flavor work
 
