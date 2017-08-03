@@ -1,8 +1,8 @@
 {
-    "github": {
-        "release": true
-    },
-    "npm": {
-        "publish": true
-    }
+  "github": {
+    "release": true
+  },
+  "npm": {
+    "publish": true
+  }
 }
