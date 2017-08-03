@@ -11,7 +11,9 @@
     "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
   },
   "author": "Jan van Brügge <supermantiu@gmail.com>",
-  "contributors": ["Steve Lee <steve@opendirective.com>"],
+  "contributors": [
+    "Steve Lee <steve@opendirective.com>"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"
@@ -31,14 +33,13 @@
     "@webpack-blocks/typescript": "^0.4.1",
     "@webpack-blocks/webpack2": "^0.4.0",
     "autoprefixer": "^7.1.1",
-    "babel-core": "^6.25.0",
-    "babel-plugin-istanbul": "^4.1.4",
     "chalk": "^2.0.1",
     "clean-webpack-plugin": "^0.1.16",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.1",
     "html-webpack-plugin": "^2.29.0",
     "ifdef-loader": "^1.1.1",
+    "istanbul-instrumenter-loader-fix": "^3.1.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
     "node-sass": "^4.5.3",

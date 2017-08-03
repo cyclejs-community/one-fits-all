@@ -104,8 +104,17 @@ module.exports = function init(appPath, appName, verbose, originalDirectory) {
     };
 
     appPackage.nyc = {
-        include: ['src'],
+        instrument: false,
+        sourceMap: false,
+        include: ['src/components'],
         reporter: ['html', 'text-summary']
+    };
+
+    appPackage['mocha-webpack'] = {
+        include: [
+            'src/components/**/*.{jsx,js,ts,tsx}',
+            'test/**/*.test.{js,jsx,ts,tsx}'
+        ]
     };
 
     fs.writeFileSync(appPackageJson, JSON.stringify(appPackage, null, 2));
