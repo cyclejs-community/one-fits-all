@@ -23,7 +23,7 @@ const basicDependencies = [
 const devDependencies = [
     '@types/history@4.6.0',
     'cycle-restart@0.2.2',
-    'cyclejs-test-helpers@1.3.0',
+    'cyclejs-test-helpers@1.4.0',
     'html-looks-like@1.0.3',
     'jsverify@0.8.2',
     'snabbdom-to-html@3.2.0'
