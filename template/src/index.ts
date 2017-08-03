@@ -1,15 +1,15 @@
-import xs from 'xstream';
 import { setup, run } from '@cycle/run';
-import { restartable, rerunner } from 'cycle-restart';
-import { makeDOMDriver } from '@cycle/dom';
-import { makeHTTPDriver } from '@cycle/http';
-import { timeDriver } from '@cycle/time';
+import { rerunner } from 'cycle-restart';
 import isolate from '@cycle/isolate';
-import onionify from 'cycle-onionify';
+/// #if DEVELOPMENT
+import { restartable } from 'cycle-restart';
+/// #endif
 
-import { Component, Sources, RootSinks } from './interfaces';
-import { App } from './app';
+import { buildDrivers, wrapMain } from './drivers';
+import { Component } from './interfaces';
+import { App } from './components/app';
 
+<<<<<<< HEAD
 const main: Component = onionify(App);
 
 let drivers: any, driverFn: any;
@@ -29,18 +29,32 @@ driverFn = () => ({
 });
 /// #endif
 export const driverNames: string[] = Object.keys(drivers || driverFn());
+=======
+const main : Component = wrapMain(App);
 
 /// #if PRODUCTION
-run(main as any, drivers);
+run(main as any, buildDrivers(([k, t]) => [k, t()]));
+>>>>>>> Add new SPA template
+
 /// #else
-const rerun = rerunner(setup, driverFn, isolate);
+const mkDrivers = () =>
+    buildDrivers(([k, t]) => {
+        if (k === 'DOM') {
+            return [k, restartable(t(), { pauseSinksWhileReplaying: false })];
+        }
+        if (k === 'time' || k === 'router') {
+            return [k, t()];
+        }
+        return [k, restartable(t())];
+    });
+const rerun = rerunner(setup, mkDrivers, isolate);
 rerun(main as any);
 
 if (module.hot) {
-    module.hot.accept('./app', () => {
-        const newApp = require('./app').App;
+    module.hot.accept('./components/app', () => {
+        const newApp = (require('./components/app') as any).App;
 
-        rerun(onionify(newApp));
+        rerun(wrapMain(newApp));
     });
 }
 /// #endif
