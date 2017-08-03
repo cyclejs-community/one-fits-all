@@ -10,9 +10,9 @@ import onionify from 'cycle-onionify';
 import { Component, Sources, RootSinks } from './interfaces';
 import { App } from './app';
 
-const main : Component = onionify(App);
+const main: Component = onionify(App);
 
-let drivers : any, driverFn : any;
+let drivers: any, driverFn: any;
 /// #if PRODUCTION
 drivers = {
     DOM: makeDOMDriver('#app'),
@@ -21,12 +21,14 @@ drivers = {
 };
 /// #else
 driverFn = () => ({
-    DOM: restartable(makeDOMDriver('#app'), { pauseSinksWhileReplaying: false }),
+    DOM: restartable(makeDOMDriver('#app'), {
+        pauseSinksWhileReplaying: false
+    }),
     HTTP: restartable(makeHTTPDriver()),
     Time: timeDriver
 });
 /// #endif
-export const driverNames : string[] = Object.keys(drivers || driverFn());
+export const driverNames: string[] = Object.keys(drivers || driverFn());
 
 /// #if PRODUCTION
 run(main as any, drivers);

@@ -1,4 +1,12 @@
-const { createConfig, defineConstants, env, entryPoint, setOutput, sourceMaps, addPlugins } = require('@webpack-blocks/webpack2');
+const {
+    createConfig,
+    defineConstants,
+    env,
+    entryPoint,
+    setOutput,
+    sourceMaps,
+    addPlugins
+} = require('@webpack-blocks/webpack2');
 const devServer = require('@webpack-blocks/dev-server2');
 const postcss = require('@webpack-blocks/postcss');
 const sass = require('@webpack-blocks/sass');
@@ -21,32 +29,38 @@ const preprocessor = production => ({
 
 const ifdef = (opts, block) => context => {
     let conf = block(context);
-    conf.module.loaders[0].loaders.push(`ifdef-loader?json=${JSON.stringify(opts)}`);
+    conf.module.loaders[0].loaders.push(
+        `ifdef-loader?json=${JSON.stringify(opts)}`
+    );
     return conf;
-}
+};
 
-const tsIfDef = production => ifdef(preprocessor(production), typescript({
-    useCache: true,
-    cacheDirectory: 'node_modules/.cache/at-loader'
-}));
+const tsIfDef = production =>
+    ifdef(
+        preprocessor(production),
+        typescript({
+            useCache: true,
+            cacheDirectory: 'node_modules/.cache/at-loader'
+        })
+    );
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
-const customConfig = fs.existsSync(appPath('webpack.config.js')) ?
-    require(appPath('webpack.config.js')) :
-    {};
+const customConfig = fs.existsSync(appPath('webpack.config.js'))
+    ? require(appPath('webpack.config.js'))
+    : {};
 
-if(customConfig === undefined) {
-    throw new Error('The 3.0 update is a breaking release, you need to upgrade manually. Please refer to https://github.com/cyclejs-community/create-cycle-app-flavors#migrating');
+if (customConfig === undefined) {
+    throw new Error(
+        'The 3.0 update is a breaking release, you need to upgrade manually. Please refer to https://github.com/cyclejs-community/create-cycle-app-flavors#migrating'
+    );
 }
 
 module.exports = createConfig([
     () => customConfig, //Include user config
     tslint(),
     sass(),
-    postcss([
-        autoprefixer({ browsers: ['last 2 versions'] })
-    ]),
+    postcss([autoprefixer({ browsers: ['last 2 versions'] })]),
     defineConstants({
         'process.env.NODE_ENV': process.env.NODE_ENV
     }),
@@ -65,9 +79,7 @@ module.exports = createConfig([
         tsIfDef(false),
         devServer(),
         sourceMaps(),
-        addPlugins([
-            new webpack.NamedModulesPlugin()
-        ])
+        addPlugins([new webpack.NamedModulesPlugin()])
     ]),
     env('production', [
         tsIfDef(true),
@@ -80,7 +92,5 @@ module.exports = createConfig([
             new webpack.optimize.UglifyJsPlugin()
         ])
     ]),
-    env('test', [
-        tsIfDef(true)
-    ])
-])
+    env('test', [tsIfDef(true)])
+]);

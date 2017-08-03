@@ -10,14 +10,13 @@ import onionify from 'cycle-onionify';
 
 import { App } from '../src/app';
 
-const testOptions : Options = {
+const testOptions: Options = {
     tests: 10,
     size: 200
 };
 
 describe('app tests', () => {
-
-    const expectedHTML = (count : number) => `
+    const expectedHTML = (count: number) => `
         <div>
             <h2>My Awesome Cycle.js app</h2>
             <span>Counter: ${count}</span>
@@ -27,24 +26,30 @@ describe('app tests', () => {
     `;
 
     it('should interact correctly', () => {
-        const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => withTime(Time => {
-            const add$ = Time.diagram(addDiagram);
-            const subtract$ = Time.diagram(subtractDiagram);
+        const property = forall(
+            diagramArbitrary,
+            diagramArbitrary,
+            (addDiagram, subtractDiagram) =>
+                withTime(Time => {
+                    const add$ = Time.diagram(addDiagram);
+                    const subtract$ = Time.diagram(subtractDiagram);
 
-            const DOM = mockDOMSource({
-                '.add': { click: add$ },
-                '.subtract': { click: subtract$ }
-            });
+                    const DOM = mockDOMSource({
+                        '.add': { click: add$ },
+                        '.subtract': { click: subtract$ }
+                    });
 
-            const app = onionify(App)({ DOM } as any);
-            const html$ = (app.DOM as Stream<VNode>).map(toHtml);
+                    const app = onionify(App)({ DOM } as any);
+                    const html$ = (app.DOM as Stream<VNode>).map(toHtml);
 
-            const expected$ = xs.merge(add$.mapTo(+1), subtract$.mapTo(-1))
-                .fold((acc, curr) => acc + curr, 0)
-                .map(expectedHTML);
+                    const expected$ = xs
+                        .merge(add$.mapTo(+1), subtract$.mapTo(-1))
+                        .fold((acc, curr) => acc + curr, 0)
+                        .map(expectedHTML);
 
-            Time.assertEqual(html$, expected$, htmlLooksLike);
-        }));
+                    Time.assertEqual(html$, expected$, htmlLooksLike);
+                })
+        );
 
         return assert(property, testOptions);
     });
