@@ -40,10 +40,9 @@ const createTest = (usePrev: boolean) => () => {
                     '.subtract': { click: subtract$ }
                 });
 
-                const state = usePrev ? { count } : { count: undefined };
-                const app: any = onionify(addPrevState(Counter, state))(
-                    { DOM } as any
-                );
+                const app: any = onionify(
+                    usePrev ? addPrevState(Counter, { count }) : Counter
+                )({ DOM } as any);
                 const html$ = (app.DOM as Stream<VNode>).map(toHtml);
 
                 const expected$ = xs
