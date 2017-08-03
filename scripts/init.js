@@ -10,18 +10,18 @@ const basicDependencies = [
     '@cycle/http@14.0.0',
     '@cycle/isolate@3.0.0',
     '@cycle/run@3.1.0',
-    "@cycle/storage@4.0.0",
+    '@cycle/storage@4.0.0',
     '@cycle/time@0.8.0',
     'cycle-onionify@3.3.0',
-    "cyclejs-utils@1.0.4",
-    "cycle-storageify@3.1.0",
-    "cyclic-router@4.0.6",
-    "switch-path@1.2.0",
+    'cyclejs-utils@1.0.4',
+    'cycle-storageify@3.1.0',
+    'cyclic-router@4.0.6',
+    'switch-path@1.2.0',
     'xstream@10.9.0'
-]
+];
 
 const devDependencies = [
-    "@types/history@4.6.0",
+    '@types/history@4.6.0',
     'cycle-restart@0.2.2',
     'cyclejs-test-helpers@1.3.0',
     'html-looks-like@1.0.3',

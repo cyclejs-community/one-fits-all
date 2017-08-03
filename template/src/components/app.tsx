@@ -12,26 +12,26 @@ import { State as CounterState } from './counter';
 import { State as SpeakerState } from './speaker';
 
 export interface Sources extends BaseSources {
-    onion : StateSource<State>;
+    onion: StateSource<State>;
 }
 export interface Sinks extends BaseSinks {
-    onion? : Stream<Reducer>;
+    onion?: Stream<Reducer>;
 }
 
 // State
 export interface State {
-    thing : number;
-    counter? : CounterState;
-    speaker? : SpeakerState;
+    thing: number;
+    counter?: CounterState;
+    speaker?: SpeakerState;
 }
-export const defaultState : State = {
+export const defaultState: State = {
     thing: 123,
     counter: { count: 5 },
     speaker: undefined //use default state of component
 };
-export type Reducer = (prev? : State) => State | undefined;
+export type Reducer = (prev?: State) => State | undefined;
 
-export function App(sources : Sources) : Sinks {
+export function App(sources: Sources): Sinks {
     const initReducer$ = xs.of<Reducer>(
         prevState => (prevState === undefined ? defaultState : prevState)
     );
@@ -39,7 +39,7 @@ export function App(sources : Sources) : Sinks {
     const match$ = sources.router.define(routes);
 
     const componentSinks$ = match$.map(
-        ({ path, value } : { path : string; value : RouteValue }) => {
+        ({ path, value }: { path: string; value: RouteValue }) => {
             const { component, scope } = value;
             return isolate(component, scope)({
                 ...sources,
