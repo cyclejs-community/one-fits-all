@@ -13,11 +13,11 @@ const basicDependencies = [
     "@cycle/storage@4.0.0",
     '@cycle/time@0.8.0',
     'cycle-onionify@3.3.0',
-    "cyclejs-utils^1.0.4",
-    "cycle-storageify@3.0.0",
-    "cyclic-router@4.0.5",
+    "cyclejs-utils@1.0.4",
+    "cycle-storageify@3.1.0",
+    "cyclic-router@4.0.6",
     "switch-path@1.2.0",
-    'xstream@10.8.0'
+    'xstream@10.9.0'
 ]
 
 const devDependencies = [
