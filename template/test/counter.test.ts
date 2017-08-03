@@ -10,12 +10,12 @@ import { mockTimeSource } from '@cycle/time';
 
 import { Counter, defaultState } from '../src/components/counter';
 
-const testOptions : Options = {
+const testOptions: Options = {
     tests: 10,
     size: 200
 };
 
-export const expectedHTML = (count : any) => `
+export const expectedHTML = (count: any) => `
     <div>
         <h2>My Awesome Cycle.js app - Page 1</h2>
         <span>Counter: ${count}</span>
@@ -26,80 +26,92 @@ export const expectedHTML = (count : any) => `
 `;
 
 describe('app tests', () => {
-
     it('counter should work without prevState', () => {
-        const property = forall(diagramArbitrary, diagramArbitrary, (addDiagram, subtractDiagram) => withTime(Time => {
-            const add$ = Time.diagram(addDiagram);
-            const subtract$ = Time.diagram(subtractDiagram);
+        const property = forall(
+            diagramArbitrary,
+            diagramArbitrary,
+            (addDiagram, subtractDiagram) =>
+                withTime(Time => {
+                    const add$ = Time.diagram(addDiagram);
+                    const subtract$ = Time.diagram(subtractDiagram);
 
-            const DOM = mockDOMSource({
-                '.add': { click: add$ },
-                '.subtract': { click: subtract$ }
-            });
+                    const DOM = mockDOMSource({
+                        '.add': { click: add$ },
+                        '.subtract': { click: subtract$ }
+                    });
 
-            const app = onionify(Counter)({ DOM } as any);
-            const html$ = (app.DOM as Stream<VNode>).map(toHtml);
+                    const app = onionify(Counter)({ DOM } as any);
+                    const html$ = (app.DOM as Stream<VNode>).map(toHtml);
 
-            const expected$ = xs.merge(add$.mapTo(+1), subtract$.mapTo(-1))
-                .fold((acc, curr) => acc + curr, defaultState.count)
-                .map(expectedHTML);
+                    const expected$ = xs
+                        .merge(add$.mapTo(+1), subtract$.mapTo(-1))
+                        .fold((acc, curr) => acc + curr, defaultState.count)
+                        .map(expectedHTML);
 
-            Time.assertEqual(html$, expected$, htmlLooksLike);
-        }));
+                    Time.assertEqual(html$, expected$, htmlLooksLike);
+                })
+        );
 
         return assert(property, testOptions);
     });
 
     it('counter should work with prevState', () => {
-        const property = forall(diagramArbitrary, diagramArbitrary, nat, (addDiagram, subtractDiagram, count) => withTime(Time => {
-            const add$ = Time.diagram(addDiagram);
-            const subtract$ = Time.diagram(subtractDiagram);
+        const property = forall(
+            diagramArbitrary,
+            diagramArbitrary,
+            nat,
+            (addDiagram, subtractDiagram, count) =>
+                withTime(Time => {
+                    const add$ = Time.diagram(addDiagram);
+                    const subtract$ = Time.diagram(subtractDiagram);
 
-            const DOM = mockDOMSource({
-                '.add': { click: add$ },
-                '.subtract': { click: subtract$ }
-            });
+                    const DOM = mockDOMSource({
+                        '.add': { click: add$ },
+                        '.subtract': { click: subtract$ }
+                    });
 
-            const wrapper = (app : any) => (sources : any) => {
-                const initReducer = xs.of<any>(() => ({ count }));
-                const appSinks = app(sources);
-                return {
-                    ...appSinks,
-                    onion: xs.merge(initReducer, appSinks.onion)
-                };
-            };
+                    const wrapper = (app: any) => (sources: any) => {
+                        const initReducer = xs.of<any>(() => ({ count }));
+                        const appSinks = app(sources);
+                        return {
+                            ...appSinks,
+                            onion: xs.merge(initReducer, appSinks.onion)
+                        };
+                    };
 
-            const app : any = onionify(wrapper(Counter))({ DOM } as any);
-            const html$ = (app.DOM as Stream<VNode>).map(toHtml);
+                    const app: any = onionify(wrapper(Counter))({ DOM } as any);
+                    const html$ = (app.DOM as Stream<VNode>).map(toHtml);
 
-            const expected$ = xs.merge(add$.mapTo(+1), subtract$.mapTo(-1))
-                .fold((acc, curr) => acc + curr, count)
-                .map(expectedHTML);
+                    const expected$ = xs
+                        .merge(add$.mapTo(+1), subtract$.mapTo(-1))
+                        .fold((acc, curr) => acc + curr, count)
+                        .map(expectedHTML);
 
-            Time.assertEqual(html$, expected$, htmlLooksLike);
-        }));
+                    Time.assertEqual(html$, expected$, htmlLooksLike);
+                })
+        );
 
         return assert(property, testOptions);
     });
 
     it('counter should navigate', () => {
-        const property = forall(diagramArbitrary, clickDiagram => withTime(Time => {
-            const click$ = Time.diagram(clickDiagram);
+        const property = forall(diagramArbitrary, clickDiagram =>
+            withTime(Time => {
+                const click$ = Time.diagram(clickDiagram);
 
-            const DOM = mockDOMSource({
-                '[data-action="navigate"]': { click: click$ }
-            });
+                const DOM = mockDOMSource({
+                    '[data-action="navigate"]': { click: click$ }
+                });
 
-            const app = onionify(Counter)({ DOM } as any);
-            const router$ = (app.router as Stream<string>);
+                const app = onionify(Counter)({ DOM } as any);
+                const router$ = app.router as Stream<string>;
 
-            const expected$ = click$
-                .mapTo('/p2');
+                const expected$ = click$.mapTo('/p2');
 
-            Time.assertEqual(router$, expected$, htmlLooksLike);
-        }));
+                Time.assertEqual(router$, expected$, htmlLooksLike);
+            })
+        );
 
         return assert(property, testOptions);
     });
-
 });

@@ -14,10 +14,10 @@ import { Component } from './interfaces';
 import speechDriver from './drivers/speech';
 
 export type DriverThunk = Readonly<[string, () => any]> & [string, () => any]; // work around readonly
-export type DriverThunkMapper = ( t : DriverThunk) => DriverThunk;
+export type DriverThunkMapper = (t: DriverThunk) => DriverThunk;
 
 // Set of Drivers used in this App
-const driverThunks : DriverThunk[] = [
+const driverThunks: DriverThunk[] = [
     ['DOM', () => makeDOMDriver('#app')],
     ['HTTP', () => makeHTTPDriver()],
     ['time', () => timeDriver],
@@ -30,16 +30,14 @@ const driverThunks : DriverThunk[] = [
     ['speech', () => speechDriver]
 ];
 
-export const buildDrivers = (fn : DriverThunkMapper) =>
+export const buildDrivers = (fn: DriverThunkMapper) =>
     driverThunks
         .map(fn)
-        .map(([n, t] : DriverThunk) => ({ [n]: t }))
+        .map(([n, t]: DriverThunk) => ({ [n]: t }))
         .reduce((a, c) => Object.assign(a, c), {});
 
 export const driverNames = driverThunks.map(([n, t]) => n).concat(['onion']);
 
-export function wrapMain(main : Component) : Component {
-    return onionify(
-        storageify(main as any, { key: 'cycle-spa-state' })
-    ) as any;
+export function wrapMain(main: Component): Component {
+    return onionify(storageify(main as any, { key: 'cycle-spa-state' })) as any;
 }

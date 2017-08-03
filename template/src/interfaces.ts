@@ -4,20 +4,20 @@ import { HTTPSource, RequestOptions } from '@cycle/http';
 import { TimeSource } from '@cycle/time';
 import { RouterSource } from 'cyclic-router';
 
-export type Component = (s : BaseSources) => BaseSinks;
+export type Component = (s: BaseSources) => BaseSinks;
 
 export interface BaseSources {
-    DOM : DOMSource;
-    HTTP : HTTPSource;
-    time : TimeSource;
-    router : RouterSource;
-    storage : any;
+    DOM: DOMSource;
+    HTTP: HTTPSource;
+    time: TimeSource;
+    router: RouterSource;
+    storage: any;
 }
 
 export interface BaseSinks {
-    DOM? : Stream<VNode>;
-    HTTP? : Stream<RequestOptions>;
-    router? : Stream<string | object>;
-    storage? : Stream<any>;
-    speech? : Stream<string>;
+    DOM?: Stream<VNode>;
+    HTTP?: Stream<RequestOptions>;
+    router?: Stream<string | object>;
+    storage?: Stream<any>;
+    speech?: Stream<string>;
 }
