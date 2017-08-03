@@ -61,12 +61,12 @@ const createTest = (usePrev: boolean) => () => {
     return assert(property, testOptions);
 };
 
-describe('app tests', () => {
-    it('counter should work without prevState', createTest(true));
+describe('counter tests', () => {
+    it('should work without prevState', createTest(true));
 
-    it('counter should work with prevState', createTest(false));
+    it('should work with prevState', createTest(false));
 
-    it('counter should navigate', () => {
+    it('should navigate', () => {
         const property = forall(diagramArbitrary, clickDiagram =>
             withTime(Time => {
                 const click$ = Time.diagram(clickDiagram);
