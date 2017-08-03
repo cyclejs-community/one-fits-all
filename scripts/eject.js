@@ -10,12 +10,15 @@ const ownPackageJson = JSON.parse(fs.readFileSync(ownPackageJsonPath));
 const appPackageJson = JSON.parse(fs.readFileSync(appPackageJsonPath));
 const scriptsPath = path.join(process.cwd(), '.scripts');
 
+const mochaArgs = '{' + appPackageJson['mocha-webpack'].include.join(',') + '}';
+
 // Declaring new scripts
 const scripts = {
     start:
         'cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.js',
     test:
-        'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config configs/webpack.config.test.js test/**/*.test.*',
+        'cross-env NODE_ENV=test nyc mocha-webpack --timeout=100000 --colors --webpack-config configs/webpack.config.test.js ' +
+        mochaArgs,
     build:
         'cross-env NODE_ENV=production webpack --config configs/webpack.config.js',
     clean: 'rimraf build .tmp .nyc_output coverage'
@@ -39,6 +42,7 @@ const newPackageJson = Object.assign({}, appPackageJson, {
     scripts: scripts,
     devDependencies: devDependencies
 });
+delete newPackageJson['mocha-webpack'];
 fs.writeFileSync(appPackageJsonPath, JSON.stringify(newPackageJson, null, 2));
 
 fs.mkdirSync(path.join(process.cwd(), 'configs'));
