@@ -4,7 +4,8 @@
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "scripts": {
-    "format": "prettier --tab-width 4 --single-quote --write './**/*.{js,ts,tsx}' && prettier --write './**/*.json'"
+    "format": "prettier --tab-width 4 --single-quote --write './**/*.{js,ts,tsx}' && prettier --write './**/*.json'",
+    "test": "echo 'TODO'"
   },
   "repository": {
     "type": "git",
