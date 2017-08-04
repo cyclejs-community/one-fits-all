@@ -7,13 +7,9 @@ const toHtml = require('snabbdom-to-html'); //snabbdom-to-html's typings are bro
 import xs, { Stream } from 'xstream';
 import { mockDOMSource, VNode } from '@cycle/dom';
 import { mockTimeSource } from '@cycle/time';
+import { testOptions } from './testOptions';
 
 import { Counter, defaultState } from '../src/components/counter';
-
-const testOptions: Options = {
-    tests: 10,
-    size: 200
-};
 
 export const expectedHTML = (count: any) => `
     <div>
@@ -79,7 +75,7 @@ describe('counter tests', () => {
 
                 const expected$ = click$.mapTo('/p2');
 
-                Time.assertEqual(router$, expected$, htmlLooksLike);
+                Time.assertEqual(router$, expected$);
             })
         );
 
