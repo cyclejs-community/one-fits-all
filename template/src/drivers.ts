@@ -39,5 +39,8 @@ export const buildDrivers = (fn: DriverThunkMapper) =>
 export const driverNames = driverThunks.map(([n, t]) => n).concat(['onion']);
 
 export function wrapMain(main: Component): Component {
-    return onionify(storageify(main as any, { key: 'cycle-spa-state' })) as any;
+    return onionify(storageify(main as any, {
+        key: 'cycle-spa-state',
+        debounce: 100 // wait for 100ms without state change before writing to localStorage
+    })) as any;
 }
