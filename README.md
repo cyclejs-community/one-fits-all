@@ -1,5 +1,7 @@
 # one-fits-all flavour
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/cyclejs-community/one-fits-all.svg)](https://greenkeeper.io/)
+
 [Cycle-app](https://github.com/cyclejs-community/create-cycle-app) flavor.
 
 ## Language
