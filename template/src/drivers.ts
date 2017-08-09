@@ -2,9 +2,9 @@ import xs, { Stream } from 'xstream';
 import { restartable } from 'cycle-restart';
 import { makeDOMDriver } from '@cycle/dom';
 import { makeHTTPDriver } from '@cycle/http';
+import { makeHistoryDriver } from '@cycle/history';
 import { timeDriver } from '@cycle/time';
-import { makeRouterDriver, RouteMatcher } from 'cyclic-router';
-import { createBrowserHistory } from 'history';
+import { routerify, RouteMatcher } from 'cyclic-router';
 import onionify from 'cycle-onionify';
 import storageify from 'cycle-storageify';
 import switchPath from 'switch-path';
@@ -21,11 +21,7 @@ const driverThunks: DriverThunk[] = [
     ['DOM', () => makeDOMDriver('#app')],
     ['HTTP', () => makeHTTPDriver()],
     ['time', () => timeDriver],
-    [
-        'router',
-        () =>
-            makeRouterDriver(createBrowserHistory(), switchPath as RouteMatcher)
-    ],
+    ['history', () => makeHistoryDriver()],
     ['storage', () => storageDriver],
     ['speech', () => speechDriver]
 ];
@@ -36,11 +32,16 @@ export const buildDrivers = (fn: DriverThunkMapper) =>
         .map(([n, t]: DriverThunk) => ({ [n]: t }))
         .reduce((a, c) => Object.assign(a, c), {});
 
-export const driverNames = driverThunks.map(([n, t]) => n).concat(['onion']);
+export const driverNames = driverThunks.map(([n, t]) => n).concat(['onion', 'router']);
 
 export function wrapMain(main: Component): Component {
-    return onionify(storageify(main as any, {
-        key: 'cycle-spa-state',
-        debounce: 100 // wait for 100ms without state change before writing to localStorage
-    })) as any;
+    return routerify(
+        onionify(
+            storageify(main as any, {
+                key: 'cycle-spa-state',
+                debounce: 100 // wait for 100ms without state change before writing to localStorage
+            })
+        ),
+        switchPath as RouteMatcher
+    ) as any;
 }

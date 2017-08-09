@@ -12,9 +12,7 @@
     "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
   },
   "author": "Jan van Brügge <supermantiu@gmail.com>",
-  "contributors": [
-    "Steve Lee <steve@opendirective.com>"
-  ],
+  "contributors": ["Steve Lee <steve@opendirective.com>"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"
@@ -54,6 +52,7 @@
   },
   "devDependencies": {
     "@cycle/dom": "^18.0.0",
+    "@cycle/history": "^6.3.0",
     "@cycle/http": "^14.0.0",
     "@cycle/isolate": "^3.0.0",
     "@cycle/run": "^3.1.0",
@@ -65,7 +64,7 @@
     "cycle-storageify": "^3.2.0",
     "cyclejs-test-helpers": "^1.4.0",
     "cyclejs-utils": "^1.0.4",
-    "cyclic-router": "^4.0.7",
+    "cyclic-router": "^5.0.1",
     "html-looks-like": "^1.0.3",
     "jsverify": "^0.8.2",
     "prettier": "^1.5.3",
