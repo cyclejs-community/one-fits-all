@@ -32,7 +32,9 @@ export const buildDrivers = (fn: DriverThunkMapper) =>
         .map(([n, t]: DriverThunk) => ({ [n]: t }))
         .reduce((a, c) => Object.assign(a, c), {});
 
-export const driverNames = driverThunks.map(([n, t]) => n).concat(['onion', 'router']);
+export const driverNames = driverThunks
+    .map(([n, t]) => n)
+    .concat(['onion', 'router']);
 
 export function wrapMain(main: Component): Component {
     return routerify(

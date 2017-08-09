@@ -1,4 +1,4 @@
-import { forall, assert, asciistring, Options } from 'jsverify';
+import { forall, assert, asciistring } from 'jsverify';
 import { diagramArbitrary, withTime, addPrevState } from 'cyclejs-test-helpers';
 import onionify from 'cycle-onionify';
 const htmlLooksLike = require('html-looks-like');
