@@ -38,7 +38,7 @@ const createTest = (usePrev: boolean) => () => {
         (navigationDiagram, count, str) =>
             withTime(Time => {
                 const DOM = mockDOMSource({});
-                const text = str.replace(/"/, '"');
+                const text = str.replace(/"/, '');
                 const navigation$: Stream<boolean> = Time.diagram(
                     navigationDiagram
                 ).fold(acc => !acc, true);
