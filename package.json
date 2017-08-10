@@ -11,7 +11,7 @@
   },
   "scripts": {
     "precommit": "lint-staged",
-    "format": "prettier --tab-width 4 --single-quote --write './**/*.{js,ts,tsx}' && prettier --write './**/*.json'",
+    "format": "prettier --tab-width 4 --single-quote --write './**/*.{js,ts,tsx}'",
     "test": "echo 'TODO'"
   },
   "repository": {
