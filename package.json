@@ -4,10 +4,7 @@
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "lint-staged": {
-    "./**/*.{js,jsx,ts,tsx}": [
-        "npm run format",
-        "git add"
-    ]
+    "./**/*.{js,jsx,jsx,ts,tsx}": ["npm run format", "git add"]
   },
   "scripts": {
     "precommit": "lint-staged",
@@ -19,9 +16,7 @@
     "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
   },
   "author": "Jan van Brügge <supermantiu@gmail.com>",
-  "contributors": [
-    "Steve Lee <steve@opendirective.com>"
-  ],
+  "contributors": ["Steve Lee <steve@opendirective.com>"],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"
