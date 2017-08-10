@@ -14,7 +14,7 @@ module.exports = Object.assign({}, config, {
     externals: [nodeExternals()],
     plugins: config.plugins.filter(p => !(p.options && p.options.template)), //Exclude HtmlWebpackPlugin
     module: Object.assign({}, config.module, {
-        loaders: packageJson.nyc.include
+        rules: packageJson.nyc.include
             .map(s => ({
                 test: /\.(jsx?|tsx?)/,
                 include: path.resolve(s),
@@ -25,6 +25,6 @@ module.exports = Object.assign({}, config, {
                     fixWebpackSourcePaths: true
                 }
             }))
-            .concat(config.module.loaders)
+            .concat(config.module.rules)
     })
 });

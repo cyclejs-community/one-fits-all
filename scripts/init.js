@@ -27,6 +27,7 @@ const devDependencies = [
     'cyclejs-test-helpers@1.4.0',
     'html-looks-like@1.0.3',
     'jsverify@0.8.2',
+    'prettier@1.5.3',
     'snabbdom-to-html@3.2.0'
 ];
 
