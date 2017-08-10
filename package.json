@@ -46,7 +46,7 @@
     "istanbul-instrumenter-loader-fix": "^3.1.0",
     "lint-staged": "^4.0.3",
     "mocha": "^3.5.0",
-    "mocha-webpack": "^1.0.0-rc.1",
+    "mocha-webpack": "^0.7.0",
     "node-sass": "^4.5.3",
     "nyc": "^11.1.0",
     "rimraf": "^2.6.1",

@@ -24,8 +24,9 @@ const createTest = (usePrev: boolean) => () => {
     const property = forall(
         diagramArbitrary,
         asciistring,
-        (inputDiagram, text) =>
+        (inputDiagram, str) =>
             withTime(Time => {
+                const text = str.replace(/"/, '\"');
                 const input$ = Time.diagram(inputDiagram).map(s => ({
                     target: { value: s }
                 }));
@@ -51,7 +52,7 @@ const createTest = (usePrev: boolean) => () => {
     return assert(property, testOptions);
 };
 
-describe('counter tests', () => {
+describe('speaker tests', () => {
     it('should work without prevState', createTest(true));
 
     it('should work with prevState', createTest(false));
