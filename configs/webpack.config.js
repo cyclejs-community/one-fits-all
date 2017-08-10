@@ -11,8 +11,7 @@ const {
     sass,
     typescript,
     extractText,
-    customConfig,
-    uglify
+    customConfig
 } = require('webpack-blocks');
 const tslint = require('@webpack-blocks/tslint');
 const autoprefixer = require('autoprefixer');
@@ -24,6 +23,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 
+const appPath = (...names) => path.join(process.cwd(), ...names);
 const userConfig = require(appPath('webpack.config.js'));
 
 const preprocessor = production => ({
@@ -31,12 +31,12 @@ const preprocessor = production => ({
     DEVELOPMENT: !production
 });
 
-const ifdef = (opts, block) => (context, utils) => {
-    let conf = block(context, utils);
-    conf.module.loaders[0].loaders.push(
+const ifdef = (opts, block) => (context, utils) => prevConfig => {
+    let conf = block(context, utils)(prevConfig);
+    conf.module.rules[0].use.push(
         `ifdef-loader?json=${JSON.stringify(opts)}`
     );
-    return utils.merge(conf);
+    return conf;
 };
 
 const tsIfDef = production =>
@@ -47,8 +47,6 @@ const tsIfDef = production =>
             cacheDirectory: 'node_modules/.cache/at-loader'
         })
     );
-
-const appPath = (...names) => path.join(process.cwd(), ...names);
 
 module.exports = createConfig([
     customConfig(userConfig), //Include user config
@@ -78,12 +76,12 @@ module.exports = createConfig([
     env('production', [
         tsIfDef(true),
         extractText('[name].css', 'text/x-sass'),
-        uglify(),
         addPlugins([
             new CleanWebpackPlugin([appPath('build')], {
                 root: process.cwd()
             }),
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
+            new webpack.optimize.UglifyJsPlugin()
         ])
     ]),
     env('test', [tsIfDef(true)])
