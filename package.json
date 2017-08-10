@@ -1,6 +1,6 @@
 {
   "name": "cycle-scripts-one-fits-all",
-  "version": "5.0.0-beta.6",
+  "version": "5.0.0-rc.0",
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "lint-staged": {

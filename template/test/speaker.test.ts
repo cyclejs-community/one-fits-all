@@ -26,7 +26,7 @@ const createTest = (usePrev: boolean) => () => {
         asciistring,
         (inputDiagram, str) =>
             withTime(Time => {
-                const text = str.replace(/"/, '\"');
+                const text = str.replace(/"/, '');
                 const input$ = Time.diagram(inputDiagram).map(s => ({
                     target: { value: s }
                 }));
