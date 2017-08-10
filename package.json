@@ -1,6 +1,6 @@
 {
   "name": "cycle-scripts-one-fits-all",
-  "version": "4.2.2",
+  "version": "5.0.0-beta.6",
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "lint-staged": {
@@ -63,7 +63,7 @@
     "@cycle/http": "^14.0.0",
     "@cycle/isolate": "^3.0.0",
     "@cycle/run": "^3.1.0",
-    "@cycle/storage": "^4.0.0",
+    "@cycle/storage": "^4.1.1",
     "@cycle/time": "^0.8.0",
     "@types/history": "^4.6.0",
     "cycle-onionify": "^3.3.0",

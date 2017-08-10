@@ -11,7 +11,7 @@ const basicDependencies = [
     '@cycle/http@14.0.0',
     '@cycle/isolate@3.0.0',
     '@cycle/run@3.1.0',
-    '@cycle/storage@4.0.0',
+    '@cycle/storage@4.1.1',
     '@cycle/time@0.8.0',
     'cycle-onionify@3.3.0',
     'cyclejs-utils@1.0.4',
