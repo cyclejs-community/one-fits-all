@@ -16,7 +16,7 @@ const basicDependencies = [
     'cycle-onionify@3.3.0',
     'cyclejs-utils@1.0.4',
     'cycle-storageify@3.2.0',
-    'cyclic-router@5.1.1',
+    'cyclic-router@5.1.2',
     'switch-path@1.2.0',
     'xstream@10.9.0'
 ];
