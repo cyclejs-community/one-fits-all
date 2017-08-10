@@ -5,14 +5,16 @@ const {
     entryPoint,
     setOutput,
     sourceMaps,
-    addPlugins
-} = require('@webpack-blocks/webpack2');
-const devServer = require('@webpack-blocks/dev-server2');
-const postcss = require('@webpack-blocks/postcss');
-const sass = require('@webpack-blocks/sass');
-const typescript = require('@webpack-blocks/typescript');
+    addPlugins,
+    devServer,
+    postcss,
+    sass,
+    typescript,
+    extractText,
+    customConfig,
+    uglify
+} = require('webpack-blocks');
 const tslint = require('@webpack-blocks/tslint');
-const extractText = require('@webpack-blocks/extract-text2');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -22,17 +24,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const path = require('path');
 const fs = require('fs');
 
+const userConfig = require(appPath('webpack.config.js'));
+
 const preprocessor = production => ({
     PRODUCTION: production,
     DEVELOPMENT: !production
 });
 
-const ifdef = (opts, block) => context => {
-    let conf = block(context);
+const ifdef = (opts, block) => (context, utils) => {
+    let conf = block(context, utils);
     conf.module.loaders[0].loaders.push(
         `ifdef-loader?json=${JSON.stringify(opts)}`
     );
-    return conf;
+    return utils.merge(conf);
 };
 
 const tsIfDef = production =>
@@ -46,18 +50,8 @@ const tsIfDef = production =>
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 
-const customConfig = fs.existsSync(appPath('webpack.config.js'))
-    ? require(appPath('webpack.config.js'))
-    : {};
-
-if (customConfig === undefined) {
-    throw new Error(
-        'The 3.0 update is a breaking release, you need to upgrade manually. Please refer to https://github.com/cyclejs-community/create-cycle-app-flavors#migrating'
-    );
-}
-
 module.exports = createConfig([
-    () => customConfig, //Include user config
+    customConfig(userConfig), //Include user config
     tslint(),
     sass(),
     postcss([autoprefixer({ browsers: ['last 2 versions'] })]),
@@ -84,12 +78,12 @@ module.exports = createConfig([
     env('production', [
         tsIfDef(true),
         extractText('[name].css', 'text/x-sass'),
+        uglify(),
         addPlugins([
             new CleanWebpackPlugin([appPath('build')], {
                 root: process.cwd()
             }),
             new CopyWebpackPlugin([{ from: 'public', to: '' }]),
-            new webpack.optimize.UglifyJsPlugin()
         ])
     ]),
     env('test', [tsIfDef(true)])
