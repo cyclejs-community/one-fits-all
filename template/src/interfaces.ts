@@ -1,18 +1,23 @@
 import { Stream } from 'xstream';
-import { VNode, DOMSource } from '@cycle/dom';
+import { DOMSource, VNode } from '@cycle/dom';
 import { HTTPSource, RequestOptions } from '@cycle/http';
 import { TimeSource } from '@cycle/time';
+import { RouterSource, HistoryAction } from 'cyclic-router';
 
-export type Sources = {
+export type Component = (s: BaseSources) => BaseSinks;
+
+export interface BaseSources {
     DOM: DOMSource;
     HTTP: HTTPSource;
-    Time: TimeSource;
-};
+    time: TimeSource;
+    router: RouterSource;
+    storage: any;
+}
 
-export type RootSinks = {
-    DOM: Stream<VNode>;
-    HTTP: Stream<RequestOptions>;
-};
-
-export type Sinks = Partial<RootSinks>;
-export type Component = (s: Sources) => Sinks;
+export interface BaseSinks {
+    DOM?: Stream<VNode>;
+    HTTP?: Stream<RequestOptions>;
+    router?: Stream<HistoryAction>;
+    storage?: Stream<any>;
+    speech?: Stream<string>;
+}

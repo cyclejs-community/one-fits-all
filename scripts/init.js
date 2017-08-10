@@ -7,17 +7,24 @@ const spawn = require('cross-spawn');
 
 const basicDependencies = [
     '@cycle/dom@18.0.0',
+    '@cycle/history@6.3.0',
     '@cycle/http@14.0.0',
-    '@cycle/time@0.8.0',
-    '@cycle/run@3.1.0',
     '@cycle/isolate@3.0.0',
+    '@cycle/run@3.1.0',
+    '@cycle/storage@4.0.0',
+    '@cycle/time@0.8.0',
     'cycle-onionify@3.3.0',
+    'cyclejs-utils@1.0.4',
+    'cycle-storageify@3.2.0',
+    'cyclic-router@5.0.1',
+    'switch-path@1.2.0',
     'xstream@10.9.0'
 ];
 
 const devDependencies = [
+    '@types/history@4.6.0',
     'cycle-restart@0.2.2',
-    'cyclejs-test-helpers@1.3.0',
+    'cyclejs-test-helpers@1.4.0',
     'html-looks-like@1.0.3',
     'jsverify@0.8.2',
     'snabbdom-to-html@3.2.0'
@@ -98,8 +105,17 @@ module.exports = function init(appPath, appName, verbose, originalDirectory) {
     };
 
     appPackage.nyc = {
-        include: ['src'],
+        instrument: false,
+        sourceMap: false,
+        include: ['src/components'],
         reporter: ['html', 'text-summary']
+    };
+
+    appPackage['mocha-webpack'] = {
+        include: [
+            'src/components/**/*.{jsx,js,ts,tsx}',
+            'test/**/*.test.{js,jsx,ts,tsx}'
+        ]
     };
 
     fs.writeFileSync(appPackageJson, JSON.stringify(appPackage, null, 2));
