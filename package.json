@@ -71,7 +71,7 @@
     "cycle-storageify": "^3.2.0",
     "cyclejs-test-helpers": "^1.4.0",
     "cyclejs-utils": "^1.0.4",
-    "cyclic-router": "^5.0.1",
+    "cyclic-router": "^5.1.1",
     "html-looks-like": "^1.0.3",
     "jsverify": "^0.8.2",
     "prettier": "^1.5.3",

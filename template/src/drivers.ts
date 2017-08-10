@@ -44,6 +44,6 @@ export function wrapMain(main: Component): Component {
                 debounce: 100 // wait for 100ms without state change before writing to localStorage
             })
         ),
-        switchPath as RouteMatcher
+        switchPath
     ) as any;
 }
