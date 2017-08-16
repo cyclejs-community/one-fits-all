@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cyclejs-community/create-cycle-app-flavors.git"
+    "url": "git+https://github.com/cyclejs-community/one-fits-all"
   },
   "author": "Jan van Brügge <supermantiu@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cyclejs-community/create-cycle-app-flavors/issues"
+    "url": "https://github.com/cyclejs-community/one-fits-all/issues"
   },
-  "homepage": "https://github.com/cyclejs-community/create-cycle-app-flavors#readme",
+  "homepage": "https://github.com/cyclejs-community/one-fits-all#readme",
   "bin": {
     "cycle-scripts": "./index.js"
   },
