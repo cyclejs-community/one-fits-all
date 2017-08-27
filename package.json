@@ -38,7 +38,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^5.0.1",
     "html-webpack-plugin": "^2.29.0",
-    "ifdef-loader": "^1.1.1",
+    "ifdef-loader": "^2.0.0",
     "mocha": "^3.4.2",
     "mocha-webpack": "^0.7.0",
     "node-sass": "^4.5.3",
