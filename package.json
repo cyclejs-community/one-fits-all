@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "prettier": "^1.5.3",
-    "release-it": "^2.8.2",
+    "release-it": "^3.0.0",
     "@cycle/dom": "^18.0.0",
     "@cycle/http": "^14.0.0",
     "@cycle/isolate": "^3.0.0",
