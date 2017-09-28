@@ -79,9 +79,11 @@ function successMsg(appName, appPath) {
     console.log();
 }
 
-module.exports = function init(appPath, appName, verbose, originalDirectory) {
-    const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
-        .name;
+module.exports = function init(appPath, appName, verboseOpts) {
+    const isObj = typeof verboseOpts === 'object';
+    const verbose = isObj ? verboseOpts.verbose : verbose;
+    const ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
+    const cli = isObj ? verboseOpts.cli : 'npm';
     const ownPath = path.join(appPath, 'node_modules', ownPackageName);
     const appPackageJson = path.join(appPath, 'package.json');
     const appPackage = require(appPackageJson);
@@ -108,13 +110,13 @@ module.exports = function init(appPath, appName, verbose, originalDirectory) {
     fs.copySync(path.join(ownPath, 'template'), appPath);
     patchGitignore(appPath);
 
-    installList(basicDependencies, '--save', verbose);
-    installList(devDependencies, '--save-dev', verbose);
+    installList(basicDependencies, '--save', verbose, cli);
+    installList(devDependencies, '--save-dev', verbose, cli);
 
     successMsg(appName, appPath);
 };
 
-function installList(list, mode, verbose) {
+function installList(list, mode, verbose, cli) {
     const listOfbasicDependencies = list
         .slice(0, list.length - 1)
         .join(', ')
@@ -123,13 +125,13 @@ function installList(list, mode, verbose) {
     console.log(`Installing ${listOfbasicDependencies} using npm...`);
     console.log();
 
-    const args = ['install']
+    const args = [cli === 'npm' ? 'install' : 'add']
         .concat(list)
         .concat([mode, verbose && '--verbose'])
         .filter(Boolean);
 
-    const code = spawn.sync('npm', args, { stdio: 'inherit' });
+    const code = spawn.sync(cli, args, { stdio: 'inherit' });
     if (code.status !== 0) {
-        console.error(chalk.red('`npm ' + args.join(' ') + '` failed'));
+        console.error(chalk.red('`' + cli + ' ' + args.join(' ') + '` failed'));
     }
 }
