@@ -81,7 +81,7 @@ function successMsg(appName, appPath) {
 
 module.exports = function init(appPath, appName, verboseOpts) {
     const isObj = typeof verboseOpts === 'object';
-    const verbose = isObj ? verboseOpts.verbose : verbose;
+    const verbose = isObj ? verboseOpts.verbose : verboseOpts;
     const ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
     const cli = isObj ? verboseOpts.cli : 'npm';
     const ownPath = path.join(appPath, 'node_modules', ownPackageName);
