@@ -27,7 +27,7 @@
     "@webpack-blocks/extract-text2": "^0.4.0",
     "@webpack-blocks/postcss": "^0.4.3",
     "@webpack-blocks/sass": "^0.4.1",
-    "@webpack-blocks/tslint": "^0.4.0",
+    "@webpack-blocks/tslint": "^1.0.0-rc",
     "@webpack-blocks/typescript": "^0.4.1",
     "@webpack-blocks/webpack2": "^0.4.0",
     "autoprefixer": "^7.1.1",
