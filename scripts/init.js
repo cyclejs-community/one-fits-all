@@ -6,19 +6,19 @@ const chalk = require('chalk');
 const spawn = require('cross-spawn');
 
 const basicDependencies = [
-    '@cycle/dom@18.0.0',
-    '@cycle/history@6.3.0',
-    '@cycle/http@14.0.0',
-    '@cycle/isolate@3.0.0',
-    '@cycle/run@3.1.0',
+    '@cycle/dom@18.3.0',
+    '@cycle/history@6.4.0',
+    '@cycle/http@14.4.0',
+    '@cycle/isolate@3.1.0',
+    '@cycle/run@3.3.0',
     '@cycle/storage@4.1.1',
-    '@cycle/time@0.8.0',
-    'cycle-onionify@3.3.0',
+    '@cycle/time@0.10.1',
+    'cycle-onionify@4.0.0',
     'cyclejs-utils@1.0.4',
     'cycle-storageify@3.2.0',
-    'cyclic-router@5.1.2',
+    'cyclic-router@5.1.3',
     'switch-path@1.2.0',
-    'xstream@10.9.0'
+    'xstream@11.0.0'
 ];
 
 const devDependencies = [
@@ -26,9 +26,9 @@ const devDependencies = [
     'cycle-restart@0.2.2',
     'cyclejs-test-helpers@1.4.0',
     'html-looks-like@1.0.3',
-    'jsverify@0.8.2',
-    'prettier@1.5.3',
-    'snabbdom-to-html@3.2.0'
+    'jsverify@0.8.3',
+    'prettier@1.7.4',
+    'snabbdom-to-html@3.3.0'
 ];
 
 function patchGitignore(appPath) {
