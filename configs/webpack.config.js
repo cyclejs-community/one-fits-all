@@ -70,7 +70,10 @@ module.exports = createConfig([
     match(
         ['*.scss', '*.sass'],
         [
-            sass(),
+            sass({
+                includePaths: [appPath('node_modules')],
+                sourceMap: true
+            }),
             postcss({
                 plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
             }),
