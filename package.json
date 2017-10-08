@@ -79,10 +79,5 @@
     "snabbdom-to-html": "^3.3.0",
     "switch-path": "^1.2.0",
     "xstream": "^11.0.0"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "webpack"
-    ]
   }
 }
