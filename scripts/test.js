@@ -2,11 +2,13 @@
 
 const path = require('path');
 const spawn = require('cross-spawn');
+const packageJson = require(path.join(process.cwd(), 'package.json'));
 
 let env = Object.create(process.env);
 env.NODE_ENV = 'test';
 
 const mocha = path.resolve(process.cwd(), 'node_modules', '.bin', 'nyc');
+const mochaArgs = '{' + packageJson['mocha-webpack'].include.join(',') + '}';
 
 const args = [
     'mocha-webpack',
@@ -14,7 +16,7 @@ const args = [
     '--colors',
     '--webpack-config',
     path.join(__dirname, '..', 'configs', 'webpack.config.test.js'),
-    'test/**/*.test.*'
+    mochaArgs
 ].filter(Boolean);
 
 spawn.sync(mocha, args, { env: env, stdio: 'inherit' });

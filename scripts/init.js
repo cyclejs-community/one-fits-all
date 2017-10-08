@@ -6,21 +6,31 @@ const chalk = require('chalk');
 const spawn = require('cross-spawn');
 
 const basicDependencies = [
-    '@cycle/dom@18.0.0',
-    '@cycle/http@14.0.0',
-    '@cycle/time@0.8.0',
-    '@cycle/run@3.1.0',
-    '@cycle/isolate@3.0.0',
-    'cycle-onionify@3.3.0',
-    'xstream@10.9.0'
+    '@cycle/dom@18.3.0',
+    '@cycle/history@6.4.0',
+    '@cycle/http@14.4.0',
+    '@cycle/isolate@3.1.0',
+    '@cycle/run@3.3.0',
+    '@cycle/storage@4.1.1',
+    '@cycle/time@0.10.1',
+    'cycle-onionify@4.0.0',
+    'cyclejs-utils@1.0.4',
+    'cycle-storageify@3.2.0',
+    'cyclic-router@5.1.3',
+    'switch-path@1.2.0',
+    'xstream@11.0.0'
 ];
 
 const devDependencies = [
+    '@types/history@4.6.0',
     'cycle-restart@0.2.2',
-    'cyclejs-test-helpers@1.3.0',
+    'cyclejs-test-helpers@1.4.0',
     'html-looks-like@1.0.3',
-    'jsverify@0.8.2',
-    'snabbdom-to-html@3.2.0'
+    'jsverify@0.8.3',
+    'prettier@1.7.4',
+    'snabbdom-to-html@3.3.0',
+    'husky@0.14.3',
+    'lint-staged@4.2.3'
 ];
 
 function patchGitignore(appPath) {
@@ -80,9 +90,11 @@ function successMsg(appName, appPath) {
 }
 
 module.exports = function init(appPath, appName, verboseOpts) {
+    console.log(appPath);
     const isObj = typeof verboseOpts === 'object';
     const verbose = isObj ? verboseOpts.verbose : verboseOpts;
-    const ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
+    const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+        .name;
     const cli = isObj ? verboseOpts.cli : 'npm';
     const ownPath = path.join(appPath, 'node_modules', ownPackageName);
     const appPackageJson = path.join(appPath, 'package.json');
@@ -92,6 +104,9 @@ module.exports = function init(appPath, appName, verboseOpts) {
     appPackage.dependencies = appPackage.dependencies || {};
     appPackage.devDependencies = appPackage.devDependencies || {};
     appPackage.scripts = {
+        precommit: 'lint-staged',
+        format:
+            "prettier --tab-width 4 --single-quote --write './**/*.{js,jsx,ts,tsx}'",
         start: 'cycle-scripts start',
         test: 'cycle-scripts test',
         build: 'cycle-scripts build',
@@ -99,9 +114,21 @@ module.exports = function init(appPath, appName, verboseOpts) {
         clean: 'cycle-scripts clean'
     };
 
+    appPackage.lintStaged = {
+        './**/*.{js,jsx,ts,tsx}': ['npm run format', 'git add']
+    };
     appPackage.nyc = {
-        include: ['src'],
+        instrument: false,
+        sourceMap: false,
+        include: ['src/components'],
         reporter: ['html', 'text-summary']
+    };
+
+    appPackage['mocha-webpack'] = {
+        include: [
+            'src/components/**/*.{jsx,js,ts,tsx}',
+            'test/**/*.test.{js,jsx,ts,tsx}'
+        ]
     };
 
     fs.writeFileSync(appPackageJson, JSON.stringify(appPackage, null, 2));
@@ -110,13 +137,13 @@ module.exports = function init(appPath, appName, verboseOpts) {
     fs.copySync(path.join(ownPath, 'template'), appPath);
     patchGitignore(appPath);
 
-    installList(basicDependencies, '--save', verbose, cli);
-    installList(devDependencies, '--save-dev', verbose, cli);
+    installList(basicDependencies, '--save', verbose, cli, appPath);
+    installList(devDependencies, '--save-dev', verbose, cli, appPath);
 
     successMsg(appName, appPath);
 };
 
-function installList(list, mode, verbose, cli) {
+function installList(list, mode, verbose, cli, appPath) {
     const listOfbasicDependencies = list
         .slice(0, list.length - 1)
         .join(', ')
@@ -130,7 +157,7 @@ function installList(list, mode, verbose, cli) {
         .concat([mode, verbose && '--verbose'])
         .filter(Boolean);
 
-    const code = spawn.sync(cli, args, { stdio: 'inherit' });
+    const code = spawn.sync(cli, args, { stdio: 'inherit', cwd: appPath });
     if (code.status !== 0) {
         console.error(chalk.red('`' + cli + ' ' + args.join(' ') + '` failed'));
     }
