@@ -28,7 +28,9 @@ const devDependencies = [
     'html-looks-like@1.0.3',
     'jsverify@0.8.3',
     'prettier@1.7.4',
-    'snabbdom-to-html@3.3.0'
+    'snabbdom-to-html@3.3.0',
+    'husky@0.14.3',
+    'lint-staged@4.2.3'
 ];
 
 function patchGitignore(appPath) {
