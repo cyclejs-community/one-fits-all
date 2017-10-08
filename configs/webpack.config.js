@@ -9,9 +9,14 @@ const {
     devServer,
     postcss,
     sass,
+    css,
     typescript,
     extractText,
-    customConfig
+    customConfig,
+    uglify,
+    match,
+    file,
+    url
 } = require('webpack-blocks');
 const tslint = require('@webpack-blocks/tslint');
 const autoprefixer = require('autoprefixer');
@@ -33,9 +38,20 @@ const preprocessor = production => ({
 
 const ifdef = (opts, block) => (context, utils) => prevConfig => {
     let conf = block(context, utils)(prevConfig);
-    conf.module.rules[0].use.push(
-        `ifdef-loader?json=${JSON.stringify(opts)}`
-    );
+    const index = conf.module.rules
+        .map(
+            (r, i) =>
+                !Array.isArray(r.test) &&
+                r.test.test('name.ts') &&
+                r.enforce !== 'pre'
+                    ? i
+                    : -1
+        )
+        .reduce((acc, curr) => (acc === -1 && curr !== -1 ? curr : acc), -1);
+    conf.module.rules[index].use.push({
+        loader: 'ifdef-loader',
+        options: opts
+    });
     return conf;
 };
 
@@ -49,10 +65,23 @@ const tsIfDef = production =>
     );
 
 module.exports = createConfig([
-    customConfig(userConfig), //Include user config
+    customConfig(userConfig),
     tslint(),
-    sass(),
-    postcss([autoprefixer({ browsers: ['last 2 versions'] })]),
+    match(
+        ['*.scss', '*.sass'],
+        [
+            sass(),
+            postcss({
+                plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
+            }),
+            env('production', [extractText('[name].[contenthash:8].css')])
+        ]
+    ),
+    match(['*.eot', '*.ttf', '*.woff', '*.woff2'], [file()]),
+    match(
+        ['*.gif', '*.jpg', '*.jpeg', '*.png', '*.svg', '*.webp'],
+        [url({ limit: 10000 })]
+    ),
     defineConstants({
         'process.env.NODE_ENV': process.env.NODE_ENV
     }),
@@ -75,13 +104,12 @@ module.exports = createConfig([
     ]),
     env('production', [
         tsIfDef(true),
-        extractText('[name].css', 'text/x-sass'),
+        uglify(),
         addPlugins([
             new CleanWebpackPlugin([appPath('build')], {
                 root: process.cwd()
             }),
-            new CopyWebpackPlugin([{ from: 'public', to: '' }]),
-            new webpack.optimize.UglifyJsPlugin()
+            new CopyWebpackPlugin([{ from: 'public', to: '' }])
         ])
     ]),
     env('test', [tsIfDef(true)])

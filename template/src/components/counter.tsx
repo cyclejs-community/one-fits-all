@@ -53,12 +53,10 @@ function intent(DOM: DOMSource): Stream<Reducer> {
 }
 
 function view(state$: Stream<State>): Stream<VNode> {
-    return state$.map(({ count }) =>
+    return state$.map(({ count }) => (
         <div>
             <h2>My Awesome Cycle.js app - Page 1</h2>
-            <span>
-                {'Counter: ' + count}
-            </span>
+            <span>{'Counter: ' + count}</span>
             <button type="button" className="add">
                 Increase
             </button>
@@ -69,5 +67,5 @@ function view(state$: Stream<State>): Stream<VNode> {
                 Page 2
             </button>
         </div>
-    );
+    ));
 }

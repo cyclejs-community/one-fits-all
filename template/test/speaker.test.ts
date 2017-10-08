@@ -90,9 +90,9 @@ describe('speaker tests', () => {
                         '[data-action="speak"]': { click: click$ }
                     });
 
-                    const app: any = onionify(addPrevState(Speaker, { text }))(
-                        { DOM } as any
-                    );
+                    const app: any = onionify(addPrevState(Speaker, { text }))({
+                        DOM
+                    } as any);
                     const speech$ = app.speech as Stream<string>;
 
                     const expected$ = click$.mapTo(text);

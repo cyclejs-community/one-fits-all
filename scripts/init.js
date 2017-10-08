@@ -88,9 +88,11 @@ function successMsg(appName, appPath) {
 }
 
 module.exports = function init(appPath, appName, verboseOpts) {
+    console.log(appPath);
     const isObj = typeof verboseOpts === 'object';
     const verbose = isObj ? verboseOpts.verbose : verboseOpts;
-    const ownPackageName = require(path.join(__dirname, '..', 'package.json')).name;
+    const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
+        .name;
     const cli = isObj ? verboseOpts.cli : 'npm';
     const ownPath = path.join(appPath, 'node_modules', ownPackageName);
     const appPackageJson = path.join(appPath, 'package.json');
@@ -133,13 +135,13 @@ module.exports = function init(appPath, appName, verboseOpts) {
     fs.copySync(path.join(ownPath, 'template'), appPath);
     patchGitignore(appPath);
 
-    installList(basicDependencies, '--save', verbose, cli);
-    installList(devDependencies, '--save-dev', verbose, cli);
+    installList(basicDependencies, '--save', verbose, cli, appPath);
+    installList(devDependencies, '--save-dev', verbose, cli, appPath);
 
     successMsg(appName, appPath);
 };
 
-function installList(list, mode, verbose, cli) {
+function installList(list, mode, verbose, cli, appPath) {
     const listOfbasicDependencies = list
         .slice(0, list.length - 1)
         .join(', ')
@@ -153,7 +155,7 @@ function installList(list, mode, verbose, cli) {
         .concat([mode, verbose && '--verbose'])
         .filter(Boolean);
 
-    const code = spawn.sync(cli, args, { stdio: 'inherit' });
+    const code = spawn.sync(cli, args, { stdio: 'inherit', cwd: appPath });
     if (code.status !== 0) {
         console.error(chalk.red('`' + cli + ' ' + args.join(' ') + '` failed'));
     }

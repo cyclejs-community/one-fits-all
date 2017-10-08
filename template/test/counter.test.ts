@@ -70,7 +70,7 @@ describe('counter tests', () => {
                     '[data-action="navigate"]': { click: click$ }
                 });
 
-                const app = onionify(Counter)({ DOM } as any);
+                const app = onionify(Counter as any)({ DOM } as any);
                 const router$ = app.router as Stream<string>;
 
                 const expected$ = click$.mapTo('/p2');
