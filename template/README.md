@@ -17,7 +17,7 @@ Example: Adding the progress bar plugin:
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 
 module.exports = {
-    plugin: [
+    plugins: [
         new ProgressBarPlugin()
     ]
 }
