@@ -34,7 +34,7 @@ I strongly recommend [wepack-blocks](https://github.com/andywer/webpack-blocks) 
 To migrate an existing app to `5.0.0` you have to
 * update `cycle-scripts-one-fits-all`
 * update `package.json` like this:
-```json
+```
 "nyc": {
   "instrument": false,
   "sourceMap": false,
