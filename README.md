@@ -4,6 +4,10 @@
 
 [Cycle-app](https://github.com/cyclejs-community/create-cycle-app) flavor.
 
+## Installation
+
+Run `create-cycle-app myAppName --flavor cycle-scripts-one-fits-all`
+
 ## Template
 
 An elementary SPA. Each page is a cycle component and has its own state, which is persisted in local storage
