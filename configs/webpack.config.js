@@ -107,7 +107,15 @@ module.exports = createConfig([
     ]),
     env('production', [
         tsIfDef(true),
-        uglify(),
+        uglify({
+            parallel: true,
+            cache: true,
+            uglifyOptions: {
+                compress: {
+                    warnings: false
+                }
+            }
+        }),
         addPlugins([
             new CleanWebpackPlugin([appPath('build')], {
                 root: process.cwd()
