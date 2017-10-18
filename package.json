@@ -70,7 +70,7 @@
     "cycle-restart": "^0.2.2",
     "cycle-storageify": "^4.0.0",
     "cyclejs-test-helpers": "^1.4.0",
-    "cyclejs-utils": "^1.0.4",
+    "cyclejs-utils": "^2.0.0",
     "cyclic-router": "^5.1.3",
     "html-looks-like": "^1.0.3",
     "jsverify": "^0.8.3",
