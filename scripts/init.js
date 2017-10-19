@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const spawn = require('cross-spawn');
 
 const basicDependencies = [
-    '@cycle/dom@18.3.0',
+    '@cycle/dom@19.0.0',
     '@cycle/history@6.4.0',
     '@cycle/http@14.4.0',
     '@cycle/isolate@3.1.0',
@@ -14,8 +14,8 @@ const basicDependencies = [
     '@cycle/storage@4.1.1',
     '@cycle/time@0.10.1',
     'cycle-onionify@4.0.0',
-    'cyclejs-utils@1.0.4',
-    'cycle-storageify@3.2.0',
+    'cyclejs-utils@2.0.0',
+    'cycle-storageify@4.0.0',
     'cyclic-router@5.1.3',
     'switch-path@1.2.0',
     'xstream@11.0.0'
