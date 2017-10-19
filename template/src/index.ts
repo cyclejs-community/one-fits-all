@@ -1,8 +1,7 @@
 import { setup, run } from '@cycle/run';
-import { rerunner } from 'cycle-restart';
 import isolate from '@cycle/isolate';
 /// #if DEVELOPMENT
-import { restartable } from 'cycle-restart';
+import { restartable, rerunner } from 'cycle-restart';
 /// #endif
 
 import { buildDrivers, wrapMain } from './drivers';
