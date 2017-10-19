@@ -101,7 +101,7 @@ module.exports = createConfig([
     ]),
     env('development', [
         tsIfDef(false),
-        devServer(),
+        devServer(userConfig.devServer || {}),
         sourceMaps(),
         addPlugins([new webpack.NamedModulesPlugin()])
     ]),
