@@ -65,63 +65,66 @@ const tsIfDef = production =>
         })
     );
 
-module.exports = webpackMerge(createConfig([
-    tslint(),
-    match(
-        ['*.scss', '*.sass'],
-        [
-            sass({
-                includePaths: [appPath('node_modules')],
-                sourceMap: true
-            }),
-            postcss({
-                plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
-            }),
-            env('production', [extractText('[name].[contenthash:8].css')])
-        ]
-    ),
-    match(['*.eot', '*.ttf', '*.woff', '*.woff2'], [file()]),
-    match(
-        ['*.gif', '*.jpg', '*.jpeg', '*.png', '*.svg', '*.webp'],
-        [url({ limit: 10000 })]
-    ),
-    defineConstants({
-        'process.env.NODE_ENV': process.env.NODE_ENV
-    }),
-    addPlugins([
-        new HtmlWebpackPlugin({
-            template: './index.ejs',
-            inject: true,
-            favicon: 'public/favicon.png',
-            hash: true
-        }),
-        new webpack.ProvidePlugin({
-            Snabbdom: 'snabbdom-pragma'
-        })
-    ]),
-    env('development', [
-        tsIfDef(false),
-        devServer(),
-        sourceMaps(),
-        addPlugins([new webpack.NamedModulesPlugin()])
-    ]),
-    env('production', [
-        tsIfDef(true),
-        uglify({
-            parallel: true,
-            cache: true,
-            uglifyOptions: {
-                compress: {
-                    warnings: false
-                }
-            }
+module.exports = webpackMerge(
+    createConfig([
+        tslint(),
+        match(
+            ['*.scss', '*.sass'],
+            [
+                sass({
+                    includePaths: [appPath('node_modules')],
+                    sourceMap: true
+                }),
+                postcss({
+                    plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
+                }),
+                env('production', [extractText('[name].[contenthash:8].css')])
+            ]
+        ),
+        match(['*.eot', '*.ttf', '*.woff', '*.woff2'], [file()]),
+        match(
+            ['*.gif', '*.jpg', '*.jpeg', '*.png', '*.svg', '*.webp'],
+            [url({ limit: 10000 })]
+        ),
+        defineConstants({
+            'process.env.NODE_ENV': process.env.NODE_ENV
         }),
         addPlugins([
-            new CleanWebpackPlugin([appPath('build')], {
-                root: process.cwd()
+            new HtmlWebpackPlugin({
+                template: './index.ejs',
+                inject: true,
+                favicon: 'public/favicon.png',
+                hash: true
             }),
-            new CopyWebpackPlugin([{ from: 'public', to: '' }])
-        ])
+            new webpack.ProvidePlugin({
+                Snabbdom: 'snabbdom-pragma'
+            })
+        ]),
+        env('development', [
+            tsIfDef(false),
+            devServer(),
+            sourceMaps(),
+            addPlugins([new webpack.NamedModulesPlugin()])
+        ]),
+        env('production', [
+            tsIfDef(true),
+            uglify({
+                parallel: true,
+                cache: true,
+                uglifyOptions: {
+                    compress: {
+                        warnings: false
+                    }
+                }
+            }),
+            addPlugins([
+                new CleanWebpackPlugin([appPath('build')], {
+                    root: process.cwd()
+                }),
+                new CopyWebpackPlugin([{ from: 'public', to: '' }])
+            ])
+        ]),
+        env('test', [tsIfDef(true)])
     ]),
-    env('test', [tsIfDef(true)])
-]), userConfig);
+    userConfig
+);

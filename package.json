@@ -4,7 +4,7 @@
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "lint-staged": {
-    "./**/*.{js,jsx,jsx,ts,tsx}": [
+    "*.{js,jsx,jsx,ts,tsx}": [
       "npm run format",
       "git add"
     ]

@@ -115,7 +115,7 @@ module.exports = function init(appPath, appName, verboseOpts) {
     };
 
     appPackage.lintStaged = {
-        './**/*.{js,jsx,ts,tsx}': ['npm run format', 'git add']
+        '*.{js,jsx,ts,tsx}': ['npm run format', 'git add']
     };
     appPackage.nyc = {
         instrument: false,
