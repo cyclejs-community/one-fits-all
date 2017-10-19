@@ -42,15 +42,16 @@ To migrate an existing app to `5.0.0` you have to
 "nyc": {
   "instrument": false,
   "sourceMap": false,
-  "include": [<paths of files you want to test>, 'src/components'],
-  "reporter": ['html', 'text-summary']
-}
+  "include": [<paths of files you want to test>, "src/components"],
+  "reporter": ["html", "text-summary"]
+},
 
 "mocha-webpack": {
-  include: [
-    'src/components/**/*.{jsx,js,ts,tsx}', //Should be the same as in nyc.include
-    'test/**/*.test.{js,jsx,ts,tsx}' //All your tests
-]
+  "include": [
+    "src/components/**/*.{jsx,js,ts,tsx}", //Should be the same as in nyc.include
+    "test/**/*.test.{js,jsx,ts,tsx}" //All your tests
+  ]
+}
     
 ```
  
