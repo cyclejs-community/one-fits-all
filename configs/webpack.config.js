@@ -23,6 +23,7 @@ const tslint = require('@webpack-blocks/tslint');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -92,9 +93,13 @@ module.exports = webpackMerge(
         addPlugins([
             new HtmlWebpackPlugin({
                 template: './index.ejs',
+                alwaysWriteToDisk: true,
                 inject: true,
                 favicon: 'public/favicon.png',
                 hash: true
+            }),
+            new HtmlWebpackHarddiskPlugin({
+                outputPath: appPath('public')
             }),
             new webpack.ProvidePlugin({
                 Snabbdom: 'snabbdom-pragma'
@@ -102,7 +107,9 @@ module.exports = webpackMerge(
         ]),
         env('development', [
             tsIfDef(false),
-            devServer(),
+            devServer({
+                contentBase: appPath('public')
+            }),
             sourceMaps(),
             addPlugins([new webpack.NamedModulesPlugin()])
         ]),
