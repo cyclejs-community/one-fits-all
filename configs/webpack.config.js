@@ -18,6 +18,7 @@ const {
     file,
     url
 } = require('webpack-blocks');
+const webpackMerge = require('webpack-merge');
 const tslint = require('@webpack-blocks/tslint');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
@@ -64,8 +65,7 @@ const tsIfDef = production =>
         })
     );
 
-module.exports = createConfig([
-    customConfig(userConfig),
+module.exports = webpackMerge(createConfig([
     tslint(),
     match(
         ['*.scss', '*.sass'],
@@ -124,4 +124,4 @@ module.exports = createConfig([
         ])
     ]),
     env('test', [tsIfDef(true)])
-]);
+]), userConfig);
