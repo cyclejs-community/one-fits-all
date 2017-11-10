@@ -63,7 +63,7 @@
     "@cycle/history": "^6.4.0",
     "@cycle/http": "^14.4.0",
     "@cycle/isolate": "^3.1.0",
-    "@cycle/run": "^3.3.0",
+    "@cycle/run": "^4.0.0",
     "@cycle/storage": "^4.1.1",
     "@cycle/time": "^0.10.1",
     "@types/history": "^4.6.0",
