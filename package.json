@@ -45,7 +45,7 @@
     "husky": "^0.14.3",
     "ifdef-loader": "^2.0.1",
     "istanbul-instrumenter-loader-fix": "^3.1.0",
-    "lint-staged": "^4.2.3",
+    "lint-staged": "^5.0.0",
     "mocha": "^4.0.1",
     "mocha-webpack": "^0.7.0",
     "node-sass": "^4.5.3",
@@ -59,12 +59,12 @@
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
-    "@cycle/dom": "^19.0.0",
+    "@cycle/dom": "^110.0.0",
     "@cycle/history": "^6.4.0",
     "@cycle/http": "^14.4.0",
     "@cycle/isolate": "^3.1.0",
     "@cycle/run": "^4.0.0",
-    "@cycle/storage": "^4.1.1",
+    "@cycle/storage": "^5.0.0",
     "@cycle/time": "^0.10.1",
     "@types/history": "^4.6.0",
     "cycle-onionify": "^4.0.0",
