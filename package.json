@@ -77,7 +77,7 @@
     "html-looks-like": "^1.0.3",
     "jsverify": "^0.8.3",
     "prettier": "^1.10.2",
-    "release-it": "^5.2.0",
+    "release-it": "^6.0.0",
     "snabbdom-to-html": "^5.0.0",
     "switch-path": "^1.2.0",
     "xstream": "^11.1.0"
