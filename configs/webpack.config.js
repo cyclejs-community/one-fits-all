@@ -16,7 +16,8 @@ const {
     uglify,
     match,
     file,
-    url
+    url,
+    resolve
 } = require('webpack-blocks');
 const webpackMerge = require('webpack-merge');
 const tslint = require('@webpack-blocks/tslint');
@@ -38,37 +39,34 @@ const preprocessor = production => ({
     DEVELOPMENT: !production
 });
 
-const ifdef = (opts, block) => (context, utils) => prevConfig => {
-    let conf = block(context, utils)(prevConfig);
-    const index = conf.module.rules
-        .map(
-            (r, i) =>
-                !Array.isArray(r.test) &&
-                r.test.test('name.ts') &&
-                r.enforce !== 'pre'
-                    ? i
-                    : -1
-        )
-        .reduce((acc, curr) => (acc === -1 && curr !== -1 ? curr : acc), -1);
-    conf.module.rules[index].use.push({
-        loader: 'ifdef-loader',
-        options: opts
+const ifdef = config => (context, { addLoader }) =>
+    addLoader({
+        test: /\.tsx?/,
+        use: [
+            {
+                loader: 'awesome-typescript-loader'
+            },
+            { loader: 'ifdef-loader?' + JSON.stringify(config) }
+        ],
+        ...context.match
     });
-    return conf;
-};
 
-const tsIfDef = production =>
-    ifdef(
-        preprocessor(production),
-        typescript({
-            useCache: true,
-            cacheDirectory: 'node_modules/.cache/at-loader'
-        })
+const makeTs = prod =>
+    match(
+        ['*.js', '*.jsx', '*.ts', '*.tsx'],
+        [
+            ifdef(preprocessor(prod)),
+            typescript({
+                useCache: true,
+                cacheDirectory: 'node_modules/.cache/at-loader'
+            })
+        ]
     );
 
 module.exports = webpackMerge(
     createConfig([
         tslint(),
+        resolve(['.js', '.jsx']),
         match(
             ['*.scss', '*.sass'],
             [
@@ -106,7 +104,7 @@ module.exports = webpackMerge(
             })
         ]),
         env('development', [
-            tsIfDef(false),
+            makeTs(false),
             devServer({
                 contentBase: appPath('public')
             }),
@@ -114,7 +112,7 @@ module.exports = webpackMerge(
             addPlugins([new webpack.NamedModulesPlugin()])
         ]),
         env('production', [
-            tsIfDef(true),
+            makeTs(true),
             uglify({
                 parallel: true,
                 cache: true,
@@ -131,7 +129,7 @@ module.exports = webpackMerge(
                 new CopyWebpackPlugin([{ from: 'public', to: '' }])
             ])
         ]),
-        env('test', [tsIfDef(true)])
+        env('test', [makeTs(true)])
     ]),
     userConfig
 );
