@@ -19,4 +19,6 @@ const args = [
     mochaArgs
 ].filter(Boolean);
 
-spawn.sync(mocha, args, { env: env, stdio: 'inherit' });
+const result = spawn.sync(mocha, args, { env: env, stdio: 'inherit' });
+
+process.exit(result.status);

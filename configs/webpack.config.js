@@ -40,16 +40,20 @@ const preprocessor = production => ({
 });
 
 const ifdef = config => (context, { addLoader }) =>
-    addLoader({
-        test: /\.tsx?/,
-        use: [
+    addLoader(
+        Object.assign(
             {
-                loader: 'awesome-typescript-loader'
+                test: /\.tsx?/,
+                use: [
+                    {
+                        loader: 'awesome-typescript-loader'
+                    },
+                    { loader: 'ifdef-loader?' + JSON.stringify(config) }
+                ]
             },
-            { loader: 'ifdef-loader?' + JSON.stringify(config) }
-        ],
-        ...context.match
-    });
+            context.match
+        )
+    );
 
 const makeTs = prod =>
     match(
