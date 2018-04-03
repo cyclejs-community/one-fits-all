@@ -1,6 +1,7 @@
 import { Options } from 'jsverify';
 
 export const testOptions: Options = {
-    tests: 10,
-    size: 200
+    tests: 100,
+    size: 200,
+    quiet: false
 };
