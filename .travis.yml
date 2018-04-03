@@ -12,10 +12,8 @@ before_install:
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
 script:
-    - export FLAVOR=$(pwd)
-    - cd ..
-    - create-cycle-app test-app --flavor "$FLAVOR" --yarn
+    - create-cycle-app test-app --flavor $(pwd) --yarn
     - cd test-app
     - yarn run build
     - yarn test
-    - cd "$FLAVOR"
+    - cd ..
