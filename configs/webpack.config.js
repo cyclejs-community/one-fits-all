@@ -72,12 +72,12 @@ module.exports = webpackMerge(
         match(
             ['*.scss', '*.sass'],
             [
+                postcss({
+                    plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
+                }),
                 sass({
                     includePaths: [appPath('node_modules')],
                     sourceMap: true
-                }),
-                postcss({
-                    plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
                 }),
                 env('production', [extractText('[name].[contenthash:8].css')])
             ]
