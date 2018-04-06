@@ -104,8 +104,7 @@ module.exports = function init(appPath, appName, verboseOpts) {
     appPackage.devDependencies = appPackage.devDependencies || {};
     appPackage.scripts = {
         precommit: 'lint-staged',
-        format:
-            "prettier --tab-width 4 --single-quote --write './**/*.{js,jsx,ts,tsx}'",
+        format: "prettier --write '{src,test}/**/*.{js,jsx,ts,tsx}'",
         start: 'cycle-scripts start',
         test: 'cycle-scripts test',
         build: 'cycle-scripts build',
@@ -113,8 +112,12 @@ module.exports = function init(appPath, appName, verboseOpts) {
         clean: 'cycle-scripts clean'
     };
 
-    appPackage.lintStaged = {
-        '*.{js,jsx,ts,tsx}': ['npm run format', 'git add']
+    appPackage['lint-staged'] = {
+        '*.{js,jsx,ts,tsx}': ['prettier --write', 'git add']
+    };
+    appPackage.prettier = {
+        tabWidth: 4,
+        singleQuote: true
     };
     appPackage.nyc = {
         instrument: false,
