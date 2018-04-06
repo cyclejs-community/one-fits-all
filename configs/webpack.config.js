@@ -70,7 +70,7 @@ const makeTs = prod =>
 module.exports = webpackMerge(
     createConfig([
         tslint(),
-        resolve(['.js', '.jsx']),
+        resolve({ extensions: ['.js', '.jsx'] }),
         match(
             ['*.scss', '*.sass'],
             [
