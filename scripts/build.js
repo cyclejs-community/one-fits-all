@@ -7,8 +7,10 @@ env.NODE_ENV = 'production';
 
 const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack');
 
-spawn.sync(
+const result = spawn.sync(
     webpack,
     ['--config', path.join(__dirname, '..', 'configs', 'webpack.config.js')],
     { env: env, stdio: 'inherit' }
 );
+
+process.exit(result.status);

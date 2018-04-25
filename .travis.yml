@@ -1,10 +1,23 @@
 language: node_js
 node_js:
   - 6
+  - 8
 notifications:
     email: false
+cache:
+    yarn: true
+    directories:
+        - node_modules
 before_install:
   - npm install -g npm@5
+  - npm install -g yarn
   - npm install -g greenkeeper-lockfile@1
+  - npm install -g create-cycle-app
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
+script:
+    - create-cycle-app test-app --flavor $(pwd) --yarn
+    - cd test-app
+    - yarn run build
+    - yarn test
+    - cd ..
