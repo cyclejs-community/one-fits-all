@@ -68,7 +68,7 @@
     "@cycle/storage": "^5.0.3",
     "@cycle/time": "^0.13.0",
     "@types/history": "^4.6.2",
-    "cycle-onionify": "^5.0.0",
+    "cycle-onionify": "^6.0.0",
     "cycle-restart": "^0.2.3",
     "cycle-storageify": "^4.0.1",
     "cyclejs-test-helpers": "^1.4.0",
