@@ -35,7 +35,7 @@
     "@types/webpack-env": "^1.13.3",
     "@webpack-blocks/core": "^1.0.0-rc",
     "@webpack-blocks/tslint": "^1.0.0-rc",
-    "autoprefixer": "^8.0.0",
+    "autoprefixer": "^9.0.0",
     "chalk": "^2.3.0",
     "clean-webpack-plugin": "^0.1.17",
     "copy-webpack-plugin": "^4.3.1",
