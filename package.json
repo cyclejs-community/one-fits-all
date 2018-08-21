@@ -60,7 +60,7 @@
     "webpack-node-externals": "^1.6.0"
   },
   "devDependencies": {
-    "@cycle/dom": "^20.1.0",
+    "@cycle/dom": "^21.4.0",
     "@cycle/history": "^6.10.0",
     "@cycle/http": "^14.8.0",
     "@cycle/isolate": "^3.2.0",
