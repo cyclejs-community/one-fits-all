@@ -83,18 +83,6 @@ module.exports = function init(appPath, appName, verboseOpts) {
     const appPackageJson = path.join(appPath, 'package.json');
     const appPackage = require(appPackageJson);
 
-    if (cli === 'yarn') {
-        //TODO: Remove
-        console.log();
-        console.error(
-            chalk.red(
-                'Sorry, but for some reason yarn resolves packages differently than npm or pnpm, please use one of those package managers for the time being.'
-            )
-        );
-        fs.removeSync(appPath);
-        process.exit(1);
-    }
-
     // Manipulate app's package.json
     appPackage.scripts = {
         format: "prettier --write '{src,test}/**/*.{js,jsx,ts,tsx}'",
@@ -149,6 +137,12 @@ module.exports = function init(appPath, appName, verboseOpts) {
         ...appPackage.devDependencies,
         ...devDependencies
     };
+
+    if (cli === 'yarn') {
+        appPackage.resolutions = {
+            '**/typescript': '2.8'
+        };
+    }
 
     fs.writeFileSync(appPackageJson, JSON.stringify(appPackage, null, 2));
 
