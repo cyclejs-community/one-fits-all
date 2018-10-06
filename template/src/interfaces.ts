@@ -1,24 +1,21 @@
 import { Stream } from 'xstream';
 import { DOMSource, VNode } from '@cycle/dom';
-import { StorageSource, StorageRequest } from '@cycle/storage';
-import { HTTPSource, RequestOptions } from '@cycle/http';
-import { TimeSource } from '@cycle/time';
 import { RouterSource, HistoryAction } from 'cyclic-router';
+import { StateSource, Reducer } from 'cycle-onionify';
 
-export type Component = (s: BaseSources) => BaseSinks;
+export { Reducer } from 'cycle-onionify';
 
-export interface BaseSources {
+export type Component<State> = (s: Sources<State>) => Sinks<State>;
+
+export interface Sources<State> {
     DOM: DOMSource;
-    HTTP: HTTPSource;
-    time: TimeSource;
     router: RouterSource;
-    storage: StorageSource;
+    onion: StateSource<State>;
 }
 
-export interface BaseSinks {
+export interface Sinks<State> {
     DOM?: Stream<VNode>;
-    HTTP?: Stream<RequestOptions>;
     router?: Stream<HistoryAction>;
-    storage?: Stream<StorageRequest>;
     speech?: Stream<string>;
+    onion?: Stream<Reducer<State>>;
 }

@@ -13,7 +13,6 @@
     "no-duplicate-variable": true,
     "no-empty": true,
     "no-eval": true,
-    "no-null-keyword": true,
     "no-shadowed-variable": true,
     "no-var-keyword": true,
     "switch-default": true,

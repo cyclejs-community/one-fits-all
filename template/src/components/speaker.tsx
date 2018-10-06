@@ -1,109 +1,84 @@
 import xs, { Stream } from 'xstream';
 import sampleCombine from 'xstream/extra/sampleCombine';
-import { VNode, DOMSource } from '@cycle/dom';
-import { StateSource } from 'cycle-onionify';
+import { VNode, DOMSource, div, h2, textarea, button } from '@cycle/dom';
 
-import { BaseSources, BaseSinks } from '../interfaces';
+import { Sources, Sinks, Reducer } from '../interfaces';
 
-// Types
-export interface Sources extends BaseSources {
-    onion: StateSource<State>;
-}
-export interface Sinks extends BaseSinks {
-    onion: Stream<Reducer>;
-}
-
-// State
 export interface State {
     text: string;
 }
 export const defaultState: State = { text: 'Edit me!' };
-export type Reducer = (prev?: State) => State | undefined;
 
-// Actions
-const SPEECH = 'speech',
-    NAVIGATE = 'navigate',
-    UPDATE = 'update';
-interface SpeechAction {
-    type: typeof SPEECH;
+export interface DOMIntent {
+    speech$: Stream<null>;
+    link$: Stream<null>;
+    updateText$: Stream<string>;
 }
-interface NavigationAction {
-    type: typeof NAVIGATE;
-}
-interface UpdateAction {
-    type: typeof UPDATE;
-    reducer: Reducer;
-}
-type Action = SpeechAction | NavigationAction | UpdateAction;
 
-export function Speaker({ DOM, onion }: Sources): Sinks {
-    const action$: Stream<Action> = intent(DOM);
+export function Speaker({ DOM, onion }: Sources<State>): Sinks<State> {
+    const { speech$, link$, updateText$ }: DOMIntent = intent(DOM);
 
     return {
         DOM: view(onion.state$),
-        speech: speech(action$, onion.state$),
-        onion: onionFn(action$),
-        router: router(action$)
+        speech: speech(speech$, onion.state$),
+        onion: model(updateText$),
+        router: redirect(link$)
     };
 }
 
-function router(action$: Stream<Action>): Stream<string> {
-    return action$.filter(({ type }) => type === NAVIGATE).mapTo('/');
-}
+function model(updateText$: Stream<string>): Stream<Reducer<State>> {
+    const init$ = xs.of<Reducer<State>>(() => defaultState);
 
-function speech(
-    action$: Stream<Action>,
-    state$: Stream<State>
-): Stream<string> {
-    return action$
-        .filter(({ type }) => type === SPEECH)
-        .compose(sampleCombine(state$))
-        .map<string>(([_, s]) => s.text);
-}
-
-function intent(DOM: DOMSource): Stream<Action> {
-    const updateText$: Stream<Action> = DOM.select('#text')
-        .events('input')
-        .map((ev: any) => ev.target.value)
-        .map<Action>((value: string) => ({
-            type: UPDATE,
-            reducer: () => ({ text: value })
-        }));
-
-    const speech$: Stream<Action> = DOM.select('[data-action="speak"]')
-        .events('click')
-        .mapTo<Action>({ type: SPEECH });
-
-    const navigation$: Stream<Action> = DOM.select('[data-action="navigate"]')
-        .events('click')
-        .mapTo<Action>({ type: NAVIGATE });
-
-    return xs.merge(updateText$, speech$, navigation$);
-}
-
-function onionFn(action$: Stream<Action>): Stream<Reducer> {
-    const init$ = xs.of<Reducer>(
-        prevState => (prevState === undefined ? defaultState : prevState)
-    );
-
-    const update$: Stream<Reducer> = action$
-        .filter(({ type }) => type === UPDATE)
-        .map<Reducer>((action: UpdateAction) => action.reducer);
+    const update$ = updateText$.map(text => (state: State) => ({
+        ...state,
+        text
+    }));
 
     return xs.merge(init$, update$);
 }
 
 function view(state$: Stream<State>): Stream<VNode> {
-    return state$.map(({ text }) => (
-        <div>
-            <h2>My Awesome Cycle.js app - Page 2</h2>
-            <textarea id="text" rows="3" value={text} />
-            <button type="button" data-action="speak">
-                Speak to Me!
-            </button>
-            <button type="button" data-action="navigate">
-                Page 1
-            </button>
-        </div>
-    ));
+    return state$.map(({ text }) =>
+        div([
+            h2(['My Awesome Cycle.js app - Page 2']),
+            textarea({
+                attrs: { id: 'text', rows: '3' },
+                props: { value: text }
+            }),
+            button(
+                { attrs: { type: 'button' }, dataset: { action: 'speak' } },
+                ['Speak to Me!']
+            ),
+            button(
+                { attrs: { type: 'button' }, dataset: { action: 'navigate' } },
+                ['Page 1']
+            )
+        ])
+    );
+}
+
+function intent(DOM: DOMSource): DOMIntent {
+    const updateText$ = DOM.select('#text')
+        .events('input')
+        .map((ev: any) => ev.target.value);
+
+    const speech$ = DOM.select('[data-action="speak"]')
+        .events('click')
+        .mapTo(null);
+
+    const link$ = DOM.select('[data-action="navigate"]')
+        .events('click')
+        .mapTo(null);
+
+    return { updateText$, speech$, link$ };
+}
+
+function redirect(link$: Stream<any>): Stream<string> {
+    return link$.mapTo('/counter');
+}
+
+function speech(speech$: Stream<any>, state$: Stream<State>): Stream<string> {
+    return speech$
+        .compose(sampleCombine(state$))
+        .map(([_, s]: [any, State]) => s.text);
 }

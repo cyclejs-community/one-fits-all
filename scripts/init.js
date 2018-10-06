@@ -5,32 +5,17 @@ const path = require('path');
 const chalk = require('chalk');
 const spawn = require('cross-spawn');
 
-const basicDependencies = [
-    '@cycle/dom@20.2.0',
-    '@cycle/history@6.10.0',
-    '@cycle/http@14.9.0',
-    '@cycle/isolate@3.2.0',
-    '@cycle/run@4.1.0',
-    '@cycle/storage@5.0.3',
-    '@cycle/time@0.13.0',
-    'cycle-onionify@5.0.0',
-    'cyclejs-utils@3.1.0',
-    'cycle-storageify@4.0.1',
-    'cyclic-router@5.1.7',
-    'switch-path@1.2.0',
-    'xstream@11.2.0'
+const devDependencyNames = [
+    'cyclejs-test-helpers',
+    'snabbdom-looks-like',
+    'snabbdom-pragma',
+    'prettier',
+    'husky',
+    'lint-staged',
+    '@types/mocha'
 ];
 
-const devDependencies = [
-    'cycle-restart@0.2.3',
-    'cyclejs-test-helpers@2.0.0',
-    'html-looks-like@1.0.3',
-    'jsverify@0.8.3',
-    'prettier@1.11.1',
-    'snabbdom-to-html@5.1.0',
-    'husky@0.14.3',
-    'lint-staged@7.0.3'
-];
+const ownDevDependencies = ['release-it'];
 
 function patchGitignore(appPath) {
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
@@ -51,21 +36,21 @@ function patchGitignore(appPath) {
     });
 }
 
-function successMsg(appName, appPath) {
+function successMsg(appName, appPath, cli) {
     console.log();
     console.log(`Success! Created ${appName} at ${appPath}`);
     console.log('Inside that directory, you can run several commands:');
     console.log();
-    console.log(chalk.cyan('  npm start'));
+    console.log(chalk.cyan('  ' + cli + ' start'));
     console.log('    Starts the development server');
     console.log();
-    console.log(chalk.cyan('  npm test'));
+    console.log(chalk.cyan('  ' + cli + ' test'));
     console.log('    Start the test runner');
     console.log();
-    console.log(chalk.cyan('  npm run build'));
+    console.log(chalk.cyan('  ' + cli + ' run build'));
     console.log('    Bundles the app into static files for production');
     console.log();
-    console.log(chalk.cyan('  npm run eject'));
+    console.log(chalk.cyan('  ' + cli + ' run eject'));
     console.log(
         '    Removes this tool and copies build dependencies, configuration files'
     );
@@ -76,7 +61,7 @@ function successMsg(appName, appPath) {
     console.log('We suggest that you begin by typing:');
     console.log();
     console.log(chalk.cyan(`  cd ${appName}`));
-    console.log(chalk.cyan('  npm start'));
+    console.log(chalk.cyan('  ' + cli + ' start'));
     console.log();
     console.log(
         'If you have questions, issues or feedback about Cycle.js and create-cycle-app, please, join us on the Gitter:'
@@ -89,21 +74,29 @@ function successMsg(appName, appPath) {
 }
 
 module.exports = function init(appPath, appName, verboseOpts) {
-    console.log(appPath);
     const isObj = typeof verboseOpts === 'object';
     const verbose = isObj ? verboseOpts.verbose : verboseOpts;
-    const ownPackageName = require(path.join(__dirname, '..', 'package.json'))
-        .name;
+    const ownPackage = require(path.join(__dirname, '..', 'package.json'));
+    const ownPackageName = ownPackage.name;
     const cli = isObj ? verboseOpts.cli : 'npm';
     const ownPath = path.join(appPath, 'node_modules', ownPackageName);
     const appPackageJson = path.join(appPath, 'package.json');
     const appPackage = require(appPackageJson);
 
+    if (cli === 'yarn') {
+        //TODO: Remove
+        console.log();
+        console.error(
+            chalk.red(
+                'Sorry, but for some reason yarn resolves packages differently than npm or pnpm, please use one of those package managers for the time being.'
+            )
+        );
+        fs.removeSync(appPath);
+        process.exit(1);
+    }
+
     // Manipulate app's package.json
-    appPackage.dependencies = appPackage.dependencies || {};
-    appPackage.devDependencies = appPackage.devDependencies || {};
     appPackage.scripts = {
-        precommit: 'lint-staged',
         format: "prettier --write '{src,test}/**/*.{js,jsx,ts,tsx}'",
         start: 'cycle-scripts start',
         test: 'cycle-scripts test',
@@ -119,18 +112,42 @@ module.exports = function init(appPath, appName, verboseOpts) {
         tabWidth: 4,
         singleQuote: true
     };
+    appPackage.husky = {
+        hooks: {
+            'pre-commit': 'lint-staged'
+        }
+    };
     appPackage.nyc = {
-        instrument: false,
-        sourceMap: false,
+        instrument: true,
+        sourceMap: true,
         include: ['src/components'],
         reporter: ['html', 'text-summary']
     };
 
-    appPackage['mocha-webpack'] = {
-        include: [
-            'src/components/**/*.{jsx,js,ts,tsx}',
-            'test/**/*.test.{js,jsx,ts,tsx}'
-        ]
+    const basicDependencies = Object.keys(ownPackage.devDependencies)
+        .filter(k => devDependencyNames.indexOf(k) === -1)
+        .filter(k => ownDevDependencies.indexOf(k) === -1)
+        .map(k => [k, ownPackage.devDependencies[k]])
+        .map(([k, v]) => ({ [k]: v }))
+        .reduce((a, c) => ({ ...a, ...c }), {});
+
+    const devDependencies = Object.keys(ownPackage.devDependencies)
+        .concat(Object.keys(ownPackage.dependencies))
+        .filter(k => devDependencyNames.indexOf(k) !== -1)
+        .map(k => [
+            k,
+            ownPackage.devDependencies[k] || ownPackage.dependencies[k]
+        ])
+        .map(([k, v]) => ({ [k]: v }))
+        .reduce((a, c) => ({ ...a, ...c }), {});
+
+    appPackage.dependencies = {
+        ...appPackage.dependencies,
+        ...basicDependencies
+    };
+    appPackage.devDependencies = {
+        ...appPackage.devDependencies,
+        ...devDependencies
     };
 
     fs.writeFileSync(appPackageJson, JSON.stringify(appPackage, null, 2));
@@ -138,29 +155,19 @@ module.exports = function init(appPath, appName, verboseOpts) {
     // Copy flavor files
     fs.copySync(path.join(ownPath, 'template'), appPath);
     patchGitignore(appPath);
+    if (cli !== 'pnpm') {
+        fs.removeSync(path.join(appPath, 'pnpmfile.js'));
+    }
 
-    installList(basicDependencies, '--save', verbose, cli, appPath);
-    installList(devDependencies, '--save-dev', verbose, cli, appPath);
-
-    successMsg(appName, appPath);
-};
-
-function installList(list, mode, verbose, cli, appPath) {
-    const listOfbasicDependencies = list
-        .slice(0, list.length - 1)
-        .join(', ')
-        .concat(` and ${list.slice(-1)}`);
-
-    console.log(`Installing ${listOfbasicDependencies} using npm...`);
+    console.log(`Installing dependencies using ${cli}...`);
     console.log();
 
-    const args = [cli === 'npm' ? 'install' : 'add']
-        .concat(list)
-        .concat([mode, verbose && '--verbose'])
-        .filter(Boolean);
+    const args = ['install'].concat([verbose && '--verbose']).filter(Boolean);
 
     const code = spawn.sync(cli, args, { stdio: 'inherit', cwd: appPath });
     if (code.status !== 0) {
         console.error(chalk.red('`' + cli + ' ' + args.join(' ') + '` failed'));
     }
-}
+
+    successMsg(appName, appPath, cli);
+};

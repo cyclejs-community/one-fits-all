@@ -1,54 +1,50 @@
 import xs, { Stream } from 'xstream';
 import { VNode, DOMSource } from '@cycle/dom';
-import { StateSource } from 'cycle-onionify';
-import isolate from '@cycle/isolate';
 import { extractSinks } from 'cyclejs-utils';
+import isolate from '@cycle/isolate';
 
 import { driverNames } from '../drivers';
-import { BaseSources, BaseSinks } from '../interfaces';
-import { RouteValue, routes, initialRoute } from '../routes';
+import { Sources, Sinks, Reducer, Component } from '../interfaces';
 
-import { State as CounterState } from './counter';
-import { State as SpeakerState } from './speaker';
+import { Counter, State as CounterState } from './counter';
+import { Speaker, State as SpeakerState } from './speaker';
 
-export interface Sources extends BaseSources {
-    onion: StateSource<State>;
-}
-export interface Sinks extends BaseSinks {
-    onion?: Stream<Reducer>;
-}
-
-// State
 export interface State {
     counter?: CounterState;
     speaker?: SpeakerState;
 }
 export const defaultState: State = {
     counter: { count: 5 },
-    speaker: undefined //use default state of component
+    speaker: undefined // use default state of component
 };
-export type Reducer = (prev?: State) => State | undefined;
 
-export function App(sources: Sources): Sinks {
-    const initReducer$ = xs.of<Reducer>(
+export function App(sources: Sources<State>): Sinks<State> {
+    const initReducer$ = xs.of<Reducer<State>>(
         prevState => (prevState === undefined ? defaultState : prevState)
     );
 
-    const match$ = sources.router.define(routes);
+    const match$ = sources.router.define({
+        '/counter': isolate(Counter, 'counter'),
+        '/speaker': isolate(Speaker, 'speaker')
+    });
 
-    const componentSinks$ = match$.map(
-        ({ path, value }: { path: string; value: RouteValue }) => {
-            const { component, scope } = value;
-            return isolate(component, scope)({
+    const componentSinks$ = match$
+        .filter(({ path, value }: any) => path && typeof value === 'function')
+        .map(({ path, value }: { path: string; value: Component<any> }) => {
+            return value({
                 ...sources,
                 router: sources.router.path(path)
             });
-        }
-    );
+        });
+
+    const redirect$ = sources.router.history$
+        .filter((l: Location) => l.pathname === '/')
+        .mapTo('/counter');
 
     const sinks = extractSinks(componentSinks$, driverNames);
     return {
         ...sinks,
+        router: xs.merge(redirect$, sinks.router),
         onion: xs.merge(initReducer$, sinks.onion)
     };
 }

@@ -1,26 +1,26 @@
 const {
     createConfig,
-    defineConstants,
+    match,
     env,
+    defineConstants,
     entryPoint,
     setOutput,
     sourceMaps,
     addPlugins,
-    devServer,
-    postcss,
-    sass,
-    css,
-    typescript,
-    extractText,
     customConfig,
-    uglify,
-    match,
-    file,
-    url,
-    resolve
-} = require('webpack-blocks');
-const webpackMerge = require('webpack-merge');
+    resolve,
+    setMode
+} = require('@webpack-blocks/webpack');
+const { css, file, url } = require('@webpack-blocks/assets');
+const devServer = require('@webpack-blocks/dev-server');
+const extractText = require('@webpack-blocks/extract-text');
+const postcss = require('@webpack-blocks/postcss');
+const sass = require('@webpack-blocks/sass');
+const uglify = require('@webpack-blocks/uglify');
+const typescript = require('@webpack-blocks/typescript');
 const tslint = require('@webpack-blocks/tslint');
+
+const webpackMerge = require('webpack-merge');
 const autoprefixer = require('autoprefixer');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -34,54 +34,27 @@ const fs = require('fs');
 const appPath = (...names) => path.join(process.cwd(), ...names);
 const userConfig = require(appPath('webpack.config.js'));
 
-const preprocessor = production => ({
-    PRODUCTION: production,
-    DEVELOPMENT: !production
-});
-
-const ifdef = config => (context, { addLoader }) =>
-    addLoader(
-        Object.assign(
-            {
-                test: /\.tsx?/,
-                use: [
-                    {
-                        loader: 'awesome-typescript-loader'
-                    },
-                    { loader: 'ifdef-loader?' + JSON.stringify(config) }
-                ]
-            },
-            context.match
-        )
-    );
-
-const makeTs = prod =>
-    match(
-        ['*.js', '*.jsx', '*.ts', '*.tsx'],
-        [
-            ifdef(preprocessor(prod)),
-            typescript({
-                useCache: true,
-                cacheDirectory: 'node_modules/.cache/at-loader'
-            })
-        ]
-    );
-
 module.exports = webpackMerge(
     createConfig([
+        setMode(process.env.NODE_ENV || 'development'),
+        typescript({
+            useCache: true,
+            cacheDirectory: 'node_modules/.cache/at-loader'
+        }),
         tslint(),
         resolve({ extensions: ['.js', '.jsx'] }),
         match(
             ['*.scss', '*.sass'],
             [
-                postcss({
-                    plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
-                }),
                 sass({
                     includePaths: [appPath('node_modules')],
                     sourceMap: true
                 }),
-                env('production', [extractText('[name].[contenthash:8].css')])
+                postcss({
+                    plugins: [autoprefixer({ browsers: ['last 2 versions'] })]
+                }),
+
+                env('production', [extractText('[name].[hash].css')])
             ]
         ),
         match(['*.eot', '*.ttf', '*.woff', '*.woff2'], [file()]),
@@ -108,7 +81,6 @@ module.exports = webpackMerge(
             })
         ]),
         env('development', [
-            makeTs(false),
             devServer({
                 contentBase: appPath('public')
             }),
@@ -116,7 +88,6 @@ module.exports = webpackMerge(
             addPlugins([new webpack.NamedModulesPlugin()])
         ]),
         env('production', [
-            makeTs(true),
             uglify({
                 parallel: true,
                 cache: true,
@@ -132,8 +103,7 @@ module.exports = webpackMerge(
                 }),
                 new CopyWebpackPlugin([{ from: 'public', to: '' }])
             ])
-        ]),
-        env('test', [makeTs(true)])
+        ])
     ]),
     userConfig
 );

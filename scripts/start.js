@@ -5,12 +5,13 @@ const path = require('path');
 const env = Object.create(process.env);
 env.NODE_ENV = 'development';
 
+const webpackAPI = require.resolve('webpack-dev-server');
+
 const webpack = path.resolve(
-    __dirname,
+    webpackAPI.slice(0, webpackAPI.lastIndexOf('/')),
     '..',
-    '..',
-    '.bin',
-    'webpack-dev-server'
+    'bin',
+    'webpack-dev-server.js'
 );
 
 spawn.sync(

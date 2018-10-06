@@ -5,11 +5,22 @@ const path = require('path');
 const env = Object.create(process.env);
 env.NODE_ENV = 'production';
 
-const webpack = path.resolve(__dirname, '..', '..', '.bin', 'webpack');
+const webpackAPI = require.resolve('webpack');
+
+const webpack = path.resolve(
+    webpackAPI.slice(0, webpackAPI.lastIndexOf('/')),
+    '..',
+    'bin',
+    'webpack.js'
+);
 
 const result = spawn.sync(
-    webpack,
-    ['--config', path.join(__dirname, '..', 'configs', 'webpack.config.js')],
+    'node',
+    [
+        webpack,
+        '--config',
+        path.join(__dirname, '..', 'configs', 'webpack.config.js')
+    ],
     { env: env, stdio: 'inherit' }
 );
 

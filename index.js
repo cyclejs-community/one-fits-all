@@ -6,22 +6,7 @@ const script = process.argv[2];
 const args = process.argv.slice(3);
 const path = require('path');
 
-function rimraf() {
-    const exectuable = path.join(
-        process.cwd(),
-        'node_modules',
-        '.bin',
-        'rimraf'
-    );
-    spawn.sync(exectuable, ['build', '.tmp', '.nyc_output', 'coverage'], {
-        stdio: 'inherit'
-    });
-}
-
 switch (script) {
-    case 'clean':
-        rimraf();
-        break;
     case 'start':
     case 'test':
     case 'build':
