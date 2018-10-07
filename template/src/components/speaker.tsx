@@ -40,7 +40,7 @@ function model(updateText$: Stream<string>): Stream<Reducer<State>> {
 function view(state$: Stream<State>): Stream<VNode> {
     return state$.map(({ text }) =>
         div([
-            h2(['My Awesome Cycle.js app - Page 2']),
+            h2('My Awesome Cycle.js app - Page 2'),
             textarea({
                 attrs: { id: 'text', rows: '3' },
                 props: { value: text }

@@ -1,8 +1,8 @@
 import { run } from '@cycle/run';
-import { drivers, wrapMain } from './drivers';
+import { getDrivers, wrapMain } from './drivers';
 import { Component } from './interfaces';
 import { App } from './components/app';
 
 const main: Component<any> = wrapMain(App);
 
-run(main as any, drivers);
+run(main as any, getDrivers());

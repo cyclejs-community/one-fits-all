@@ -19,8 +19,10 @@ dependencies:
   html-webpack-harddisk-plugin: 0.2.0
   html-webpack-plugin: 3.2.0
   husky: 1.1.1
+  istanbul-instrumenter-loader: 3.0.1
   lint-staged: 7.3.0
   mocha: 5.2.0
+  mocha-webpack: 2.0.0-beta.0
   node-sass: 4.9.3
   nyc: 13.0.1
   prettier: 1.14.3
@@ -36,13 +38,14 @@ devDependencies:
   '@cycle/history': 6.10.0
   '@cycle/isolate': 3.4.0
   '@cycle/run': 4.4.0
+  '@cycle/time': 0.15.0
   '@types/mocha': 5.2.5
   cycle-onionify: 6.1.0
   cyclejs-test-helpers: 2.0.0
   cyclejs-utils: 3.2.0
   cyclic-router: 5.1.7
   release-it: 7.6.1
-  snabbdom-looks-like: 1.0.1
+  snabbdom-looks-like: 1.0.4
   snabbdom-pragma: 2.7.0
   switch-path: 1.2.0
   xstream: 11.7.0
@@ -183,7 +186,7 @@ packages:
       most: /most/1.7.3/most@1.7.3
       performance-now: 2.1.0
       raf: 3.3.2
-      rxjs: 6.2.2
+      rxjs: 6.3.3
       setimmediate: 1.0.5
       sorted-immutable-list: 1.1.0
       variable-diff: 1.1.0
@@ -920,7 +923,6 @@ packages:
       lodash: 4.17.11
       source-map: 0.5.7
       trim-right: 1.0.1
-    dev: true
     resolution:
       integrity: sha512-HyfwY6ApZj7BYTcJURpM5tznulaBvyio7/0d4zFOeMPUmfxkCjHocCuoLa2SAGzBI8AREcH3eP3758F672DppA==
   /babel-helper-builder-binary-assignment-operator-visitor/6.24.1:
@@ -1027,7 +1029,6 @@ packages:
   /babel-messages/6.23.0:
     dependencies:
       babel-runtime: 6.26.0
-    dev: true
     resolution:
       integrity: sha1-8830cDhYA1sqKVHG7F7fbGLyYw4=
   /babel-plugin-check-es2015-constants/6.22.0:
@@ -1298,7 +1299,6 @@ packages:
     dependencies:
       core-js: 2.5.7
       regenerator-runtime: 0.11.1
-    dev: true
     resolution:
       integrity: sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
   /babel-template/6.26.0:
@@ -1308,7 +1308,6 @@ packages:
       babel-types: 6.26.0
       babylon: 6.18.0
       lodash: 4.17.11
-    dev: true
     resolution:
       integrity: sha1-3gPi0WOWsGn0bdn/+FIfsaDjXgI=
   /babel-traverse/6.26.0:
@@ -1322,7 +1321,6 @@ packages:
       globals: 9.18.0
       invariant: 2.2.4
       lodash: 4.17.11
-    dev: true
     resolution:
       integrity: sha1-RqnL1+3MYsjlwGTi0tjQ9ANXZu4=
   /babel-types/6.26.0:
@@ -1331,11 +1329,9 @@ packages:
       esutils: 2.0.2
       lodash: 4.17.11
       to-fast-properties: 1.0.3
-    dev: true
     resolution:
       integrity: sha1-o7Bz+Uq0nrb6Vc1lInozQ4BjJJc=
   /babylon/6.18.0:
-    dev: true
     hasBin: true
     resolution:
       integrity: sha512-q/UEjfGJ2Cm3oKV71DJz9d25TPnq5rhBVL2Q4fA5wcC3jcrdn7+SssEybFIxwAvvP+YCsCYNKughoF33GxgycQ==
@@ -2285,7 +2281,6 @@ packages:
   /convert-source-map/1.6.0:
     dependencies:
       safe-buffer: 5.1.2
-    dev: true
     resolution:
       integrity: sha512-eFu7XigvxdZ1ETfbgPBohgyQ/Z++C0eEhTor0qRwBw9unw+L0/6V8wkSuGgzdThkiS5lSpdptOQPD8Ak40a+7A==
   /cookie-signature/1.0.6:
@@ -2330,7 +2325,6 @@ packages:
     resolution:
       integrity: sha512-zmC33E8FFSq3AbflTvqvPvBo621H36Afsxlui91d+QyZxPIuXghfnTsa1CuqiAaCPgJoSUWfTFbKJnadZpKEbQ==
   /core-js/2.5.7:
-    dev: true
     resolution:
       integrity: sha512-RszJCAxg/PP6uzXVXL6BsxSXx/B05oJAQ2vkJRjyjrEcNVycaqOmNb5OTxZPE3xa5gwZduqza6L9JOCenh/Ecw==
   /core-util-is/1.0.2:
@@ -2818,7 +2812,6 @@ packages:
   /detect-indent/4.0.0:
     dependencies:
       repeating: 2.0.1
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -3762,7 +3755,6 @@ packages:
     resolution:
       integrity: sha512-io6LkyPVuzCHBSQV9fmOwxZkUk6nIaGmxheLDgmuFv89j0fm2aqDbIXKAGfzCMHqz3HLF2Zf8WSG6VqMh2qFmA==
   /globals/9.18.0:
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -3783,7 +3775,7 @@ packages:
     dependencies:
       array-union: 1.0.2
       dir-glob: 2.0.0
-      glob: 7.1.2
+      glob: 7.1.3
       ignore: 3.3.10
       pify: 3.0.0
       slash: 1.0.0
@@ -4763,12 +4755,41 @@ packages:
     dev: false
     resolution:
       integrity: sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
+  /istanbul-instrumenter-loader/3.0.1:
+    dependencies:
+      convert-source-map: 1.6.0
+      istanbul-lib-instrument: 1.10.2
+      loader-utils: 1.1.0
+      schema-utils: 0.3.0
+    dev: false
+    engines:
+      node: '>= 4.8 < 5.0.0 || >= 5.10'
+    peerDependencies:
+      webpack: ^2.0.0 || ^3.0.0 || ^4.0.0
+    resolution:
+      integrity: sha512-a5SPObZgS0jB/ixaKSMdn6n/gXSrK2S6q/UfRJBT3e6gQmVjwZROTODQsYW5ZNwOu78hG62Y3fWlebaVOL0C+w==
+  /istanbul-lib-coverage/1.2.1:
+    dev: false
+    resolution:
+      integrity: sha512-PzITeunAgyGbtY1ibVIUiV679EFChHjoMNRibEIobvmrCRaIgwLxNucOSimtNWUhEib/oO7QY2imD75JVgCJWQ==
   /istanbul-lib-coverage/2.0.1:
     dev: false
     engines:
       node: '>=6'
     resolution:
       integrity: sha512-nPvSZsVlbG9aLhZYaC3Oi1gT/tpyo3Yt5fNyf6NmcKIayz4VV/txxJFFKAK/gU4dcNn8ehsanBbVHVl0+amOLA==
+  /istanbul-lib-instrument/1.10.2:
+    dependencies:
+      babel-generator: 6.26.1
+      babel-template: 6.26.0
+      babel-traverse: 6.26.0
+      babel-types: 6.26.0
+      babylon: 6.18.0
+      istanbul-lib-coverage: 1.2.1
+      semver: 5.5.1
+    dev: false
+    resolution:
+      integrity: sha512-aWHxfxDqvh/ZlxR8BBaEPVSWDPUkGD63VjGQn3jcw8jCp7sHEMKcrj4xfJn/ABzdMEHiQNyvDQhqm5o8+SQg7A==
   /istanbul-lib-instrument/2.3.2:
     dependencies:
       '@babel/generator': 7.0.0-beta.51
@@ -4841,7 +4862,6 @@ packages:
     resolution:
       integrity: sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
   /jsesc/1.3.0:
-    dev: true
     hasBin: true
     resolution:
       integrity: sha1-RsP+yMGJKxKwgz25vHYiF226s0s=
@@ -5589,6 +5609,32 @@ packages:
     resolution:
       integrity: sha1-MAV0OOrGz3+MR2fzhkjWaX11yQM=
       tarball: 'http://registry.npmjs.org/mkdirp/-/mkdirp-0.5.1.tgz'
+  /mocha-webpack/2.0.0-beta.0:
+    dependencies:
+      babel-runtime: 6.26.0
+      chalk: 2.4.1
+      chokidar: 2.0.4
+      glob-parent: 3.1.0
+      globby: 7.1.1
+      interpret: 1.1.0
+      is-glob: 4.0.0
+      loader-utils: 1.1.0
+      lodash: 4.17.11
+      memory-fs: 0.4.1
+      nodent-runtime: 3.2.1
+      normalize-path: 2.1.1
+      progress: 2.0.0
+      source-map-support: 0.5.9
+      strip-ansi: 4.0.0
+      toposort: 1.0.7
+      yargs: 11.1.0
+    dev: false
+    hasBin: true
+    peerDependencies:
+      mocha: '>=4 <=5'
+      webpack: ^4.0.0
+    resolution:
+      integrity: sha512-2ezbW0h5cYWr874F/hzytQCqINxk+GVelMY4xWTSHwwH1LrPAOzjlUljZ+/PhpaP6QeqYbL5x5vK/bnaXqkfEw==
   /mocha/5.2.0:
     dependencies:
       browser-stdout: 1.3.1
@@ -5802,6 +5848,11 @@ packages:
     requiresBuild: true
     resolution:
       integrity: sha512-XzXyGjO+84wxyH7fV6IwBOTrEBe2f0a6SBze9QWWYR/cL74AcQUks2AsqcCZenl/Fp/JVbuEaLpgrLtocwBUww==
+  /nodent-runtime/3.2.1:
+    dev: false
+    requiresBuild: true
+    resolution:
+      integrity: sha512-7Ws63oC+215smeKJQCxzrK21VFVlCFBkwl0MOObt0HOpVQXs3u483sAmtkF33nNqZ5rSOQjB76fgyPBmAUrtCA==
   /nopt/3.0.6:
     dependencies:
       abbrev: 1.1.1
@@ -6096,6 +6147,7 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-IPnxeuKe00XoveWDsT0gCYA8FNk=
+      tarball: 'http://registry.npmjs.org/os-locale/-/os-locale-1.4.0.tgz'
   /os-locale/2.1.0:
     dependencies:
       execa: 0.7.0
@@ -6745,6 +6797,12 @@ packages:
       node: '>= 0.6.0'
     resolution:
       integrity: sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
+  /progress/2.0.0:
+    dev: false
+    engines:
+      node: '>=0.4.0'
+    resolution:
+      integrity: sha1-ihvjZr+Pwj2yvSPxDG/pILQ4nR8=
   /promise-inflight/1.0.1:
     dev: false
     resolution:
@@ -7045,7 +7103,6 @@ packages:
     resolution:
       integrity: sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
   /regenerator-runtime/0.11.1:
-    dev: true
     resolution:
       integrity: sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
   /regenerator-transform/0.10.1:
@@ -7345,14 +7402,6 @@ packages:
     dev: false
     resolution:
       integrity: sha1-6Eg5bwV9Ij8kOGkkYY4laUFh7Ec=
-  /rxjs/6.2.2:
-    dependencies:
-      tslib: 1.9.3
-    dev: true
-    engines:
-      npm: '>=2.0.0'
-    resolution:
-      integrity: sha512-0MI8+mkKAXZUF9vMrEoPnaoHkfzBPP4IGwUYRJhIRJF6/w3uByO1e91bEHn8zd43RdkTMKiooYKmwz7RH6zfOQ==
   /rxjs/6.3.3:
     dependencies:
       tslib: 1.9.3
@@ -7404,6 +7453,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+  /schema-utils/0.3.0:
+    dependencies:
+      ajv: 5.5.2
+    dev: false
+    engines:
+      node: '>= 4.3 < 5.0.0 || >= 5.10'
+    resolution:
+      integrity: sha1-9YdyIs4+kx7a4DnxfrNxbnE3+M8=
   /schema-utils/0.4.7:
     dependencies:
       ajv: 6.5.4
@@ -7612,12 +7669,12 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7b+JA/ZvfOL46v1s7tZeJkyDGzU=
-  /snabbdom-looks-like/1.0.1:
+  /snabbdom-looks-like/1.0.4:
     dependencies:
       diff: 3.5.0
     dev: true
     resolution:
-      integrity: sha512-okU0z1LsqFjiXw+NznFf+POVZhDXB1yI5TtgTfGAjHIOT71Gm8zouPPtmGhIKi6d590e6G0sCXhbVQm2eSoeiw==
+      integrity: sha512-+3qIesvA2i+fqWy4Q5/e++rtSbrxAGBmnLK5D/JmN+g27z2IcFBUuDJ8tGbWp/lDx2WToEII2m9XOck9xB7Jyw==
   /snabbdom-pragma/2.7.0:
     dependencies:
       extend: 3.0.2
@@ -7721,6 +7778,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-try0/JqxPLF9nOjvSta7tVondkP5dwgyLDjVoyMDlmjugT2lRZ1OfsrYTkCd2hkDnJTKRbO/Rl3orm8vlsUzbA==
+  /source-map-support/0.5.9:
+    dependencies:
+      buffer-from: 1.1.1
+      source-map: 0.6.1
+    dev: false
+    resolution:
+      integrity: sha512-gR6Rw4MvUlYy83vP0vxoVNzM6t8MUXqNuRsuBmBHQDu1Fh6X015FrLdgoDKcNdkwGubozq0P4N0Q37UyFVr1EA==
   /source-map-url/0.4.0:
     resolution:
       integrity: sha1-PpNdfd1zYxuXZZlW1VEo6HtQhKM=
@@ -8136,7 +8200,6 @@ packages:
     resolution:
       integrity: sha1-fSKbH8xjfkZsoIEYCDanqr/4P0M=
   /to-fast-properties/1.0.3:
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -8999,6 +9062,24 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Rjp+lMYQOWtgqojx1dEWorjCofi1YN7AoFvYV7b1gx/7dAAeuI4kN5SZiEvr0ZmsZTOpDRcCqrpI10L31tFkBw==
+  /yargs/11.1.0:
+    dependencies:
+      cliui: 4.1.0
+      decamelize: 1.2.0
+      find-up: 2.1.0
+      get-caller-file: 1.0.3
+      os-locale: 2.1.0
+      require-directory: 2.1.1
+      require-main-filename: 1.0.1
+      set-blocking: 2.0.0
+      string-width: 2.1.1
+      which-module: 2.0.0
+      y18n: 3.2.1
+      yargs-parser: 9.0.2
+    dev: false
+    resolution:
+      integrity: sha512-NwW69J42EsCSanF8kyn5upxvjp5ds+t3+udGBeTbFnERA+lF541DDpMawzo4z6W/QrzNM18D+BPMiOBibnFV5A==
+      tarball: 'http://registry.npmjs.org/yargs/-/yargs-11.1.0.tgz'
   /yargs/12.0.2:
     dependencies:
       cliui: 4.1.0
@@ -9042,6 +9123,7 @@ specifiers:
   '@cycle/history': ^6.10.0
   '@cycle/isolate': ^3.4.0
   '@cycle/run': ^4.4.0
+  '@cycle/time': ^0.15.0
   '@types/mocha': ^5.2.5
   '@types/webpack-env': ^1.13.6
   '@webpack-blocks/assets': ^2.0.0-alpha
@@ -9067,14 +9149,16 @@ specifiers:
   html-webpack-harddisk-plugin: ^0.2.0
   html-webpack-plugin: ^3.2.0
   husky: ^1.1.1
+  istanbul-instrumenter-loader: ^3.0.1
   lint-staged: ^7.3.0
   mocha: ^5.2.0
+  mocha-webpack: ^2.0.0-beta.0
   node-sass: ^4.9.3
   nyc: ^13.0.1
   prettier: ^1.14.3
   release-it: ^7.6.1
   rimraf: ^2.6.2
-  snabbdom-looks-like: ^1.0.1
+  snabbdom-looks-like: ^1.0.4
   snabbdom-pragma: ^2.7.0
   switch-path: ^1.2.0
   typescript: ~2.8.4

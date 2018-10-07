@@ -7,18 +7,21 @@ const packageJson = require(path.join(process.cwd(), 'package.json'));
 let env = Object.create(process.env);
 env.NODE_ENV = 'test';
 
-const mocha = path.resolve(process.cwd(), 'node_modules', '.bin', 'nyc');
-const mochaArgs = '{' + packageJson['mocha-webpack'].include.join(',') + '}';
+const nycAPI = require.resolve('nyc');
+const nyc = path.resolve(
+    nycAPI.slice(0, nycAPI.lastIndexOf('/')),
+    'bin',
+    'nyc.js'
+);
 
 const args = [
     'mocha-webpack',
-    '--timeout=100000',
     '--colors',
     '--webpack-config',
-    path.join(__dirname, '..', 'configs', 'webpack.config.test.js'),
-    mochaArgs
+    path.join(__dirname, '..', 'configs', 'webpack.config.js'),
+    ...packageJson['mocha-webpack'].include
 ].filter(Boolean);
 
-const result = spawn.sync(mocha, args, { env: env, stdio: 'inherit' });
+const result = spawn.sync(nyc, args, { env: env, stdio: 'inherit' });
 
 process.exit(result.status);

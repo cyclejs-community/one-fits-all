@@ -106,10 +106,14 @@ module.exports = function init(appPath, appName, verboseOpts) {
         }
     };
     appPackage.nyc = {
-        instrument: true,
-        sourceMap: true,
+        instrument: false,
+        sourceMap: false,
         include: ['src/components'],
-        reporter: ['html', 'text-summary']
+        reporter: ['html', 'text']
+    };
+
+    appPackage['mocha-webpack'] = {
+        include: ['test/**/*.test.{js,jsx,ts,tsx}']
     };
 
     const basicDependencies = Object.keys(ownPackage.devDependencies)

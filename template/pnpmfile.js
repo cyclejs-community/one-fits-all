@@ -12,14 +12,21 @@ function readPackage(pkg, context) {
     ) {
         pkg.devDependencies = {
             ...pkg.devDependencies,
+            tslint: '*',
+            jsverify: '*',
+            webpack: '*',
+            mocha: '*',
+            typescript: '2.8',
             'awesome-typescript-loader': '*',
             'style-loader': '*',
             'css-loader': '*',
             'tslint-loader': '*',
             'sass-loader': '*',
             'postcss-loader': '*',
-            tslint: '*',
-            '@types/history': '*'
+            'istanbul-instrumenter-loader': '*',
+            '@types/history': '*',
+            'cross-env': '*',
+            'mocha-webpack': '2.0.0-beta.0'
         };
         pkg.dependencies = {
             ...pkg.dependencies,

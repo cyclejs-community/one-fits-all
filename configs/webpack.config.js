@@ -27,16 +27,20 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
 const fs = require('fs');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 const userConfig = require(appPath('webpack.config.js'));
+const packageJson = require(appPath('package.json'));
 
 module.exports = webpackMerge(
     createConfig([
-        setMode(process.env.NODE_ENV || 'development'),
+        setMode(
+            process.env.NODE_ENV === 'production' ? 'production' : 'development'
+        ),
         typescript({
             useCache: true,
             cacheDirectory: 'node_modules/.cache/at-loader'
@@ -105,5 +109,35 @@ module.exports = webpackMerge(
             ])
         ])
     ]),
-    userConfig
+    userConfig,
+    createConfig([
+        env('test', [
+            customConfig({
+                target: 'node',
+                externals: [nodeExternals()],
+                output: {
+                    // use absolute paths in sourcemaps (important for debugging via IDE)
+                    devtoolModuleFilenameTemplate: '[absolute-resource-path]',
+                    devtoolFallbackModuleFilenameTemplate:
+                        '[absolute-resource-path]?[hash]'
+                },
+                module: {
+                    rules: [
+                        {
+                            test: /\.(jsx?|tsx?)/,
+                            include: packageJson.nyc.include.map(p =>
+                                path.resolve(appPath(p))
+                            ),
+                            use: {
+                                loader: 'istanbul-instrumenter-loader',
+                                options: { esModules: true }
+                            },
+                            enforce: 'post'
+                        }
+                    ]
+                }
+            }),
+            sourceMaps('inline-cheap-module-source-map')
+        ])
+    ])
 );
