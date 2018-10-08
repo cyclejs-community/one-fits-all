@@ -142,6 +142,8 @@ module.exports = function init(appPath, appName, verboseOpts) {
         ...devDependencies
     };
 
+    appPackage['one-fits-all'] = true;
+
     if (cli === 'yarn') {
         appPackage.resolutions = {
             '**/typescript': '2.8'

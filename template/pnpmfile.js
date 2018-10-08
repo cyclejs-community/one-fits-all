@@ -6,10 +6,7 @@ module.exports = {
 };
 
 function readPackage(pkg, context) {
-    if (
-        pkg.devDependencies &&
-        pkg.devDependencies['cycle-scripts-one-fits-all']
-    ) {
+    if (pkg['one-fits-all']) {
         pkg.devDependencies = {
             ...pkg.devDependencies,
             tslint: '*',

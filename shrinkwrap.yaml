@@ -20,8 +20,10 @@ dependencies:
   html-webpack-harddisk-plugin: 0.2.0
   html-webpack-plugin: 3.2.0
   husky: 1.1.1
+  inquirer: 6.2.0
   istanbul-instrumenter-loader-fix: 3.0.2
   lint-staged: 7.3.0
+  mkdirp: 0.5.1
   mocha: 5.2.0
   mocha-webpack: 2.0.0-beta.0
   node-sass: 4.9.3
@@ -654,7 +656,6 @@ packages:
     resolution:
       integrity: sha1-06ioOzGapneTZisT52HHkRQiMG4=
   /ansi-escapes/3.1.0:
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -1755,7 +1756,6 @@ packages:
     resolution:
       integrity: sha512-ObN6h1v2fTJSmUXoS3nMQ92LbDK9be4TV+6G+omQlGJFdcUX5heKi1LZ1YnRMIgwTLEj3E24bT6tYni50rlCfQ==
   /chardet/0.7.0:
-    dev: true
     resolution:
       integrity: sha512-mT8iDcrh03qDGRRmoA2hmBJnxpllMR+0/0qlzjqZES6NdiWDcZkCNAk4rPFZ9Q85r27unkiNNg8ZOiwZXBHwcA==
   /chokidar/2.0.4:
@@ -1848,7 +1848,6 @@ packages:
   /cli-cursor/2.1.0:
     dependencies:
       restore-cursor: 2.0.0
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -1869,7 +1868,6 @@ packages:
     resolution:
       integrity: sha1-nxXPuwcFAFNpIWxiasfQWrkN1XQ=
   /cli-width/2.2.0:
-    dev: true
     resolution:
       integrity: sha1-/xnt6Kml5XkyQUewwR8PvLq+1jk=
   /cliui/3.2.0:
@@ -3284,7 +3282,6 @@ packages:
       chardet: 0.7.0
       iconv-lite: 0.4.24
       tmp: 0.0.33
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -3385,7 +3382,6 @@ packages:
   /figures/2.0.0:
     dependencies:
       escape-string-regexp: 1.0.5
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -4214,7 +4210,6 @@ packages:
   /iconv-lite/0.4.24:
     dependencies:
       safer-buffer: 2.1.2
-    dev: true
     engines:
       node: '>=0.10.0'
     resolution:
@@ -4334,7 +4329,6 @@ packages:
       string-width: 2.1.1
       strip-ansi: 4.0.0
       through: 2.3.8
-    dev: true
     engines:
       node: '>=6.0.0'
     resolution:
@@ -5661,7 +5655,6 @@ packages:
     resolution:
       integrity: sha512-ji6J5enbMyGRHIAkAOu3WdV8nggqviKCEKtXcOqfphZZtQrmHKycfynJ2V7eVPUA4NhJ6V7Wf4TmGbTwKE9B6g==
   /mute-stream/0.0.7:
-    dev: true
     resolution:
       integrity: sha1-MHXOk7whuPq0PhvE2n6BFe0ee6s=
   /nan/2.11.1:
@@ -6040,7 +6033,6 @@ packages:
   /onetime/2.0.1:
     dependencies:
       mimic-fn: 1.2.0
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -7320,7 +7312,6 @@ packages:
     dependencies:
       onetime: 2.0.1
       signal-exit: 3.0.2
-    dev: true
     engines:
       node: '>=4'
     resolution:
@@ -7351,7 +7342,6 @@ packages:
   /run-async/2.3.0:
     dependencies:
       is-promise: 2.1.0
-    dev: true
     engines:
       node: '>=0.12.0'
     resolution:
@@ -8117,7 +8107,6 @@ packages:
     resolution:
       integrity: sha512-mVzjRxuWnDKs/qH1rbOJEVHLlSX9kty9lpi7lMvLgU9S74mQ8/Ozg9UPcKxShh0qG2NZ+NyPOPpcZU4C1Eld9A==
   /through/2.3.8:
-    dev: true
     resolution:
       integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=
       tarball: 'http://registry.npmjs.org/through/-/through-2.3.8.tgz'
@@ -8155,7 +8144,6 @@ packages:
   /tmp/0.0.33:
     dependencies:
       os-tmpdir: 1.0.2
-    dev: true
     engines:
       node: '>=0.6.0'
     resolution:
@@ -9035,8 +9023,10 @@ specifiers:
   html-webpack-harddisk-plugin: ^0.2.0
   html-webpack-plugin: ^3.2.0
   husky: ^1.1.1
+  inquirer: ^6.2.0
   istanbul-instrumenter-loader-fix: ^3.0.2
   lint-staged: ^7.3.0
+  mkdirp: ^0.5.1
   mocha: ^5.2.0
   mocha-webpack: ^2.0.0-beta.0
   node-sass: ^4.9.3
