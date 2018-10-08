@@ -1,27 +1,28 @@
 # one-fits-all flavour
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/cyclejs-community/one-fits-all.svg)](https://greenkeeper.io/)
-
 [Cycle-app](https://github.com/cyclejs-community/create-cycle-app) flavor.
 
 ## Installation
 
 Run `create-cycle-app myAppName --flavor cycle-scripts-one-fits-all`
 
+To use pnpm as package manager use
+```
+create-cycle-app myAppName --flavor cycle-scripts-one-fits-all --pnpm
+``` 
+for `yarn` you can use the same but with `--yarn`.
+
 ## Template
 
-An elementary SPA. Each page is a cycle component and has its own state, which is persisted in local storage
+An elementary SPA. Each page is a cycle component and has its own state.
 
 Uses:
-* xstream observables designed for HTML apps
+* xstream observables designed for Cycle.js apps
 * @cycle/dom and snabbdom for HTML rendering and events
-* @cycle/http for http requests
-* @cycle/time for accurate timing
+* @cycle/time for easy testing
 * cycle-onionify and @cycle/isolate for fractal single state atom
-* cycle-storageify and @cycle/storage for persistence in browser local storage
-* cyclic-router and switch-path for routing and history management
-* cycle-rerun for Hot Module Reloading (HMR)
-* Custom HTML speech driver (write only)
+* cyclic-router and switch-path for routing
+* Custom HTML speech driver (write only) as example how to write a driver yourself
 
 ## Language
 
@@ -29,37 +30,12 @@ Typescript (strict) with TSLint or ES6, uses the Typescript compiler for both.
 
 ## How does this flavor work
 
-My goal is to create a flavor where you don't have to eject if you want to customize the config. This is now possible with the 3.0.0 update. The template will create a `webpack.config.js` inside your app folder that defines the entry points of the app. You can add to that config and it will be merged with the config defined in this flavor.
+My goal is to create a flavor where you don't have to eject if you want to customize the config. Thus, the template will create a `webpack.config.js` inside your app folder that defines the entry points of the app. You can add to that config and it will be merged with the config defined in this flavor.
 
-I strongly recommend [wepack-blocks](https://github.com/andywer/webpack-blocks) as they help a lot in making webpack easy.
-
-## Migrating
-
-To migrate an existing app to `5.0.0` you have to
-* update `cycle-scripts-one-fits-all`
-* update `package.json` like this:
-```
-"nyc": {
-  "instrument": false,
-  "sourceMap": false,
-  "include": [<paths of files you want to test>, "src/components"],
-  "reporter": ["html", "text-summary"]
-},
-
-"mocha-webpack": {
-  "include": [
-    "src/components/**/*.{jsx,js,ts,tsx}", //Should be the same as in nyc.include
-    "test/**/*.test.{js,jsx,ts,tsx}" //All your tests
-  ]
-}
-    
-```
- 
 ## Bundler
 
 Webpack is configured using [webpack-blocks](https://github.com/andywer/webpack-blocks)
 * [Webpack dev server](https://webpack.js.org/configuration/dev-server)
-* [Hot Module Replacement](https://webpack.js.org/concepts/hot-module-replacement/)
 
 ## Scripts
 
@@ -71,4 +47,3 @@ Webpack is configured using [webpack-blocks](https://github.com/andywer/webpack-
 
 ### Config files
 * webpack.config.js (Added to `config/` after running the eject script)
-* webpack.config.test.js (Added to `config/` after running the eject script)
