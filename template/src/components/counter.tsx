@@ -7,7 +7,7 @@ export interface State {
     count: number;
 }
 export const defaultState: State = {
-    count: 30
+    count: 0
 };
 
 interface DOMIntent {

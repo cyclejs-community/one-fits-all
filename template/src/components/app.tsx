@@ -13,16 +13,8 @@ export interface State {
     counter?: CounterState;
     speaker?: SpeakerState;
 }
-export const defaultState: State = {
-    counter: { count: 5 },
-    speaker: undefined // use default state of component
-};
 
 export function App(sources: Sources<State>): Sinks<State> {
-    const initReducer$ = xs.of<Reducer<State>>(
-        prevState => (prevState === undefined ? defaultState : prevState)
-    );
-
     const match$ = sources.router.define({
         '/counter': isolate(Counter, 'counter'),
         '/speaker': isolate(Speaker, 'speaker')
@@ -44,7 +36,6 @@ export function App(sources: Sources<State>): Sinks<State> {
     const sinks = extractSinks(componentSinks$, driverNames);
     return {
         ...sinks,
-        router: xs.merge(redirect$, sinks.router),
-        onion: xs.merge(initReducer$, sinks.onion)
+        router: xs.merge(redirect$, sinks.router)
     };
 }
