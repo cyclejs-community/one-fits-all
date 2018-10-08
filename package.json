@@ -1,6 +1,6 @@
 {
   "name": "cycle-scripts-one-fits-all",
-  "version": "6.0.0-beta.0",
+  "version": "6.0.0-beta.2",
   "description": "create-cycle-one-fits-all flavor",
   "main": "index.js",
   "lint-staged": {
@@ -41,6 +41,7 @@
   "dependencies": {
     "@types/webpack-env": "^1.13.6",
     "@webpack-blocks/assets": "^2.0.0-alpha",
+    "@webpack-blocks/core": "^2.0.0-alpha",
     "@webpack-blocks/dev-server": "^2.0.0-alpha",
     "@webpack-blocks/extract-text": "^2.0.0-alpha",
     "@webpack-blocks/postcss": "^2.0.0-alpha",
@@ -59,7 +60,7 @@
     "html-webpack-harddisk-plugin": "^0.2.0",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.1.1",
-    "istanbul-instrumenter-loader": "^3.0.1",
+    "istanbul-instrumenter-loader-fix": "^3.0.2",
     "lint-staged": "^7.3.0",
     "mocha": "^5.2.0",
     "mocha-webpack": "^2.0.0-beta.0",
@@ -82,10 +83,12 @@
     "@cycle/time": "^0.15.0",
     "@types/mocha": "^5.2.5",
     "cycle-onionify": "^6.1.0",
-    "cyclejs-test-helpers": "^2.0.0",
+    "cyclejs-test-helpers": "^3.0.0",
     "cyclejs-utils": "^3.2.0",
     "cyclic-router": "^5.1.7",
     "release-it": "^7.6.1",
+    "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.3.3",
     "snabbdom-looks-like": "^1.0.4",
     "snabbdom-pragma": "^2.7.0",
     "switch-path": "^1.2.0",

@@ -5,29 +5,32 @@ import { mockDOMSource, VNode } from '@cycle/dom';
 import { App } from '../src/components/app';
 import { wrapMain } from '../src/drivers';
 
+function fakeLocationObj(path: string): any {
+    return {
+        pathname: path,
+        search: '',
+        hash: '',
+        locationKey: ''
+    };
+}
+
 describe('app tests', () => {
-    it('should switch page based on url', () =>
+    it(
+        'should switch page based on url',
         withTime(Time => {
             const DOM = mockDOMSource({});
-            const location$ = Time.diagram('a-b--a--a--b-', {
+            const history = Time.diagram('a-b--a--a--b-', {
                 a: '/counter',
                 b: '/speaker'
-            });
-            const history = location$.map((p: string) => ({
-                pathname: p,
-                search: '',
-                hash: '',
-                locationKey: ''
-            }));
+            }).map(fakeLocationObj);
 
-            const appWithState = wrapMain(
+            const sinks: any = wrapMain(App)({ DOM, history } as any);
+            const sinksWithState: any = wrapMain(
                 addPrevState(App, {
-                    speaker: { text: 'THIS IS EXPECTED' }
+                    speaker: { text: 'THIS IS EXPECTED' },
+                    counter: 5
                 })
-            );
-            const app = wrapMain(App);
-            const sinksWithState = app({ DOM, history } as any);
-            const sinks = app({ DOM, history } as any);
+            )({ DOM, history } as any);
 
             const expected$ = Time.diagram('1-2--1--1--2-').map<VNode>(
                 (n: string) => (
@@ -38,7 +41,26 @@ describe('app tests', () => {
                 )
             );
 
-            Time.assertEqual(sinksWithState.DOM!, expected$, assertLooksLike);
-            Time.assertEqual(sinks.DOM!, expected$, assertLooksLike);
-        }));
+            Time.assertEqual(sinks.DOM, expected$, assertLooksLike);
+            Time.assertEqual(sinksWithState.DOM, expected$, assertLooksLike);
+        })
+    );
+
+    it(
+        'should redirect to /counter from /',
+        withTime(Time => {
+            const DOM = mockDOMSource({});
+            const history = Time.diagram('r--r--', {
+                r: '/'
+            }).map(fakeLocationObj);
+
+            const sinks = wrapMain(App)({ DOM, history } as any);
+
+            const expected$ = Time.diagram('a--a--', {
+                a: '/counter'
+            });
+
+            Time.assertEqual(sinks.router!, expected$);
+        })
+    );
 });

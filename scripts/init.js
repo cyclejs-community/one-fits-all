@@ -15,7 +15,7 @@ const devDependencyNames = [
     '@types/mocha'
 ];
 
-const ownDevDependencies = ['release-it'];
+const ownDevDependencies = ['release-it', 'rxjs', 'rxjs-compat'];
 
 function patchGitignore(appPath) {
     // Rename gitignore after the fact to prevent npm from renaming it to .npmignore

@@ -129,8 +129,11 @@ module.exports = webpackMerge(
                                 path.resolve(appPath(p))
                             ),
                             use: {
-                                loader: 'istanbul-instrumenter-loader',
-                                options: { esModules: true }
+                                loader: 'istanbul-instrumenter-loader-fix',
+                                options: {
+                                    esModules: true,
+                                    fixWebpackSourcePaths: true
+                                }
                             },
                             enforce: 'post'
                         }

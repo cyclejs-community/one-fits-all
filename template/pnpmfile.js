@@ -23,7 +23,7 @@ function readPackage(pkg, context) {
             'tslint-loader': '*',
             'sass-loader': '*',
             'postcss-loader': '*',
-            'istanbul-instrumenter-loader': '*',
+            'istanbul-instrumenter-loader-fix': '*',
             '@types/history': '*',
             'cross-env': '*',
             'mocha-webpack': '2.0.0-beta.0'

@@ -7,7 +7,7 @@ import switchPath from 'switch-path';
 import { Component } from './interfaces';
 import speechDriver from './drivers/speech';
 
-export const driversFactories: any = {
+const driversFactories: any = {
     DOM: () => makeDOMDriver('#app'),
     history: () => makeHistoryDriver(),
     speech: () => speechDriver
@@ -19,11 +19,10 @@ export function getDrivers(): any {
         .reduce((a, c) => ({ ...a, ...c }), {});
 }
 
-export const driverNames = Object.keys(driversFactories).concat([
-    'onion',
-    'router'
-]);
+export const driverNames = Object.keys(driversFactories)
+    .filter(name => name !== 'history')
+    .concat(['onion', 'router']);
 
 export function wrapMain(main: Component<any>): Component<any> {
-    return routerify(onionify(main as any), switchPath) as any;
+    return onionify(routerify(main as any, switchPath as any));
 }
