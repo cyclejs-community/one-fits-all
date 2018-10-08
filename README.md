@@ -4,13 +4,12 @@
 
 ## Installation
 
-Run `create-cycle-app myAppName --flavor cycle-scripts-one-fits-all`
+Run `create-cycle-app myAppName`.
 
-To use pnpm as package manager use
-```
-create-cycle-app myAppName --flavor cycle-scripts-one-fits-all --pnpm
-``` 
-for `yarn` you can use the same but with `--yarn`.
+If you use `create-cycle-app@<5.0.0` you will need this command:
+`create-cycle-app myAppName --flavor cycle-scripts-one-fits-all`
+
+To use different package manager, add either `--pnpm` or `--yarn` at the end.
 
 ## Template
 
