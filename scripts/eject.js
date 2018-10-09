@@ -71,7 +71,10 @@ inquirer
             Object.keys(ownPackageJson.dependencies)
                 .filter(dep => ownDependencyNames.indexOf(dep) === -1)
                 .reduce(
-                    (a, c) => ({ ...a, [c]: ownPackageJson.dependencies[c] }),
+                    (a, c) =>
+                        Object.assign(a, {
+                            [c]: ownPackageJson.dependencies[c]
+                        }),
                     {}
                 )
         );

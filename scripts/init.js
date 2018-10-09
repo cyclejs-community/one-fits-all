@@ -131,7 +131,7 @@ module.exports = function init(appPath, appName, verboseOpts) {
             ownPackage.devDependencies[k] || ownPackage.dependencies[k]
         ])
         .map(([k, v]) => ({ [k]: v }))
-        .reduce((a, c) => ({ ...a, ...c }), {});
+        .reduce((a, c) => Object.assign(a, c), {});
 
     appPackage.dependencies = {
         ...appPackage.dependencies,
