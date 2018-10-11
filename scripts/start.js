@@ -8,7 +8,7 @@ env.NODE_ENV = 'development';
 const webpackAPI = require.resolve('webpack-dev-server');
 
 const webpack = path.resolve(
-    webpackAPI.slice(0, webpackAPI.lastIndexOf('/')),
+    path.dirname(webpackAPI),
     '..',
     'bin',
     'webpack-dev-server.js'
