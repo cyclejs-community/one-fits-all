@@ -8,7 +8,7 @@ env.NODE_ENV = 'production';
 const webpackAPI = require.resolve('webpack');
 
 const webpack = path.resolve(
-    webpackAPI.slice(0, webpackAPI.lastIndexOf('/')),
+    path.dirname(webpackAPI),
     '..',
     'bin',
     'webpack.js'
