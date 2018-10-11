@@ -121,7 +121,7 @@ module.exports = function init(appPath, appName, verboseOpts) {
         .filter(k => ownDevDependencies.indexOf(k) === -1)
         .map(k => [k, ownPackage.devDependencies[k]])
         .map(([k, v]) => ({ [k]: v }))
-        .reduce((a, c) => ({ ...a, ...c }), {});
+        .reduce((a, c) => Object.assign(a, c), {});
 
     const devDependencies = Object.keys(ownPackage.devDependencies)
         .concat(Object.keys(ownPackage.dependencies))
@@ -133,15 +133,16 @@ module.exports = function init(appPath, appName, verboseOpts) {
         .map(([k, v]) => ({ [k]: v }))
         .reduce((a, c) => Object.assign(a, c), {});
 
-    appPackage.dependencies = {
-        ...appPackage.dependencies,
-        ...basicDependencies
-    };
-    appPackage.devDependencies = {
-        ...appPackage.devDependencies,
-        ...devDependencies
-    };
-
+    appPackage.dependencies = Object.assign(
+        {},
+        appPackage.dependencies,
+        basicDependencies
+    );
+    appPackage.devDependencies = Object.assign(
+        {},
+        appPackage.devDependencies,
+        devDependencies
+    );
     appPackage['one-fits-all'] = true;
 
     if (cli === 'yarn') {
