@@ -9,7 +9,7 @@ env.NODE_ENV = 'test';
 
 const nycAPI = require.resolve('nyc');
 const nyc = path.resolve(
-    nycAPI.slice(0, nycAPI.lastIndexOf('/')),
+    path.dirname(nycAPI),    
     'bin',
     'nyc.js'
 );
