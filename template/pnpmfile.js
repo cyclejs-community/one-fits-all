@@ -13,7 +13,7 @@ function readPackage(pkg, context) {
             jsverify: '*',
             webpack: '*',
             mocha: '*',
-            typescript: '2.8',
+            typescript: '*',
             'awesome-typescript-loader': '*',
             'style-loader': '*',
             'css-loader': '*',
