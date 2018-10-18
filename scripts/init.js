@@ -147,7 +147,7 @@ module.exports = function init(appPath, appName, verboseOpts) {
 
     if (cli === 'yarn') {
         appPackage.resolutions = {
-            '**/typescript': '2.8'
+            '**/typescript': '3.1'
         };
     }
 
