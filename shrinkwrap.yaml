@@ -1,4 +1,5 @@
 dependencies:
+  '@types/webpack': 4.4.17
   '@types/webpack-env': 1.13.6
   '@webpack-blocks/assets': 2.0.0-alpha
   '@webpack-blocks/core': 2.0.0-alpha
@@ -11,6 +12,7 @@ dependencies:
   '@webpack-blocks/uglify': 2.0.0-alpha
   '@webpack-blocks/webpack': 2.0.0-alpha
   autoprefixer: 9.2.1
+  awesome-typescript-loader: 5.2.1
   chalk: 2.4.1
   clean-webpack-plugin: 0.1.19
   copy-webpack-plugin: 4.5.3
@@ -298,10 +300,33 @@ packages:
     dev: true
     resolution:
       integrity: sha512-lAVp+Kj54ui/vLUFxsJTMtWvZraZxum3w3Nwkble2dNuV5VnPA+Mi2oGX9XYJAaIvZi3tn3cbjS/qcJXRb6Bww==
+  /@types/node/10.12.0:
+    dev: false
+    resolution:
+      integrity: sha512-3TUHC3jsBAB7qVRGxT6lWyYo2v96BMmD2PTcl47H25Lu7UXtFH/2qqmKiVrnel6Ne//0TFYf6uvNX+HW2FRkLQ==
+  /@types/tapable/1.0.4:
+    dev: false
+    resolution:
+      integrity: sha512-78AdXtlhpCHT0K3EytMpn4JNxaf5tbqbLcbIRoQIHzpTIyjpxLQKRoxU55ujBXAtg3Nl2h/XWvfDa9dsMOd0pQ==
+  /@types/uglify-js/3.0.4:
+    dependencies:
+      source-map: 0.6.1
+    dev: false
+    resolution:
+      integrity: sha512-SudIN9TRJ+v8g5pTG8RRCqfqTMNqgWCKKd3vtynhGzkIIjxaicNAMuY5TRadJ6tzDu3Dotf3ngaMILtmOdmWEQ==
   /@types/webpack-env/1.13.6:
     dev: false
     resolution:
       integrity: sha512-5Th3OsZ4gTRdr9Mho83BQ23cex4sRhOR4XTG+m+cJc0FhtUBK9Vn62hBJ+pnQYnSxoPOsKoAPOx6FcphxBC8ng==
+  /@types/webpack/4.4.17:
+    dependencies:
+      '@types/node': 10.12.0
+      '@types/tapable': 1.0.4
+      '@types/uglify-js': 3.0.4
+      source-map: 0.6.1
+    dev: false
+    resolution:
+      integrity: sha512-f8fHYEhlrSQJ5BHaonyatL11MYwqQ7I6QDVCT41LqIyxR7j9B2uY4cQKxDoWFC9l2NbFGsIhiJBKZ6Y6LMBFLA==
   /@webassemblyjs/ast/1.7.8:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.7.8
@@ -866,6 +891,15 @@ packages:
     resolution:
       integrity: sha512-qlK4GnZk8OXLK+8kBn9ttfzu2PkhRe8kVYoWcc9HsrZEMWiBkQuRYdXyJg9cIIKxfMzhh6UbvlJ1CsstMIzxwA==
   /awesome-typescript-loader/5.2.1:
+    dependencies:
+      chalk: 2.4.1
+      enhanced-resolve: 4.1.0
+      loader-utils: 1.1.0
+      lodash: 4.17.11
+      micromatch: 3.1.10
+      mkdirp: 0.5.1
+      source-map-support: 0.5.9
+      webpack-log: 1.2.0
     dev: false
     peerDependencies:
       typescript: ^2.7 || ^3
@@ -2611,6 +2645,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-GzN5LhHpFKL9bW7WRHRkRE5fpkA=
+  /d/1.0.0:
+    dependencies:
+      es5-ext: 0.10.46
+    dev: false
+    resolution:
+      integrity: sha1-dUu1v+VUUdpppYuU1F9MWwRi1Y8=
   /dargs/4.1.0:
     dependencies:
       number-is-nan: 1.0.1
@@ -3044,6 +3084,22 @@ packages:
       node: '>= 0.4'
     resolution:
       integrity: sha512-qZryBOJjV//LaxLTV6UC//WewneB3LcXOL9NP++ozKVXsIIIpm/2c13UDiD9Jp2eThsecw9m3jPqDwTyobcdbg==
+  /es5-ext/0.10.46:
+    dependencies:
+      es6-iterator: 2.0.3
+      es6-symbol: 3.1.1
+      next-tick: 1.0.0
+    dev: false
+    resolution:
+      integrity: sha512-24XxRvJXNFwEMpJb3nOkiRJKRoupmjYmOPVlI65Qy2SrtxwOTB+g6ODjBKOtwEHbYrhWRty9xxOWLNdClT2djw==
+  /es6-iterator/2.0.3:
+    dependencies:
+      d: 1.0.0
+      es5-ext: 0.10.46
+      es6-symbol: 3.1.1
+    dev: false
+    resolution:
+      integrity: sha1-p96IkUGgWpSwhUQDstCg+/qY87c=
   /es6-promise/4.2.5:
     dev: true
     resolution:
@@ -3054,6 +3110,13 @@ packages:
     dev: true
     resolution:
       integrity: sha1-UQnWLz5W6pZ8S2NQWu8IKRyKUgM=
+  /es6-symbol/3.1.1:
+    dependencies:
+      d: 1.0.0
+      es5-ext: 0.10.46
+    dev: false
+    resolution:
+      integrity: sha1-vwDvT9q2uhtG7Le2KbTH7VcVzHc=
   /escape-html/1.0.3:
     dev: false
     resolution:
@@ -5223,6 +5286,15 @@ packages:
       node: '>= 0.6.0'
     resolution:
       integrity: sha1-4PyVEztu8nbNyIh82vJKpvFW+Po=
+  /loglevelnext/1.0.5:
+    dependencies:
+      es6-symbol: 3.1.1
+      object.assign: 4.1.0
+    dev: false
+    engines:
+      node: '>= 6'
+    resolution:
+      integrity: sha512-V/73qkPuJmx4BcBF19xPBr+0ZRVBhc4POxvZTZdMeXpJ4NItXSJ/MSwuFT0kQJlCbXvdlZoQQ/418bS1y9Jh6A==
   /loose-envify/1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -5487,7 +5559,6 @@ packages:
   /minimist/0.0.8:
     resolution:
       integrity: sha1-hX/Kv8M5fSYluCKCYuhqp6ARsF0=
-      tarball: 'http://registry.npmjs.org/minimist/-/minimist-0.0.8.tgz'
   /minimist/1.2.0:
     resolution:
       integrity: sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
@@ -5664,6 +5735,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
+  /next-tick/1.0.0:
+    dev: false
+    resolution:
+      integrity: sha1-yobR/ogoFpsBICCOPchCS524NCw=
   /nice-try/1.0.5:
     dev: false
     resolution:
@@ -5969,6 +6044,17 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-95xEk68MU3e1n+OdOV5BBC3QRbs=
+  /object.assign/4.1.0:
+    dependencies:
+      define-properties: 1.1.3
+      function-bind: 1.1.1
+      has-symbols: 1.0.0
+      object-keys: 1.0.12
+    dev: false
+    engines:
+      node: '>= 0.4'
+    resolution:
+      integrity: sha512-exHJeq6kBKj58mqGyTQ9DFvrZC/eR6OwxzoM9YRoGBqrXYonaFyGiFMuc9VZrXf7DarreEwMpurG3dd+CNyW5w==
   /object.getownpropertydescriptors/2.0.3:
     dependencies:
       define-properties: 1.1.3
@@ -8713,6 +8799,17 @@ packages:
       webpack: ^4.0.0
     resolution:
       integrity: sha512-fqPkuNalLuc/hRC2QMkVYJkgNmRvxZQo7ykA2e1XRg/tMJm3qY7ZaD6d89/Fqjxtj9bOrn5wZzLD2n84lJdvWg==
+  /webpack-log/1.2.0:
+    dependencies:
+      chalk: 2.4.1
+      log-symbols: 2.2.0
+      loglevelnext: 1.0.5
+      uuid: 3.3.2
+    dev: false
+    engines:
+      node: '>=6'
+    resolution:
+      integrity: sha512-U9AnICnu50HXtiqiDxuli5gLB5PGBo7VvcHx36jRZHwK4vzOYLbImqT4lwWwoMHdQWwEKw736fCHEekokTEKHA==
   /webpack-log/2.0.0:
     dependencies:
       ansi-colors: 3.1.0
@@ -8992,6 +9089,7 @@ specifiers:
   '@cycle/run': ^5.1.0
   '@cycle/time': ^0.16.0
   '@types/mocha': ^5.2.5
+  '@types/webpack': ^4.4.17
   '@types/webpack-env': ^1.13.6
   '@webpack-blocks/assets': ^2.0.0-alpha
   '@webpack-blocks/core': ^2.0.0-alpha
@@ -9004,6 +9102,7 @@ specifiers:
   '@webpack-blocks/uglify': ^2.0.0-alpha
   '@webpack-blocks/webpack': ^2.0.0-alpha
   autoprefixer: ^9.2.1
+  awesome-typescript-loader: ^5.2.1
   chalk: ^2.4.1
   clean-webpack-plugin: ^0.1.19
   copy-webpack-plugin: ^4.5.3

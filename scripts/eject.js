@@ -8,6 +8,7 @@ const inquirer = require('inquirer');
 
 const appPath = (...paths) => path.join(process.cwd(), ...paths);
 const usingPnpm = fs.existsSync(appPath('shrinkwrap.yaml'));
+const usingYarn = fs.existsSync(appPath('yarn.lock'));
 
 const ownDependencyNames = [
     'inquirer',
@@ -17,17 +18,32 @@ const ownDependencyNames = [
     'mkdirp'
 ];
 
+function getPromptMessage() {
+    const baseMessage =
+        'Are you sure you want to eject? This flavor is designed so that you do not have to do so, if I forgot a use case, please open an issue at\n\nhttps://github.com/cyclejs-community/one-fits-all\n\nThis process is NOT reversable, it will remove all traces of the flavor from your project\n';
+
+    if (usingPnpm)
+        return (
+            baseMessage +
+            '\nYou are using pnpm which will cause this script to delete your shrinkwrap.yaml and node_modules and reinstall afterwards\n'
+        );
+    if (usingYarn)
+        return (
+            baseMessage +
+            '\nYou are using yarn which will cause this script to delete your yarn.lock and node_modules and reinstall afterwards\n'
+        );
+
+    // default
+    return baseMessage;
+}
+
 inquirer
     .prompt([
         {
             type: 'confirm',
             name: 'confirm',
             default: false,
-            message:
-                'Are you sure you want to eject? This flavor is designed so that you do not have to do so, if I forgot a use case, please open an issue at\n\nhttps://github.com/cyclejs-community/one-fits-all\n\nThis process is NOT reversable, it will remove all traces of the flavor from your project\n' +
-                (!usingPnpm
-                    ? ''
-                    : '\nYou are using pnpm which will cause this script to delete your shrinkwrap.yaml and node_modules and reinstall afterwards\n')
+            message: getPromptMessage()
         }
     ])
     .then(answers => {
@@ -100,5 +116,13 @@ inquirer
             fs.removeSync(appPath('shrinkwrap.yaml'));
             fs.removeSync(appPath('node_modules'));
             spawn.sync('pnpm', ['install'], { stdio: 'inherit' });
+        } else if (usingYarn) {
+            fs.removeSync(appPath('yarn.lock'));
+            fs.removeSync(appPath('node_modules'));
+            spawn.sync('yarn', ['install'], { stdio: 'inherit' });
+        } else {
+            // npm is ok about installing new dependencies
+            // it seems this is not necessary to remove lock file and node_modules
+            spawn.sync('npm', ['install'], { stdio: 'inherit' });
         }
     });
