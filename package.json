@@ -39,6 +39,7 @@
     "cycle-scripts": "./index.js"
   },
   "dependencies": {
+    "@types/webpack": "^4.4.17",
     "@types/webpack-env": "^1.13.6",
     "@webpack-blocks/assets": "^2.0.0-alpha",
     "@webpack-blocks/core": "^2.0.0-alpha",
@@ -51,6 +52,7 @@
     "@webpack-blocks/uglify": "^2.0.0-alpha",
     "@webpack-blocks/webpack": "^2.0.0-alpha",
     "autoprefixer": "^9.2.1",
+    "awesome-typescript-loader": "^5.2.1",
     "chalk": "^2.4.1",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.3",
