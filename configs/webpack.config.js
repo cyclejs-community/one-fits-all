@@ -11,7 +11,7 @@ const {
     resolve,
     setMode
 } = require('@webpack-blocks/webpack');
-const { css, file, url } = require('@webpack-blocks/assets');
+const { file, url } = require('@webpack-blocks/assets');
 const devServer = require('@webpack-blocks/dev-server');
 const extractText = require('@webpack-blocks/extract-text');
 const postcss = require('@webpack-blocks/postcss');
@@ -30,11 +30,12 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
-const fs = require('fs');
 
 const appPath = (...names) => path.join(process.cwd(), ...names);
 const userConfig = require(appPath('webpack.config.js'));
 const packageJson = require(appPath('package.json'));
+
+const PORT = process.env.PORT || 8080
 
 module.exports = webpackMerge(
     createConfig([
@@ -86,6 +87,7 @@ module.exports = webpackMerge(
         ]),
         env('development', [
             devServer({
+                port: PORT,
                 contentBase: appPath('public')
             }),
             sourceMaps(),
