@@ -35,7 +35,7 @@ const appPath = (...names) => path.join(process.cwd(), ...names);
 const userConfig = require(appPath('webpack.config.js'));
 const packageJson = require(appPath('package.json'));
 
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8080;
 
 module.exports = webpackMerge(
     createConfig([

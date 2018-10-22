@@ -1,23 +1,30 @@
 language: node_js
-node_js:
-  - 6
-  - 8
+
 notifications:
     email: false
+
 cache:
     yarn: true
     directories:
         - node_modules
+        - /home/travis/.pnpm-store
+
 before_install:
-  - npm install -g npm@5
   - npm install -g yarn
-  - npm install -g greenkeeper-lockfile@1
   - npm install -g create-cycle-app
-before_script: greenkeeper-lockfile-update
-after_script: greenkeeper-lockfile-upload
-script:
-    - create-cycle-app test-app --flavor $(pwd) --yarn
-    - cd test-app
-    - yarn run build
-    - yarn test
-    - cd ..
+  - npm install -g pnpm@^2.17.0
+
+matrix:
+    include:
+        - script: ./runCI.sh yarn
+          node_js: 6
+          install: yarn install
+        - script: ./runCI.sh yarn
+          node_js: 8
+          install: yarn install
+#       - script: ./runCI.sh pnpm
+#         node_js: 6
+#         install: pnpm install
+#       - script: ./runCI.sh pnpm
+#         node_js: 8
+#         install: pnpm install
