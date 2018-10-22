@@ -20,7 +20,7 @@ export function App(sources: Sources<State>): Sinks<State> {
         '/speaker': isolate(Speaker, 'speaker')
     });
 
-    const componentSinks$ = match$
+    const componentSinks$: Stream<Sinks<State>> = match$
         .filter(({ path, value }: any) => path && typeof value === 'function')
         .map(({ path, value }: { path: string; value: Component<any> }) => {
             return value({
@@ -29,7 +29,7 @@ export function App(sources: Sources<State>): Sinks<State> {
             });
         });
 
-    const redirect$ = sources.router.history$
+    const redirect$: Stream<string> = sources.router.history$
         .filter((l: Location) => l.pathname === '/')
         .mapTo('/counter');
 

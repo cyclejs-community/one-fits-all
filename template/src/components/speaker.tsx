@@ -15,13 +15,13 @@ export interface DOMIntent {
     updateText$: Stream<string>;
 }
 
-export function Speaker({ DOM, onion }: Sources<State>): Sinks<State> {
+export function Speaker({ DOM, state }: Sources<State>): Sinks<State> {
     const { speech$, link$, updateText$ }: DOMIntent = intent(DOM);
 
     return {
-        DOM: view(onion.state$),
-        speech: speech(speech$, onion.state$),
-        onion: model(updateText$),
+        DOM: view(state.stream),
+        speech: speech(speech$, state.stream),
+        state: model(updateText$),
         router: redirect(link$)
     };
 }

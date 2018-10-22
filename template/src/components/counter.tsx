@@ -16,12 +16,12 @@ interface DOMIntent {
     link$: Stream<null>;
 }
 
-export function Counter({ DOM, onion }: Sources<State>): Sinks<State> {
+export function Counter({ DOM, state }: Sources<State>): Sinks<State> {
     const { increment$, decrement$, link$ }: DOMIntent = intent(DOM);
 
     return {
-        DOM: view(onion.state$),
-        onion: model(increment$, decrement$),
+        DOM: view(state.stream),
+        state: model(increment$, decrement$),
         router: redirect(link$)
     };
 }
