@@ -1,7 +1,7 @@
 import { makeDOMDriver } from '@cycle/dom';
 import { makeHistoryDriver } from '@cycle/history';
+import { withState } from '@cycle/state';
 import { routerify } from 'cyclic-router';
-import onionify from 'cycle-onionify';
 import switchPath from 'switch-path';
 
 import { Component } from './interfaces';
@@ -21,8 +21,8 @@ export function getDrivers(): any {
 
 export const driverNames = Object.keys(driversFactories)
     .filter(name => name !== 'history')
-    .concat(['onion', 'router']);
+    .concat(['state', 'router']);
 
 export function wrapMain(main: Component<any>): Component<any> {
-    return onionify(routerify(main as any, switchPath as any));
+    return withState(routerify(main as any, switchPath as any)) as any;
 }
