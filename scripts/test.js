@@ -8,11 +8,7 @@ let env = Object.create(process.env);
 env.NODE_ENV = 'test';
 
 const nycAPI = require.resolve('nyc');
-const nyc = path.resolve(
-    path.dirname(nycAPI),    
-    'bin',
-    'nyc.js'
-);
+const nyc = path.resolve(path.dirname(nycAPI), 'bin', 'nyc.js');
 
 const args = [
     'mocha-webpack',

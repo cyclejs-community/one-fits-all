@@ -7,8 +7,7 @@ module.exports = {
 
 function readPackage(pkg, context) {
     if (pkg['one-fits-all']) {
-        pkg.devDependencies = {
-            ...pkg.devDependencies,
+        pkg.devDependencies = Object.assign({}, pkg.devDependencies, {
             tslint: '*',
             jsverify: '*',
             webpack: '*',
@@ -24,12 +23,11 @@ function readPackage(pkg, context) {
             '@types/history': '*',
             'cross-env': '*',
             'mocha-webpack': '2.0.0-beta.0'
-        };
-        pkg.dependencies = {
-            ...pkg.dependencies,
+        });
+        pkg.dependencies = Object.assign({}, pkg.dependencies, {
             snabbdom: '*',
             history: '*'
-        };
+        });
     }
 
     return pkg;
