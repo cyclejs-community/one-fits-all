@@ -21,6 +21,12 @@ function readPackage(pkg, context) {
             'postcss-loader': '*',
             'istanbul-instrumenter-loader-fix': '*',
             '@types/history': '*',
+            '@types/node': '*',
+            'source-map': '*',
+            tapable: '*',
+            '@types/tapable': '*',
+            'uglify-js': '*',
+            '@types/uglify-js': '*',
             'cross-env': '*',
             'mocha-webpack': '2.0.0-beta.0'
         });

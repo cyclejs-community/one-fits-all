@@ -6,7 +6,6 @@ notifications:
 cache:
     yarn: true
     directories:
-        - node_modules
         - /home/travis/.pnpm-store
 
 before_install:
@@ -22,9 +21,9 @@ matrix:
         - script: ./runCI.sh yarn
           node_js: 8
           install: yarn install
-#       - script: ./runCI.sh pnpm
-#         node_js: 6
-#         install: pnpm install
-#       - script: ./runCI.sh pnpm
-#         node_js: 8
-#         install: pnpm install
+        - script: ./runCI.sh pnpm
+          node_js: 6
+          install: pnpm install
+        - script: ./runCI.sh pnpm
+          node_js: 8
+          install: pnpm install

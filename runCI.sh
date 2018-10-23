@@ -4,7 +4,10 @@ cli=$1
 
 set -eu
 
-create-cycle-app test-app --flavor $(pwd) "--$cli"
+dir=$(pwd)
+
+cd ..
+create-cycle-app test-app --flavor "$dir" "--$cli"
 cd test-app
 "$cli" run build
 "$cli" test
