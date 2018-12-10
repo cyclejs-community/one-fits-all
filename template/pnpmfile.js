@@ -15,7 +15,7 @@ function readPackage(pkg, context) {
             typescript: '*',
             'awesome-typescript-loader': '*',
             'style-loader': '*',
-            'css-loader': '*',
+            'css-loader': '^1.0.1',
             'tslint-loader': '*',
             'sass-loader': '*',
             'postcss-loader': '*',
