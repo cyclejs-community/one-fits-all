@@ -80,7 +80,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "devDependencies": {
-    "@cycle/dom": "^22.2.0",
+    "@cycle/dom": "^22.3.0",
     "@cycle/history": "^7.1.0",
     "@cycle/isolate": "^4.2.0",
     "@cycle/run": "^5.2.0",
@@ -89,8 +89,8 @@
     "@types/mocha": "^5.2.5",
     "cyclejs-test-helpers": "^4.0.0",
     "cyclejs-utils": "^4.0.2",
-    "cyclic-router": "^5.1.7",
-    "release-it": "^8.3.0",
+    "cyclic-router": "^6.0.0",
+    "release-it": "^9.0.0",
     "rxjs": "^6.3.3",
     "rxjs-compat": "^6.3.3",
     "snabbdom-looks-like": "^1.0.5",
