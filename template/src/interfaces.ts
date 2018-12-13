@@ -1,7 +1,7 @@
 import { Stream } from 'xstream';
 import { DOMSource, VNode } from '@cycle/dom';
 import { StateSource, Reducer } from '@cycle/state';
-import { RouterSource, HistoryAction } from 'cyclic-router';
+import { RouterSource, HistoryInput } from 'cyclic-router';
 
 export { Reducer } from '@cycle/state';
 
@@ -15,7 +15,7 @@ export interface Sources<State> {
 
 export interface Sinks<State> {
     DOM?: Stream<VNode>;
-    router?: Stream<HistoryAction>;
+    router?: Stream<HistoryInput>;
     speech?: Stream<string>;
     state?: Stream<Reducer<State>>;
 }

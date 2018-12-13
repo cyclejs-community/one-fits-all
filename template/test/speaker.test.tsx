@@ -6,7 +6,7 @@ import { mockDOMSource, VNode } from '@cycle/dom';
 import { Speaker } from '../src/components/speaker';
 import { wrapMain } from '../src/drivers';
 
-describe('app tests', () => {
+describe('speaker tests', () => {
     it(
         'should update text when typing',
         withTime(Time => {
@@ -35,7 +35,7 @@ describe('app tests', () => {
 
             const expected$ = Time.diagram('o' + diagram.slice(1), {
                 ...timeValues,
-                o: ''
+                o: 'Edit me!'
             });
 
             const expectedDOM = (s: string) => (
