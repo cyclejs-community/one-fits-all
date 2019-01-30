@@ -11,7 +11,7 @@ const {
     resolve,
     setMode
 } = require('@webpack-blocks/webpack');
-const { file, url } = require('@webpack-blocks/assets');
+const { css, file, url } = require('@webpack-blocks/assets');
 const devServer = require('@webpack-blocks/dev-server');
 const extractText = require('@webpack-blocks/extract-text');
 const postcss = require('@webpack-blocks/postcss');
@@ -51,6 +51,7 @@ module.exports = webpackMerge(
         match(
             ['*.scss', '*.sass'],
             [
+                css(),
                 sass({
                     includePaths: [appPath('node_modules')],
                     sourceMap: true
