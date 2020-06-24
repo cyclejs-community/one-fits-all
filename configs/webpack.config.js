@@ -53,7 +53,9 @@ module.exports = webpackMerge(
             [
                 css(),
                 sass({
-                    includePaths: [appPath('node_modules')],
+                    sassOptions: {
+                        includePaths: [appPath('node_modules')],
+                    },
                     sourceMap: true
                 }),
                 postcss({
